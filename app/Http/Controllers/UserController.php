@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UserController extends Controller
+{
+
+    public function list()
+    {
+        $users = DB::table('users')
+        ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+        ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+        ->get();
+        return response()->json(['success' => true, 'message' => "", "dados" => $users], 200);
+    }
+
+    public function show(string $id)
+    {
+        $user = DB::table('users')
+        ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+        ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+        ->where([['users.id', '=', $id]])
+        ->get();
+        return response()->json(['success' => true, 'message' => !empty($user) ? "" : "Usuário não encontrado!", "dados" => $user], !empty($user) ? 200 : 404);
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $dados = $request->except('id');
+            $user = User::find($request->id);
+            $user->update($dados);
+            return response()->json(['success' => true, 'message' => 'Usuário atualizado!'], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $user = User::find($request->id);
+            $user->delete();
+            return response()->json(['success' => true, 'message' => "Usuário excluído!"], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+}
