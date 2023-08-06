@@ -31,7 +31,7 @@ class AuthController extends Controller
         try {
 
             if ($this->emailExists($request->email)) {
-                return response()->json(['success' => false, 'message' => "Email inválido!"], 200);
+                return response()->json(['success' => false, 'message' => "Email inválido!", 'dados' => json_decode('{}')], 200);
             }
 
             $user = new User();
