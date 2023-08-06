@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -14,8 +15,12 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            $user = User::where('email', '=', $credentials['email'])->get();
-            $token = $this->generateJWTToken($user[0]['id'], $user[0]['name'], $user[0]['email'], $user[0]['user_type_id'], $user[0]['user_type']);
+            $user = DB::table('users')
+            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+            ->where([['users.email', '=', $credentials['email']]])
+            ->get();
+            $token = $this->generateJWTToken($user[0]->id, $user[0]->name, $user[0]->email, $user[0]->user_type_id, $user[0]->user_type);
             return response()->json(['success' => true, 'message' => "Usuário autenticado!", 'token' =>  $token, 'dados' => $user[0]], 200);
         }
         return response()->json(['success' => false, 'message' => "Usuário não autenticado!", 'dados' => json_decode('{}')], 200);
@@ -25,8 +30,8 @@ class AuthController extends Controller
     {
         try {
 
-            if($this->emailExists($request->email)) {
-                return response()->json(['success' => false, 'message' => "Email inválido!"], 200);
+            if ($this->emailExists($request->email)) {
+                return response()->json(['success' => false, 'message' => "Email inválido!", 'dados' => json_decode('{}')], 200);
             }
 
             $user = new User();
@@ -35,22 +40,30 @@ class AuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->user_type_id = ($request->user_type_id) ? $request->user_type_id : 1;
             if ($user->save()) {
-                return response()->json(['success' => true, 'message' => "Usuário cadastrado!", 'dados' => $user[0]], 200);
+                $user = DB::table('users')
+                ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+                ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+                ->where([['users.email', '=', $request->email]])
+                ->get();
+                $token = $this->generateJWTToken($user[0]->id, $user[0]->name, $user[0]->email, $user[0]->user_type_id, $user[0]->user_type);
+                return response()->json(['success' => true, 'message' => "Usuário cadastrado!", 'token' => $token, 'dados' => $user[0]], 200);
             }
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage(), 'dados' => json_decode('{}')], 500);
         }
     }
 
-    public function emailExists(string $email) {
+    public function emailExists(string $email)
+    {
         $e = User::where('email', '=', $email)->get();
         return !empty(json_decode($e));
     }
 
-    function generateJWTToken($userId, $username, $email, $userTypeId, $userType) {
+    function generateJWTToken($userId, $username, $email, $userTypeId, $userType)
+    {
         $issuedAt = time();
         $expirationTime = $issuedAt + 604800; // 1 semana de expiração
-    
+
         $payload = array(
             "id" => $userId,
             "name" => $username,
@@ -60,12 +73,11 @@ class AuthController extends Controller
             "iat" => $issuedAt,
             "exp" => $expirationTime
         );
-    
+
         $secretKey = getenv('APP_KEY');
-    
+
         $jwt = JWT::encode($payload, $secretKey, 'HS256');
-    
+
         return $jwt;
     }
-    
 }
