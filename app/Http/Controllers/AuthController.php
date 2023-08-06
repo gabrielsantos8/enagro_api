@@ -6,6 +6,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Firebase\JWT\JWT;
 
 class AuthController extends Controller
 {
@@ -14,7 +15,8 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $user = User::where('email', '=', $credentials['email'])->get();
-            return response()->json(['success' => true, 'message' => "Usuário autenticado!", 'dados' => $user[0]], 200);
+            $token = $this->generateJWTToken($user[0]['id'], $user[0]['name'], $user[0]['email'], $user[0]['user_type_id'], $user[0]['user_type']);
+            return response()->json(['success' => true, 'message' => "Usuário autenticado!", 'token' =>  $token, 'dados' => $user[0]], 200);
         }
         return response()->json(['success' => false, 'message' => "Usuário não autenticado!", 'dados' => json_decode('{}')], 200);
     }
@@ -44,4 +46,26 @@ class AuthController extends Controller
         $e = User::where('email', '=', $email)->get();
         return !empty(json_decode($e));
     }
+
+    function generateJWTToken($userId, $username, $email, $userTypeId, $userType) {
+        $issuedAt = time();
+        $expirationTime = $issuedAt + 604800; // 1 semana de expiração
+    
+        $payload = array(
+            "id" => $userId,
+            "name" => $username,
+            "email" => $email,
+            "user_type_id" => $userTypeId,
+            "user_type" => $userType,
+            "iat" => $issuedAt,
+            "exp" => $expirationTime
+        );
+    
+        $secretKey = getenv('APP_KEY');
+    
+        $jwt = JWT::encode($payload, $secretKey, 'HS256');
+    
+        return $jwt;
+    }
+    
 }
