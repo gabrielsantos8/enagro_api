@@ -15,11 +15,19 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+
+            $userAddressController = new UserAddressController;
+
             $user = DB::table('users')
             ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
             ->where([['users.email', '=', $credentials['email']]])
             ->get();
+            
+            foreach ($user as $key => $value) {
+                $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);        
+            }
+
             $token = $this->generateJWTToken($user[0]->id, $user[0]->name, $user[0]->email, $user[0]->user_type_id, $user[0]->user_type);
             return response()->json(['success' => true, 'message' => "Usuário autenticado!", 'token' =>  $token, 'dados' => $user[0]], 200);
         }
@@ -40,11 +48,19 @@ class AuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->user_type_id = ($request->user_type_id) ? $request->user_type_id : 1;
             if ($user->save()) {
-                $user = DB::table('users')
+            
+            $userAddressController = new UserAddressController;
+
+            $user = DB::table('users')
                 ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
                 ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
                 ->where([['users.email', '=', $request->email]])
                 ->get();
+                
+                foreach ($user as $key => $value) {
+                    $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);        
+                }
+
                 $token = $this->generateJWTToken($user[0]->id, $user[0]->name, $user[0]->email, $user[0]->user_type_id, $user[0]->user_type);
                 return response()->json(['success' => true, 'message' => "Usuário cadastrado!", 'token' => $token, 'dados' => $user[0]], 200);
             }
