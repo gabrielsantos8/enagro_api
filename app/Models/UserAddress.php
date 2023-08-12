@@ -9,5 +9,5 @@ class UserAddress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['complemento', 'city_id'];
+    protected $fillable = ['complemento', 'city_id', 'user_id'];
 }
