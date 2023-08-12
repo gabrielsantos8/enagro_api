@@ -68,4 +68,15 @@ class UserAddressController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function getBy(string $field, $value)
+    {
+        $userAddress = DB::table('user_addresses')
+            ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
+            ->join('users', 'user_addresses.user_id', '=', 'users.id')
+            ->select('user_addresses.*', 'cities.description as city', 'cities.uf', 'cities.ibge', 'users.name as user')
+            ->where('user_addresses.'.$field, '=', $value)
+            ->get();
+        return $userAddress;
+    }
 }

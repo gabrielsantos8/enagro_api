@@ -11,7 +11,7 @@ class City extends Model
 
     protected $fillable = ['description', 'uf', 'ibge'];
 
-    public function userAddress(){
+    public function userAddresses(){
         return $this->hasMany(UserAddress::class);
     }
 }
