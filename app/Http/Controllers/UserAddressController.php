@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\City;
+use App\Models\UserAddress;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UserAddressController extends Controller
+{
+    public function list()
+    {
+        $userAddress = DB::table('user_addresses')
+            ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
+            ->join('users', 'user_addresses.user_id', '=', 'users.id')
+            ->select('user_addresses.*', 'cities.description as city', 'cities.uf', 'cities.ibge', 'users.name as user')
+            ->get();
+        return response()->json(['success' => true, 'message' => "", "dados" => $userAddress], 200);
+    }
+
+    public function show(string $id)
+    {
+        $userAddress = DB::table('user_addresses')
+            ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
+            ->join('users', 'user_addresses.user_id', '=', 'users.id')
+            ->select('user_addresses.*', 'cities.description as city', 'cities.uf', 'cities.ibge', 'users.name as user')
+            ->where('user_addresses.id', '=', $id)
+            ->get();
+        return response()->json(['success' => true, 'message' => "", "dados" => $userAddress], !empty($userAddress) ? 200 : 404);
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $userAddress = new UserAddress();
+            $userAddress->complement = $request->complement;
+            $userAddress->user_id = $request->user_id;
+            $userAddress->city_id = $request->city_id;
+            if ($userAddress->save()) {
+                return response()->json(['success' => true, 'message' => "Endereço cadastrado!", 'dados' => $userAddress], 200);
+            }
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $dados = $request->except('id');
+            $userAddress = UserAddress::find($request->id);
+            $userAddress->update($dados);
+            return response()->json(['success' => true, 'message' => 'Endereço atualizado!'], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $userAddress = UserAddress::find($request->id);
+            $userAddress->delete();
+            return response()->json(['success' => true, 'message' => "Endereço excluído!"], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+}

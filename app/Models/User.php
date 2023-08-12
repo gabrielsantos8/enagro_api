@@ -17,6 +17,11 @@ class User extends Authenticatable
         return $this->belongsTo(UserType::class);
     }
 
+    public function userAddress()
+    {
+        return $this->belongsTo(UserAddress::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
