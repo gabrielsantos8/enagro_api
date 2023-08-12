@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use Illuminate\Http\Request;
@@ -36,4 +38,20 @@ Route::prefix('user')->group(function () {
     Route::get('/show/{id}', [UserController::class, 'show']);
     Route::post('/update', [UserController::class, 'update']);
     Route::post('/destroy', [UserController::class, 'destroy']);
+});
+
+Route::prefix('city')->group(function () {
+    Route::post('/store', [CityController::class, 'store']);
+    Route::get('/', [CityController::class, 'list']);
+    Route::get('/show/{id}', [CityController::class, 'show']);
+    Route::post('/update', [CityController::class, 'update']);
+    Route::post('/destroy', [CityController::class, 'destroy']);
+});
+
+Route::prefix('user_address')->group(function () {
+    Route::post('/store', [UserAddressController::class, 'store']);
+    Route::get('/', [UserAddressController::class, 'list']);
+    Route::get('/show/{id}', [UserAddressController::class, 'show']);
+    Route::post('/update', [UserAddressController::class, 'update']);
+    Route::post('/destroy', [UserAddressController::class, 'destroy']);
 });
