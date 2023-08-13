@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPhoneController;
 use App\Http\Controllers\UserTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,4 +56,13 @@ Route::prefix('user_address')->group(function () {
     Route::post('/update', [UserAddressController::class, 'update']);
     Route::post('/destroy', [UserAddressController::class, 'destroy']);
     Route::get('/getByUser/{id}', [UserAddressController::class, 'getByUser']);
+});
+
+Route::prefix('user_phone')->group(function () {
+    Route::post('/store', [UserPhoneController::class, 'store']);
+    Route::get('/', [UserPhoneController::class, 'list']);
+    Route::get('/show/{id}', [UserPhoneController::class, 'show']);
+    Route::post('/update', [UserPhoneController::class, 'update']);
+    Route::post('/destroy', [UserPhoneController::class, 'destroy']);
+    Route::get('/getByUser/{id}', [UserPhoneController::class, 'getByUser']);
 });

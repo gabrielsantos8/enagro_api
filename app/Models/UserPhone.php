@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAddress extends Model
+class UserPhone extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['complemento', 'city_id', 'user_id'];
+    protected $fillable = ['ddd', 'number', 'user_id'];
 
     public function users() {
         return $this->hasMany(User::class);
