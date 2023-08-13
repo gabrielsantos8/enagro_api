@@ -54,4 +54,5 @@ Route::prefix('user_address')->group(function () {
     Route::get('/show/{id}', [UserAddressController::class, 'show']);
     Route::post('/update', [UserAddressController::class, 'update']);
     Route::post('/destroy', [UserAddressController::class, 'destroy']);
+    Route::get('/getByUser/{id}', [UserAddressController::class, 'getByUser']);
 });
