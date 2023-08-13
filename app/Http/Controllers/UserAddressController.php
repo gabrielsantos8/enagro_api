@@ -69,6 +69,12 @@ class UserAddressController extends Controller
         }
     }
 
+    public function getByUser(int $id)
+    {
+       $userAddresses = $this->getBy('user_id', $id);
+       return response()->json(['success' => true, 'message' => "", "dados" => $userAddresses], count($userAddresses) >= 1 ? 200 : 404);
+    }
+
     public function getBy(string $field, $value)
     {
         $userAddress = DB::table('user_addresses')
