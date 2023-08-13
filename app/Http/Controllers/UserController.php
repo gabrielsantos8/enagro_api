@@ -16,12 +16,13 @@ class UserController extends Controller
         $userAddressController = new UserAddressController;
 
         $users = DB::table('users')
-        ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-        ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
-        ->get();
+            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->join('user_phones', 'user_phones.user_id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->get();
 
         foreach ($users as $key => $value) {
-            $users[$key]->addresses = $userAddressController->getBy('user_id', $users[$key]->id);            
+            $users[$key]->addresses = $userAddressController->getBy('user_id', $users[$key]->id);
         }
 
         return response()->json(['success' => true, 'message' => "", "dados" => $users], 200);
@@ -32,13 +33,14 @@ class UserController extends Controller
         $userAddressController = new UserAddressController;
 
         $user = DB::table('users')
-        ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-        ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
-        ->where([['users.id', '=', $id]])
-        ->get();
+            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->join('user_phones', 'user_phones.user_id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->where([['users.id', '=', $id]])
+            ->get();
 
         foreach ($user as $key => $value) {
-            $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);            
+            $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);
         }
 
         return response()->json(['success' => true, 'message' => !empty($user) ? "" : "Usuário não encontrado!", "dados" => $user], !empty($user) ? 200 : 404);
