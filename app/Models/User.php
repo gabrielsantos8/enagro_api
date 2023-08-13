@@ -19,7 +19,12 @@ class User extends Authenticatable
 
     public function userAddresses()
     {
-        return $this->belongsTo(UserAddress::class);
+        return $this->hasMany(UserAddress::class);
+    }
+
+    public function userPhones()
+    {
+        return $this->belongsTo(UserPhone::class);
     }
 
     /**
