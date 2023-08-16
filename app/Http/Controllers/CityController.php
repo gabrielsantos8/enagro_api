@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CityController extends Controller
 {
@@ -56,5 +57,17 @@ class CityController extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function getUfs()
+    {
+        $ufs = DB::table('cities')->select('uf')->groupBy('uf')->get();
+        return response()->json(['success' => true, 'message' => '', 'dados' => $ufs], 200);
+    }
+
+    public function getCities(string $uf)
+    {
+        $cities = DB::table('cities')->select(['cities.id', 'cities.description'])->where('uf', '=', $uf)->get();
+        return response()->json(['success' => true, 'message' => '', 'dados' => $cities], 200);
     }
 }

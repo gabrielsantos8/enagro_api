@@ -47,6 +47,8 @@ Route::prefix('city')->group(function () {
     Route::get('/show/{id}', [CityController::class, 'show']);
     Route::post('/update', [CityController::class, 'update']);
     Route::post('/destroy', [CityController::class, 'destroy']);
+    Route::get('/getUfs', [CityController::class, 'getUfs']);
+    Route::get('/getCities/{uf}', [CityController::class, 'getCities']);
 });
 
 Route::prefix('user_address')->group(function () {
