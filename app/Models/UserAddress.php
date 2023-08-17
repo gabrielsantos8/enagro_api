@@ -9,7 +9,7 @@ class UserAddress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['complemento', 'city_id', 'user_id'];
+    protected $fillable = ['complement', 'city_id', 'user_id'];
 
     public function users() {
         return $this->hasMany(User::class);
