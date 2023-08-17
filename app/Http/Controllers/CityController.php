@@ -68,6 +68,7 @@ class CityController extends Controller
     public function getCities(string $uf)
     {
         $cities = DB::table('cities')->select(['cities.id', 'cities.description'])->where('uf', '=', $uf)->get();
-        return response()->json(['success' => true, 'message' => '', 'dados' => $cities], 200);
+        $cities[] = ['id' => 0, 'description' => 'Selecione'];
+        return response()->json(['success' => true, 'message' => '', 'dados' =>  $cities], 200);
     }
 }
