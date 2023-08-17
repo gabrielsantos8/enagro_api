@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,3 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/', [LoginController::class, 'index']);
+
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.logar');
