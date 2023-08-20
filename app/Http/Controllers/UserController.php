@@ -18,7 +18,7 @@ class UserController extends Controller
         $users = DB::table('users')
             ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->join('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
             ->get();
 
         foreach ($users as $key => $value) {
@@ -35,7 +35,7 @@ class UserController extends Controller
         $user = DB::table('users')
             ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->join('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
             ->where([['users.id', '=', $id]])
             ->get();
 
@@ -66,6 +66,41 @@ class UserController extends Controller
             return response()->json(['success' => true, 'message' => "Usuário excluído!"], 200);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getImage(int $id)
+    {
+        try {
+            $user = User::find($id);
+            if (!empty($user->image_url)) {
+                return response()->json(['success' => true, 'message' => "", 'image_url' => $user->image_url], 200);
+            }
+            return response()->json(['success' => false, 'message' => "Nenhuma imagem encontrada"], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
+        }
+    }
+
+    public function removeImage(int $id)
+    {
+        try {
+            $user = User::find($id);
+            $user->update(['image_url' => null]);
+            return response()->json(['success' => true, 'message' => ""], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
+        }
+    }
+
+    public function sendImage(Request $request)
+    {
+        $fileCtrl = new FileUploadController();
+        try {
+            $fileCtrl->upload($request);
+            return response()->json(['success' => true, 'message' => ""], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
         }
     }
 }
