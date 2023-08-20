@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPhoneController;
@@ -39,6 +40,9 @@ Route::prefix('user')->group(function () {
     Route::get('/show/{id}', [UserController::class, 'show']);
     Route::post('/update', [UserController::class, 'update']);
     Route::post('/destroy', [UserController::class, 'destroy']);
+    Route::get('/getImage/{id}', [UserController::class, 'getImage']);
+    Route::get('/removeImage/{id}', [UserController::class, 'removeImage']);
+    Route::post('/sendImage', [UserController::class, 'sendImage']);
 });
 
 Route::prefix('city')->group(function () {
@@ -67,4 +71,9 @@ Route::prefix('user_phone')->group(function () {
     Route::post('/update', [UserPhoneController::class, 'update']);
     Route::post('/destroy', [UserPhoneController::class, 'destroy']);
     Route::get('/getByUser/{id}', [UserPhoneController::class, 'getByUser']);
+});
+
+
+Route::prefix('archives')->group(function () {
+    Route::post('/upload', [FileUploadController::class, 'upload']);
 });
