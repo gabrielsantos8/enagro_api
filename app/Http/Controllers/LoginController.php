@@ -31,7 +31,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $user = User::where('email', '=', $credentials['email'])->get();
-            return view('/');
+            return view('home.home');
         }
         return view('login.index', ['msg' => "Usuário não autenticado!"]);
     }

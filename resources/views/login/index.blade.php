@@ -24,11 +24,11 @@
                 <div class="form-floating mb-3">
                     @method('POST')
                     @csrf
-                  <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
+                  <input type="email" name="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com">
                   <label for="floatingInput">Endereço de Email</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
+                  <input type="password" name="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
                   <label for="floatingPassword">Senha</label>
                 </div>
                 <button class="w-100 mb-2 btn btn-lg rounded-3 text-white" value="Entrar" style="background-color: #009632;" type="submit">Entrar</button>
