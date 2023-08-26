@@ -7,6 +7,7 @@ use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPhoneController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\VeterinarianController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,4 +77,12 @@ Route::prefix('user_phone')->group(function () {
 
 Route::prefix('archives')->group(function () {
     Route::post('/upload', [FileUploadController::class, 'upload']);
+});
+
+Route::prefix('veterinarian')->group(function () {
+    Route::post('/store', [VeterinarianController::class, 'store']);
+    Route::get('/show/{id}', [VeterinarianController::class, 'show']);
+    Route::get('/', [VeterinarianController::class, 'list']);
+    Route::post('/update', [VeterinarianController::class, 'update']);
+    Route::post('/destroy', [VeterinarianController::class, 'destroy']);
 });

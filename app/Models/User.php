@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->belongsTo(UserPhone::class);
     }
 
+    public function veterinarian()
+    {
+        return $this->belongsTo(Veterinarian::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
