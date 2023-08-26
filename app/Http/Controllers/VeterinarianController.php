@@ -26,7 +26,7 @@ class VeterinarianController extends Controller
     {
         try {
             $crmvService = new CrmvController();
-            $data    = $crmvService->validate($request->uf, $request->name, $request->crmv, $request->idcrmv);
+            $data = $crmvService->validate($request->uf, $request->name, $request->crmv, $request->idcrmv);
             if (!empty($data)) {
                 $veterinarian = new Veterinarian();
                 $veterinarian->id_pf_inscricao = $data->id_pf_inscricao;
@@ -78,5 +78,21 @@ class VeterinarianController extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function getByUser(int $id)
+    {
+       $veterinarian = $this->getBy('user_id', $id);
+       return response()->json(['success' => true, 'message' => "", "dados" => $veterinarian], count($veterinarian) >= 1 ? 200 : 404);
+    }
+
+    public function getBy(string $field, $value)
+    {
+        $veterinarian = DB::table('veterinarians')
+        ->join('users', 'users.id', '=', 'veterinarians.user_id')
+        ->select('veterinarians.*', 'users.name as user')
+        ->where('veterinarians.'.$field, '=', $value)
+        ->get();
+        return $veterinarian;
     }
 }
