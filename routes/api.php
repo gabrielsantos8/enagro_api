@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPhoneController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VeterinarianController;
+use App\Models\Veterinarian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -85,4 +86,5 @@ Route::prefix('veterinarian')->group(function () {
     Route::get('/', [VeterinarianController::class, 'list']);
     Route::post('/update', [VeterinarianController::class, 'update']);
     Route::post('/destroy', [VeterinarianController::class, 'destroy']);
+    Route::get('/getByUser/{id}', [VeterinarianController::class, 'getByUser']);
 });
