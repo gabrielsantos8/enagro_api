@@ -81,4 +81,8 @@ Route::prefix('archives')->group(function () {
 
 Route::prefix('veterinarian')->group(function () {
     Route::post('/store', [VeterinarianController::class, 'store']);
+    Route::get('/show/{id}', [VeterinarianController::class, 'show']);
+    Route::get('/', [VeterinarianController::class, 'list']);
+    Route::post('/update', [VeterinarianController::class, 'update']);
+    Route::post('/destroy', [VeterinarianController::class, 'destroy']);
 });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_pf_inscricao')->unique();
             $table->integer('pf_inscricao')->unique();
-            $table->integer('pf_uf');
+            $table->string('pf_uf');
             $table->string('nome');
             $table->string('nome_social');
             $table->integer('atuante');
