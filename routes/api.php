@@ -3,11 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\ServiceCityController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPhoneController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VeterinarianController;
+use App\Models\ServiceCity;
 use App\Models\Veterinarian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -87,4 +89,14 @@ Route::prefix('veterinarian')->group(function () {
     Route::post('/update', [VeterinarianController::class, 'update']);
     Route::post('/destroy', [VeterinarianController::class, 'destroy']);
     Route::get('/getByUser/{id}', [VeterinarianController::class, 'getByUser']);
+});
+
+Route::prefix('service_city')->group(function () {
+    Route::post('/store', [ServiceCityController::class, 'store']);
+    Route::get('/show/{id}', [ServiceCityController::class, 'show']);
+    Route::get('/', [ServiceCityController::class, 'list']);
+    Route::post('/update', [ServiceCityController::class, 'update']);
+    Route::post('/destroy', [ServiceCityController::class, 'destroy']);
+    Route::get('/getByVeterinarian/{id}', [ServiceCityController::class, 'getByVeterinarian']);
+    Route::get('/getByUf/{id}/{uf}', [ServiceCityController::class, 'getByUf']);
 });
