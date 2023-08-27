@@ -98,4 +98,5 @@ Route::prefix('service_city')->group(function () {
     Route::post('/update', [ServiceCityController::class, 'update']);
     Route::post('/destroy', [ServiceCityController::class, 'destroy']);
     Route::get('/getByVeterinarian/{id}', [ServiceCityController::class, 'getByVeterinarian']);
+    Route::get('/getByUf/{id}/{uf}', [ServiceCityController::class, 'getByUf']);
 });
