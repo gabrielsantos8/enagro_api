@@ -19,7 +19,7 @@ class LoginController extends Controller
         // $user->save();
 
         if (Auth::check()) {
-            return redirect()->route('/');
+            return view('home.home');
         } else {
             return view('login.index');
         }
