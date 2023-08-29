@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimalTypeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\FileUploadController;
@@ -9,9 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPhoneController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VeterinarianController;
-use App\Models\ServiceCity;
-use App\Models\Veterinarian;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -99,4 +97,12 @@ Route::prefix('service_city')->group(function () {
     Route::post('/destroy', [ServiceCityController::class, 'destroy']);
     Route::get('/getByVeterinarian/{id}', [ServiceCityController::class, 'getByVeterinarian']);
     Route::get('/getByUf/{id}/{uf}', [ServiceCityController::class, 'getByUf']);
+});
+
+Route::prefix('animal_type')->group(function () {
+    Route::get('/', [AnimalTypeController::class, 'list']);
+    Route::post('/store', [AnimalTypeController::class, 'store']);
+    Route::post('/update', [AnimalTypeController::class, 'update']);
+    Route::post('/destroy', [AnimalTypeController::class, 'destroy']);
+    Route::get('/show/{id}', [AnimalTypeController::class, 'show']);
 });
