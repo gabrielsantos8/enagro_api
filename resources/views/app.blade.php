@@ -24,7 +24,7 @@
         <nav class="nav">
             <div>
                 <a href="/cows" class="nav_logo"> <i class='bx bx-refresh nav_logo-icon'></i><span
-                        class="nav_logo-name"><img src="{{ asset('img/logo_enagro_admin_white.png') }}" style="width: 30%"></span></a>
+                        class="nav_logo-name"><img src="{{ asset('img/logo_enagro_white.png') }}" style="width: 30%"></span></a>
                 <div class="nav_list">
                     {{-- <a href="{{ route('cows.create') }}" class="nav_link @yield('manClass')"> <i class='bx bx-slider-alt nav_icon'></i> --}}
 
