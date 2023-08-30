@@ -19,7 +19,7 @@ class LoginController extends Controller
         // $user->save();
 
         if (Auth::check()) {
-            return redirect()->route('/');
+            return view('home.home');
         } else {
             return view('login.index');
         }
@@ -30,8 +30,8 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            $user = User::where('email', '=', $credentials['email'])->get();
-            return view('home.home');
+            $user = User::where('email', '=', $credentials['email'])->get();  
+            return view('home.home', ['user' => $user[0]]);
         }
         return view('login.index', ['msg' => "Usuário não autenticado!"]);
     }
