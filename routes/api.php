@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalTypeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
@@ -105,4 +106,14 @@ Route::prefix('animal_type')->group(function () {
     Route::post('/update', [AnimalTypeController::class, 'update']);
     Route::post('/destroy', [AnimalTypeController::class, 'destroy']);
     Route::get('/show/{id}', [AnimalTypeController::class, 'show']);
+});
+
+
+Route::prefix('animal')->group(function () {
+    Route::get('/', [AnimalController::class, 'list']);
+    Route::post('/store', [AnimalController::class, 'store']);
+    Route::post('/update', [AnimalController::class, 'update']);
+    Route::post('/destroy', [AnimalController::class, 'destroy']);
+    Route::get('/show/{id}', [AnimalController::class, 'show']);
+    Route::get('/getByUser/{id}', [AnimalController::class, 'getByUser']);
 });
