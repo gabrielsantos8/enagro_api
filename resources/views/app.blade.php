@@ -12,6 +12,8 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <link rel="icon" href="{{ asset('img/icone_enagro.png') }}" type="image/x-icon">
 </head>
 
 <body id="body-pd">
@@ -40,7 +42,39 @@
 
                     <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-donate-heart nav_icon'></i>
                         <span class="nav_name">Veterinários</span> </a>
+
+                    
+                    <hr style="color: #fff">
+
+                    <div class="nav_link d-flex" style="color: white"> 
+                        <i class='bx bx-user-circle bx-sm nav_icon'></i>
+                        <span>{{ $user->name }}</span>           
+                        <form action="{{ route('login.sair') }}">
+                            <button class="btn btn-link ms-auto" type="submit">
+                                <i class="logoutBtn bx bx-log-out bx-rotate-180 bx-sm"></i>
+                            </button>
+                        </form>
+                    
+                    </div>
+
+
+                        {{-- <div class="cardLogin card d-flex flex-row align-items-center">
+                            <i class="userIcon bx bx-user-circle bx-sm"></i>
+                            <span>{{ $user->name }}</span>
+                            <form action="{{ route('login.sair') }}">
+                                <button class="btn btn-link ms-auto" type="submit">
+                                    <i class="logoutBtn bx bx-log-out bx-rotate-180"></i>
+                                </button>
+                            </form> 
+                        </div> --}}
+
+
                 </div>
+
+                
+
+                
+
             </div>
         </nav>
     </div>

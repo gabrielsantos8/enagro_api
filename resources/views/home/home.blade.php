@@ -1,7 +1,7 @@
 @extends('app')
-@section('title', 'Vacas')
+@section('title', 'Enagro Admin')
 @section('manClass', '')
-@section('relClass', 'active')
+@section('relClass', '')
 
 
 @section('content')
@@ -33,7 +33,7 @@
                     <th scope="row">
                         <div class="btn-group" role="group" aria-label="Botões">
                             {{-- <a class="botao-default" href="{{ route('cows.edit', $cow->id) }}"><i --}}
-                                    class='bx bx-show-alt'></i></a>
+                                    {{-- class='bx bx-show-alt'></i></a> --}}
                             {{-- <form action="{{ route('cows.destroy', $cow) }}" method="POST"> --}}
                                 @method('DELETE')
                                 @csrf

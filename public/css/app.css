@@ -3,8 +3,8 @@
     --header-height: 3rem;
     --nav-width: 68px;
     --first-color: #009632;
-    --first-color-light: #afa5d9;
-    --white-color: #f7f6fb;
+    --first-color-light: #ffffff;
+    --white-color: #ffffff;
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
@@ -101,8 +101,9 @@ a {
     transition: 0.3s;
 }
 .nav_link:hover {
-    color: var(--white-color);
+    color: rgb(188, 188, 188);
 }
+
 .nav_icon {
     font-size: 1.25rem;
 }
@@ -180,4 +181,17 @@ a {
     margin: 0 5px 0 5px;
     border: none;
     border-radius: 5px;
+}
+
+.cardLogin {
+    background-color: #009632;
+    border: 0;
+}
+
+.userIcon{
+    color: white;
+}
+
+.logoutBtn {
+    color: white;
 }

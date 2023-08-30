@@ -20,3 +20,5 @@ Route::get('/', [LoginController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login.logar');
+
+Route::get('/sair', [LoginController::class, 'logout'])->name('login.sair');
