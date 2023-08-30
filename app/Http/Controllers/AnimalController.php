@@ -90,4 +90,16 @@ class AnimalController extends Controller
             ->get();
         return $animal;
     }
+
+
+    public function sendImage(Request $request)
+    {
+        $fileCtrl = new FileUploadController();
+        try {
+            $fileCtrl->uploadAnimal($request);
+            return response()->json(['success' => true, 'message' => ""], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
+        }
+    }
 }
