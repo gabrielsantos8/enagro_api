@@ -33,7 +33,7 @@ class VeterinarianController extends Controller
                 $veterinarian->pf_inscricao = $data->pf_inscricao;
                 $veterinarian->pf_uf = $data->pf_uf;
                 $veterinarian->nome = $data->nome;
-                $veterinarian->nome_social = $data->nome_social;
+                $veterinarian->nome_social = $data->nome_social ?? '';
                 $veterinarian->atuante = $data->atuante ? 1 : 0;
                 $veterinarian->user_id = $request->user_id;
                 if ($veterinarian->save()) {
