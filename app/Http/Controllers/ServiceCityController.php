@@ -77,7 +77,7 @@ class ServiceCityController extends Controller
     {
         $query = "SELECT c.id as city_id, c.description as city, c.uf, ? as veterinarian_id FROM cities c WHERE c.uf = ? AND NOT EXISTS (select 1 from service_cities sc where sc.veterinarian_id = ? and sc.city_id = c.id)";
         $serviceCities = DB::select($query, [$id, $uf, $id]);
-        return response()->json(['success' => true, 'message' => "", "dados" => $serviceCities], count($serviceCities) >= 1 ? 200 : 404);
+        echo json_encode(['success' => true, 'message' => "", "dados" => $serviceCities]);
     }
 
     public function getBy(string $table, string $field, $value)
