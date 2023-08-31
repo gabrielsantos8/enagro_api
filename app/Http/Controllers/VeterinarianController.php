@@ -29,8 +29,8 @@ class VeterinarianController extends Controller
             $data = $crmvService->validate($request->uf, $request->name, $request->crmv, $request->idcrmv);
             if (!empty($data)) {
                 $veterinarian = new Veterinarian();
-                $veterinarian->id_pf_inscricao = $data->id_pf_inscricao;
-                $veterinarian->pf_inscricao = $data->pf_inscricao;
+                $veterinarian->id_pf_inscricao = intval($data->id_pf_inscricao);
+                $veterinarian->pf_inscricao = intval($data->pf_inscricao);
                 $veterinarian->pf_uf = $data->pf_uf;
                 $veterinarian->nome = $data->nome;
                 $veterinarian->nome_social = $data->nome_social ?? '';
