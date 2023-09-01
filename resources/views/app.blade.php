@@ -23,31 +23,34 @@
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="/cows" class="nav_logo"> <i class='bx bx-refresh nav_logo-icon'></i><span
+                <a href="/cows" class="nav_logo"> <i class='fa-solid fa-arrows-rotate fa-spin nav_logo-icon'></i><span
                         class="nav_logo-name"><img src="{{ asset('img/logo_enagro_white.png') }}" style="width: 30%"></span></a>
                 <div class="nav_list">
                     {{-- <a href="{{ route('cows.create') }}" class="nav_link @yield('manClass')"> <i class='bx bx-slider-alt nav_icon'></i> --}}
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-user nav_icon'></i>
+                    <a href="" class="nav_link @yield('relClass')"> <i class='fa fa-users nav_icon'></i>
                         <span class="nav_name">Usuários</span> </a>
+
+                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
+                        <span class="nav_name">Animais</span> </a>
 
                     <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-plus-medical nav_icon'></i>
                         <span class="nav_name">Planos de Saúde</span> </a>
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-lock-alt nav_icon'></i>
+                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-lock nav_icon'></i>
                         <span class="nav_name">Seguros</span> </a>
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-briefcase-alt-2 nav_icon'></i>
+                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-briefcase nav_icon'></i>
                         <span class="nav_name">Serviços Avulsos</span> </a>
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-donate-heart nav_icon'></i>
+                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-stethoscope nav_icon'></i>
                         <span class="nav_name">Veterinários</span> </a>
 
                     
                     <hr style="color: #fff">
 
                     <div class="nav_link d-flex" style="color: white"> 
-                        <i class='bx bx-user-circle bx-sm nav_icon'></i>
+                        <i class='fa fa-user-circle bx-sm nav_icon'></i>
                         <span>{{ $user->name }}</span>           
                         <form action="{{ route('login.sair') }}">
                             <button class="btn btn-link ms-auto" type="submit">
