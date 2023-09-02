@@ -15,7 +15,7 @@ class AnimalController extends Controller
             ->join('animal_types', 'animals.animal_type_id', '=', 'animal_types.id')
             ->join('user_addresses', 'animals.user_address_id', '=', 'user_addresses.id')
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
-            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.description as city', 'cities.uf', 'cities.ibge')
+            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
             ->get();
         return response()->json(['success' => true, 'message' => "", "dados" => $animal], 200);
     }
@@ -26,7 +26,7 @@ class AnimalController extends Controller
             ->join('animal_types', 'animals.animal_type_id', '=', 'animal_types.id')
             ->join('user_addresses', 'animals.user_address_id', '=', 'user_addresses.id')
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
-            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.description as city', 'cities.uf', 'cities.ibge')
+            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
             ->where('animals.id', '=', $id)
             ->get();
         return response()->json(['success' => true, 'message' => "", "dados" => $animal], !empty($animal) ? 200 : 404);
@@ -85,7 +85,7 @@ class AnimalController extends Controller
             ->join('animal_types', 'animals.animal_type_id', '=', 'animal_types.id')
             ->join('user_addresses', 'animals.user_address_id', '=', 'user_addresses.id')
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
-            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.description as city', 'cities.uf', 'cities.ibge')
+            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
             ->where($table . '.' . $field, '=', $value)
             ->get();
         return $animal;
