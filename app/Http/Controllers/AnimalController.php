@@ -87,6 +87,8 @@ class AnimalController extends Controller
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
             ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
             ->where($table . '.' . $field, '=', $value)
+            ->orderBy('user_addresses.id')
+            ->orderBy('animals.name')
             ->get();
         return $animal;
     }
