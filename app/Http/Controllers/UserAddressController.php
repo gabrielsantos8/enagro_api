@@ -71,8 +71,31 @@ class UserAddressController extends Controller
 
     public function getByUser(int $id)
     {
-       $userAddresses = $this->getBy('user_id', $id);
-       return response()->json(['success' => true, 'message' => "", "dados" => $userAddresses], count($userAddresses) >= 1 ? 200 : 404);
+        $userAddresses = $this->getBy('user_id', $id);
+        return response()->json(['success' => true, 'message' => "", "dados" => $userAddresses], count($userAddresses) >= 1 ? 200 : 404);
+    }
+
+    public function getComboByUser(int $id)
+    {
+        $query = "select 
+                     cast(ua.id as integer) as id 
+                    ,ua.complement
+                    ,c.description as city
+                    ,c.uf 
+                from user_addresses ua
+                left join cities c on c.id = ua.city_id
+                where ua.user_id = ?
+                
+                union all
+                
+                select
+                     0
+                    ,'' as complement
+                    ,'Selecione...' as city
+                    ,'' as uf
+       ";
+        $userAddresses = DB::select($query, [$id]);
+        return response()->json(['success' => true, 'message' => "", "dados" => $userAddresses], count($userAddresses) >= 1 ? 200 : 404);
     }
 
     public function getBy(string $field, $value)
@@ -81,7 +104,7 @@ class UserAddressController extends Controller
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
             ->join('users', 'user_addresses.user_id', '=', 'users.id')
             ->select('user_addresses.*', 'cities.description as city', 'cities.uf', 'cities.ibge', 'users.name as user')
-            ->where('user_addresses.'.$field, '=', $value)
+            ->where('user_addresses.' . $field, '=', $value)
             ->get();
         return $userAddress;
     }

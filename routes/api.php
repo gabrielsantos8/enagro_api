@@ -65,6 +65,7 @@ Route::prefix('user_address')->group(function () {
     Route::post('/update', [UserAddressController::class, 'update']);
     Route::post('/destroy', [UserAddressController::class, 'destroy']);
     Route::get('/getByUser/{id}', [UserAddressController::class, 'getByUser']);
+    Route::get('/getComboByUser/{id}', [UserAddressController::class, 'getComboByUser']);
 });
 
 Route::prefix('user_phone')->group(function () {
