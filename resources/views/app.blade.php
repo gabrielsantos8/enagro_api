@@ -1,3 +1,8 @@
+@php
+    $userName = explode(' ',$user->name)[0];
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -23,11 +28,11 @@
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="/cows" class="nav_logo"> <i class='fa-solid fa-arrows-rotate fa-spin nav_logo-icon'></i><span
+                <a href="/" class="nav_logo"> <i class='fa-solid fa-arrows-rotate fa-spin nav_logo-icon'></i><span
                         class="nav_logo-name"><img src="{{ asset('img/logo_enagro_white.png') }}" style="width: 30%"></span></a>
                 <div class="nav_list">
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='fa fa-users nav_icon'></i>
+                    <a id="usuarios" href="{{route('user.index')}}" class="nav_link"> <i class='fa fa-users nav_icon'></i>
                         <span class="nav_name">Usuários</span>
                     </a>
 
@@ -56,7 +61,7 @@
 
                     <div class="nav_link d-flex" style="color: white"> 
                         <i class='fa fa-user-circle bx-sm nav_icon'></i>
-                        <span>{{ $user->name }}</span>           
+                        <span>{{ $userName }}</span>           
                         <form action="{{ route('login.sair') }}">
                             <button class="btn btn-link ms-auto" type="submit">
                                 <i class="logoutBtn bx bx-log-out bx-rotate-180 bx-sm"></i>
