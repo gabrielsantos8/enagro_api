@@ -26,10 +26,15 @@
                 <a href="/cows" class="nav_logo"> <i class='fa-solid fa-arrows-rotate fa-spin nav_logo-icon'></i><span
                         class="nav_logo-name"><img src="{{ asset('img/logo_enagro_white.png') }}" style="width: 30%"></span></a>
                 <div class="nav_list">
-                    {{-- <a href="{{ route('cows.create') }}" class="nav_link @yield('manClass')"> <i class='bx bx-slider-alt nav_icon'></i> --}}
 
                     <a href="" class="nav_link @yield('relClass')"> <i class='fa fa-users nav_icon'></i>
-                        <span class="nav_name">Usuários</span> </a>
+                        <span class="nav_name">Usuários</span>
+                    </a>
+
+                    <a id="tipUsuarios" href="{{route('user_type.index')}}" class="nav_link"><i class="fas fa-user"></i>
+                        <span class="nav_name">Tipos de Usuários</span> 
+                    </a>
+    
 
                     <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
                         <span class="nav_name">Animais</span> </a>
@@ -87,6 +92,10 @@
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        var menuAtivo = @yield('menuAtivo');
+        menuAtivo.classList.add('active');
+    </script>
 </body>
 
 </html>
