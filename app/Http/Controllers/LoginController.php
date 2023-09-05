@@ -19,7 +19,7 @@ class LoginController extends Controller
         // $user->save();
 
         if (Auth::check()) {
-            return view('home.home');
+            return redirect('/');
         } else {
             return view('login.index');
         }
@@ -38,7 +38,7 @@ class LoginController extends Controller
 
     public function logout() {
         Auth::logout();
-        return redirect('/');
+        return redirect('/login');
     }
 
     public function cadastrar() {

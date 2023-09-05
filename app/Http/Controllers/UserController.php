@@ -6,19 +6,24 @@ use App\Models\User;
 use App\Models\UserAddress;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+
+    public function index() {
+        return view('user.index', ['user' => Auth::user(), 'dados' => $this->list()->getData()->dados]);
+    }
 
     public function list()
     {
         $userAddressController = new UserAddressController;
 
         $users = DB::table('users')
-            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-            ->join('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->leftJoin('user_phones', 'user_phones.user_id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'users.updated_at', 'users.created_at', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
             ->get();
 
         foreach ($users as $key => $value) {
@@ -33,8 +38,8 @@ class UserController extends Controller
         $userAddressController = new UserAddressController;
 
         $user = DB::table('users')
-            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-            ->join('user_phones', 'user_phones.user_id', '=', 'users.id')
+            ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->leftJoin('user_phones', 'user_phones.user_id', '=', 'users.id')
             ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
             ->where([['users.id', '=', $id]])
             ->get();

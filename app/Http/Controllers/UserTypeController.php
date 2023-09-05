@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\UserType;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserTypeController extends Controller
 {
 
+
+    public function index()
+    {
+        $dados = $this->list()->getData()->dados;
+        return view('user_type.index', ['dados' => $dados, 'user' => Auth::user()]);
+    }
 
     public function list()
     {
