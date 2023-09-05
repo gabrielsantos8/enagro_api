@@ -92,7 +92,30 @@ class AnimalController extends Controller
             ->get();
         return $animal;
     }
+    
+    public function getImage(int $id)
+    {
+        try {
+            $animal = Animal::find($id);
+            if (!empty($animal->img_url)) {
+                return response()->json(['success' => true, 'message' => "", 'img_url' => $animal->img_url], 200);
+            }
+            return response()->json(['success' => false, 'message' => "Nenhuma imagem encontrada"], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
+        }
+    }
 
+    public function removeImage(int $id)
+    {
+        try {
+            $animal = Animal::find($id);
+            $animal->update(['img_url' => null]);
+            return response()->json(['success' => true, 'message' => ""], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
+        }
+    }
 
     public function sendImage(Request $request)
     {

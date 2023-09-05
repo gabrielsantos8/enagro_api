@@ -117,5 +117,7 @@ Route::prefix('animal')->group(function () {
     Route::post('/destroy', [AnimalController::class, 'destroy']);
     Route::get('/show/{id}', [AnimalController::class, 'show']);
     Route::get('/getByUser/{id}', [AnimalController::class, 'getByUser']);
+    Route::get('/getImage/{id}', [AnimalController::class, 'getImage']);
+    Route::get('/removeImage/{id}', [AnimalController::class, 'removeImage']);
     Route::post('/sendImage', [AnimalController::class, 'sendImage']);
 });
