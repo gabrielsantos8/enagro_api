@@ -45,6 +45,14 @@ class UserTypeController extends Controller
         return view('user_type.edit', ['user' => Auth::user(), 'error' => $ret->message]);
     }
 
+    public function webDestroy(Request $req) {
+        $ret = $this->destroy($req)->getData();
+        if ($ret->success) {
+            return redirect('/user_type');
+        }
+        return view('user_type.index', ['user' => Auth::user(), 'error' => $ret->message]);
+    }
+
     public function list()
     {
         $user_types = UserType::all();
