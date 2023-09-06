@@ -195,3 +195,7 @@ a {
 .logoutBtn {
     color: white;
 }
+
+.error-message {
+    color: red;
+}
