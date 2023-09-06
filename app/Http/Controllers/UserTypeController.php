@@ -17,6 +17,20 @@ class UserTypeController extends Controller
         return view('user_type.index', ['dados' => $dados, 'user' => Auth::user()]);
     }
 
+    public function create()
+    {
+        return view('user_type.create', ['user' => Auth::user()]);
+    }
+
+    public function webStore(Request $req)
+    {
+        $ret = $this->store($req)->getData();
+        if ($ret->success) {
+            return redirect('/user_type');
+        }
+        return view('user_type.create', ['user' => Auth::user(), 'error' => $ret->message]);
+    }
+
     public function list()
     {
         $user_types = UserType::all();

@@ -91,7 +91,8 @@
             </div>
         </nav>
     </div>
-    <div class="height-100 bg-light">
+    <p class="error-message">@yield('error')</p>
+    <div class="height-100 bg-light p-4">
         @yield('content')
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
