@@ -42,6 +42,6 @@ Route::prefix('user_type')->middleware('auth')->group(function () {
     Route::get('/edit/{id}', [UserTypeController::class, 'edit'])->name('user_type.edit');
     Route::post('/store', [UserTypeController::class, 'webStore'])->name('user_type.store');
     Route::post('/update', [UserTypeController::class, 'webUpdate'])->name('user_type.update');
-    Route::post('/destroy', [UserTypeController::class, 'webDestroy'])->name('user_type.destroy');
+    Route::delete('/destroy', [UserTypeController::class, 'webDestroy'])->name('user_type.destroy');
     Route::get('/show/{id}', [UserTypeController::class, 'webShow'])->name('user_type.show');
 });

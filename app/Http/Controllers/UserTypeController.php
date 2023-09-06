@@ -22,6 +22,11 @@ class UserTypeController extends Controller
         return view('user_type.create', ['user' => Auth::user()]);
     }
 
+    public function edit(int $id) {
+        $usr_type = $this->show($id)->getData()->dados;
+        return view('user_type.edit', ['usr_type'=>$usr_type,'user' => Auth::user()]);
+    }
+
     public function webStore(Request $req)
     {
         $ret = $this->store($req)->getData();
@@ -29,6 +34,15 @@ class UserTypeController extends Controller
             return redirect('/user_type');
         }
         return view('user_type.create', ['user' => Auth::user(), 'error' => $ret->message]);
+    }
+
+    public function webUpdate(Request $req)
+    {
+        $ret = $this->update($req)->getData();
+        if ($ret->success) {
+            return redirect('/user_type');
+        }
+        return view('user_type.edit', ['user' => Auth::user(), 'error' => $ret->message]);
     }
 
     public function list()
