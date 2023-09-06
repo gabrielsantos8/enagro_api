@@ -23,12 +23,13 @@
                     <th scope="row">{{ $val->id }}</th>
                     <th scope="row">{{ $val->description }}</th>
                     <th scope="row">
-                        <form action="{{ route('user_type.destroy', $val->id) }}" method="POST">
+                        <form action="{{ route('user_type.destroy') }}" method="POST">
                             <div class="btn-group" role="group" aria-label="Botões">
                                 <a class="botao-default" href="{{ route('user_type.edit', $val->id) }}"><i
                                         class='bx bx-show-alt'></i></a>
-                                @method('DELETE')
+                                @method('POST')
                                 @csrf
+                                <input type="number" name="id" value="{{$val->id}}" hidden>
                                 <button class="botao-risco-default" type="submit"
                                     onclick="return confirm('Tem certeza que deseja apagar?')">
                                     <i class='bx bx-trash'></i>
