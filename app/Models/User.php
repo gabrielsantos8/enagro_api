@@ -24,7 +24,7 @@ class User extends Authenticatable
 
     public function userPhones()
     {
-        return $this->belongsTo(UserPhone::class);
+        return $this->hasMany(UserPhone::class);
     }
 
     public function veterinarian()

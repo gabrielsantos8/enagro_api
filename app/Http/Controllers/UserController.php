@@ -60,6 +60,11 @@ class UserController extends Controller implements WebInteface
 
     public function webDestroy(Request $req)
     {
+        $ret = $this->destroy($req)->getData();
+        if ($ret->success) {
+            return redirect('/user');
+        }
+        return view('user.index', ['dados' => $this->list()->getData()->dados,'user' => Auth::user(), 'error' => $ret->message]);
     }
 
     public function list()
