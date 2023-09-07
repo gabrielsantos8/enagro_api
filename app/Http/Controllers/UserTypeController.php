@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class UserTypeController extends Controller
 {
 
-
     public function index()
     {
         $dados = $this->list()->getData()->dados;
