@@ -31,9 +31,9 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/create', [UserController::class, 'create'])->name('user.create');
     Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/store', [UserController::class, 'webStore'])->name('user.store');
-    // Route::post('/update', [UserController::class, 'webUpdate'])->name('user.update');
-    // Route::post('/destroy', [UserController::class, 'webDestroy'])->name('user.destroy');
-    // Route::get('/show/{id}', [UserController::class, 'webShow'])->name('user.show');
+    Route::post('/update', [UserController::class, 'webUpdate'])->name('user.update');
+    Route::post('/destroy', [UserController::class, 'webDestroy'])->name('user.destroy');
+    Route::get('/show/{id}', [UserController::class, 'webShow'])->name('user.show');
 });
 
 Route::prefix('user_type')->middleware('auth')->group(function () {

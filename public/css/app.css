@@ -199,3 +199,11 @@ a {
 .error-message {
     color: red;
 }
+
+.img-selected {
+    padding: 10px;
+}
+
+.img-selected img{
+    width: 200px;
+}

@@ -49,7 +49,7 @@ class UserTypeController extends Controller
         if ($ret->success) {
             return redirect('/user_type');
         }
-        return view('user_type.index', ['user' => Auth::user(), 'error' => $ret->message]);
+        return view('user_type.index', ['dados' => $this->list()->getData()->dados, 'user' => Auth::user(), 'error' => $ret->message]);
     }
 
     public function list()

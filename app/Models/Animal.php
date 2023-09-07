@@ -10,4 +10,8 @@ class Animal extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'animal_type_id', 'img_url', 'user_address_id', 'birth_date'];
+
+    public function userAddress() {
+        return $this->belongsTo(UserAddress::class);
+    }
 }

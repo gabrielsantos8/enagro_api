@@ -27,6 +27,8 @@ class UserController extends Controller implements WebInteface
 
     public function edit(int $id)
     {
+        $user_types = UserType::all();
+        return view('user.edit', ['user' => Auth::user(), 'user_types' => $user_types, 'dados' => $this->show($id)->getData()->dados[0]]);
     }
 
     public function webStore(Request $req)
@@ -56,10 +58,43 @@ class UserController extends Controller implements WebInteface
 
     public function webUpdate(Request $req)
     {
+        $req->merge(['user_id' => $req->id]);
+
+        if ($req->password == '00000000') {
+            $newReq = $req->except('password');
+        }
+        $newReq = new Request($newReq);
+        $ret = $this->update($newReq)->getData();
+        if (!$ret->success) {
+            $user_types = UserType::all();
+            return view('user.edit', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+        }
+
+        if ($req->hasFile('foto_perfil')) {
+            $retEnv = $this->sendImage($req)->getData();
+            if (!$retEnv->success) {
+                $user_types = UserType::all();
+                return view('user.edit', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+            }
+        }
+
+        if (empty($req->user_phone_id)) {
+            UserPhone::create($req->except('id'));
+        } else {
+            UserPhone::find($req->user_phone_id)->update($req->except('id'));
+        }
+        
+
+        return redirect('/user');
     }
 
     public function webDestroy(Request $req)
     {
+        $ret = $this->destroy($req)->getData();
+        if ($ret->success) {
+            return redirect('/user');
+        }
+        return view('user.index', ['dados' => $this->list()->getData()->dados, 'user' => Auth::user(), 'error' => $ret->message]);
     }
 
     public function list()
@@ -69,7 +104,7 @@ class UserController extends Controller implements WebInteface
         $users = DB::table('users')
             ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->leftJoin('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'users.updated_at', 'users.created_at', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'users.updated_at', 'users.created_at', 'user_types.description as user_type', 'user_phones.id as user_phone_id', 'user_phones.ddd', 'user_phones.number')
             ->get();
 
         foreach ($users as $key => $value) {
@@ -86,7 +121,7 @@ class UserController extends Controller implements WebInteface
         $user = DB::table('users')
             ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->leftJoin('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.ddd', 'user_phones.number')
+            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.id as user_phone_id', 'user_phones.ddd', 'user_phones.number')
             ->where([['users.id', '=', $id]])
             ->get();
 

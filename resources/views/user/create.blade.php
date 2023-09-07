@@ -1,6 +1,7 @@
 @extends('app')
 @section('title', 'Cadastro de Usuários')
 @section('menuAtivo', 'usuarios')
+@section('error', isset($error) ? $error : '')
 @section('content')
 
     <h1>Usuário - Manutenção</h1>
@@ -32,11 +33,11 @@
                     <label for="ddd" class="form-label"><b>DDD:</b></label>
                     <input type="number" required name="ddd" max="99" id="ddd" class="form-control" placeholder="00">
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <label for="number" class="form-label"><b>Número Telefone:</b></label>
                     <input type="number" required name="number" max="999999999" id="number" class="form-control" placeholder="000000000">
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <label for="user_type_id" class="form-label"><b>Tipo:</b></label>
                     <select name="user_type_id" required class="form-control" id="user_type_id">
                         @foreach ($user_types as $type)

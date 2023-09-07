@@ -24,7 +24,7 @@ class User extends Authenticatable
 
     public function userPhones()
     {
-        return $this->belongsTo(UserPhone::class);
+        return $this->hasMany(UserPhone::class);
     }
 
     public function veterinarian()
@@ -42,7 +42,8 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type_id',
-        'image_url'
+        'image_url',
+        'password'
     ];
 
     /**

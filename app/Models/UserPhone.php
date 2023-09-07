@@ -11,7 +11,7 @@ class UserPhone extends Model
 
     protected $fillable = ['ddd', 'number', 'user_id'];
 
-    public function users() {
-        return $this->hasMany(User::class);
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

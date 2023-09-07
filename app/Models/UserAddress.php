@@ -11,7 +11,11 @@ class UserAddress extends Model
 
     protected $fillable = ['complement', 'city_id', 'user_id'];
 
-    public function users() {
-        return $this->hasMany(User::class);
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function animals() {
+        return $this->hasMany(Animal::class);
     }
 }
