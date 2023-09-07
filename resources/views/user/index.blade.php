@@ -1,12 +1,7 @@
-@php
-    // echo "<pre>";
-    // print_r($dados); die;
-@endphp
-
-
 @extends('app')
 @section('title', 'Enagro Admin')
 @section('menuAtivo', 'usuarios')
+@section('error', isset($error) ? $error : '')
 
 
 @section('content')
@@ -41,8 +36,8 @@
                     <th scope="row">{{ $val->user_type }}</th>
                     <th scope="row">
                         <div class="btn-group" role="group" aria-label="Botões">
-                            {{-- <a class="botao-default" href="{{ route('cows.edit', $cow->id) }}"><i --}}
-                            {{-- class='bx bx-show-alt'></i></a> --}}
+                            <a class="botao-default" href="{{ route('user.edit', $val->id) }}"><i
+                            class='bx bx-show-alt'></i></a>
                             <form action="{{ route('user.destroy') }}" method="POST">
                                 @method('POST')
                                 @csrf
