@@ -2,18 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\WebInteface;
 use App\Models\User;
-use App\Models\UserAddress;
+use App\Models\UserType;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class UserController extends Controller
+class UserController extends Controller implements WebInteface
 {
 
-    public function index() {
+    public function index()
+    {
         return view('user.index', ['user' => Auth::user(), 'dados' => $this->list()->getData()->dados]);
+    }
+
+    public function create()
+    {
+        $user_types = UserType::all();
+        return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types]);
+    }
+
+    public function edit(int $id)
+    {
+    }
+
+    public function webStore(Request $req)
+    {
+        $authController = new AuthController();
+        $ret = $authController->register($req)->getData();
+        if (!$ret->success) {
+            $user_types = UserType::all();
+            return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+        }
+        $req->merge(['user_id' => $ret->dados->id]);
+        $retEnv = $this->sendImage($req)->getData();
+        if (!$retEnv->success) {
+            $user_types = UserType::all();
+            return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+        }
+        return redirect('/user');
+    }
+
+
+    public function webUpdate(Request $req)
+    {
+    }
+
+    public function webDestroy(Request $req)
+    {
     }
 
     public function list()
