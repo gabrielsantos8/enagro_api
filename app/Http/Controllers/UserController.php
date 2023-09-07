@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Interfaces\WebInteface;
 use App\Models\User;
+use App\Models\UserPhone;
 use App\Models\UserType;
 use Exception;
 use Illuminate\Http\Request;
@@ -36,6 +37,13 @@ class UserController extends Controller implements WebInteface
             $user_types = UserType::all();
             return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
         }
+
+        UserPhone::create([
+            'user_id' => $ret->dados->id,
+            'ddd' => $req->ddd,
+            'number' => $req->number
+        ]);
+
         $req->merge(['user_id' => $ret->dados->id]);
         $retEnv = $this->sendImage($req)->getData();
         if (!$retEnv->success) {

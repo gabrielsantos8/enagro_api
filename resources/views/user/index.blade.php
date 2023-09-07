@@ -20,6 +20,7 @@
                 <th class="header-table-col-default" scope="col">ID</th>
                 <th class="header-table-col-default" scope="col">Nome</th>
                 <th class="header-table-col-default" scope="col">Email</th>
+                <th class="header-table-col-default" scope="col">Telefone</th>
                 <th class="header-table-col-default" scope="col">Senha </th>
                 <th class="header-table-col-default" scope="col">Data Criado</th>
                 <th class="header-table-col-default" scope="col">Data Atualizado</th>
@@ -33,6 +34,7 @@
                     <th scope="row">{{ $val->id }}</th>
                     <th scope="row">{{ $val->name }}</th>
                     <th scope="row">{{ $val->email }}</th>
+                    <th scope="row">{{ $val->ddd . ' - ' . $val->number }}</th>
                     <th scope="row">***********</th>
                     <th scope="row">{{ $val->created_at }}</th>
                     <th scope="row">{{ $val->updated_at }}</th>

@@ -16,7 +16,7 @@
                     <input type="text" required name="name" id="name" class="form-control">
                 </div>
                 <div class="col-4">
-                    <label for="email" class="form-label"><b>Email:</b></label>
+                    <label for="number" class="form-label"><b>Email:</b></label>
                     <input type="email" required name="email" id="email" class="form-control">
                 </div>
                 <div class="col-4">
@@ -28,7 +28,15 @@
 
         <div class="mb-3">
             <div class="row">
-                <div class="col-12">
+                <div class="col-2">
+                    <label for="ddd" class="form-label"><b>DDD:</b></label>
+                    <input type="number" required name="ddd" max="99" id="ddd" class="form-control" placeholder="00">
+                </div>
+                <div class="col-4">
+                    <label for="number" class="form-label"><b>Número Telefone:</b></label>
+                    <input type="number" required name="number" max="999999999" id="number" class="form-control" placeholder="000000000">
+                </div>
+                <div class="col-6">
                     <label for="user_type_id" class="form-label"><b>Tipo:</b></label>
                     <select name="user_type_id" required class="form-control" id="user_type_id">
                         @foreach ($user_types as $type)
@@ -43,7 +51,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="foto_perfil" class="form-label"><b>Imagem:</b></label>
-                    <input type="file" class="form-control" name="foto_perfil"/>
+                    <input type="file" class="form-control" name="foto_perfil" required/>
                 </div>
             </div>
         </div>
