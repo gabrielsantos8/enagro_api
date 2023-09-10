@@ -3,14 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\CrmvController;
+use App\Http\Interfaces\WebInteface;
 use App\Models\Veterinarian;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use PHPUnit\Framework\MockObject\Generator\DuplicateMethodException;
 
-class VeterinarianController extends Controller
+class VeterinarianController extends Controller implements WebInteface
 {
+
+    public function index() {
+        return view('veterinarian.index', ['dados' => $this->list()->getData()->dados]);
+    }
+
+    public function create() {
+
+    }
+
+    public function edit(int $id) {
+
+    }
+
+    public function webStore(Request $req) {
+
+    }
+
+    public function webUpdate(Request $req) {
+
+    }
+
+    public function webDestroy(Request $req) {
+
+    }
+
 
     public function list()
     {

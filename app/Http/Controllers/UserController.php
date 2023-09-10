@@ -16,19 +16,19 @@ class UserController extends Controller implements WebInteface
 
     public function index()
     {
-        return view('user.index', ['user' => Auth::user(), 'dados' => $this->list()->getData()->dados]);
+        return view('user.index', ['dados' => $this->list()->getData()->dados]);
     }
 
     public function create()
     {
         $user_types = UserType::all();
-        return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types]);
+        return view('user.create', ['user_types' => $user_types]);
     }
 
     public function edit(int $id)
     {
         $user_types = UserType::all();
-        return view('user.edit', ['user' => Auth::user(), 'user_types' => $user_types, 'dados' => $this->show($id)->getData()->dados[0]]);
+        return view('user.edit', [ 'user_types' => $user_types, 'dados' => $this->show($id)->getData()->dados[0]]);
     }
 
     public function webStore(Request $req)
@@ -37,7 +37,7 @@ class UserController extends Controller implements WebInteface
         $ret = $authController->register($req)->getData();
         if (!$ret->success) {
             $user_types = UserType::all();
-            return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+            return view('user.create', ['user_types' => $user_types, 'error' => $ret->message]);
         }
 
         UserPhone::create([
@@ -50,7 +50,7 @@ class UserController extends Controller implements WebInteface
         $retEnv = $this->sendImage($req)->getData();
         if (!$retEnv->success) {
             $user_types = UserType::all();
-            return view('user.create', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+            return view('user.create', ['user_types' => $user_types, 'error' => $ret->message]);
         }
         return redirect('/user');
     }
@@ -64,14 +64,14 @@ class UserController extends Controller implements WebInteface
         $ret = $this->update($newReq)->getData();
         if (!$ret->success) {
             $user_types = UserType::all();
-            return view('user.edit', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+            return view('user.edit', ['user_types' => $user_types, 'error' => $ret->message]);
         }
 
         if ($req->hasFile('foto_perfil')) {
             $retEnv = $this->sendImage($req)->getData();
             if (!$retEnv->success) {
                 $user_types = UserType::all();
-                return view('user.edit', ['user' => Auth::user(), 'user_types' => $user_types, 'error' => $ret->message]);
+                return view('user.edit', ['user_types' => $user_types, 'error' => $ret->message]);
             }
         }
 
@@ -91,7 +91,7 @@ class UserController extends Controller implements WebInteface
         if ($ret->success) {
             return redirect('/user');
         }
-        return view('user.index', ['dados' => $this->list()->getData()->dados, 'user' => Auth::user(), 'error' => $ret->message]);
+        return view('user.index', ['dados' => $this->list()->getData()->dados, 'error' => $ret->message]);
     }
 
     public function list()

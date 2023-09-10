@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Cadastro de Vacas')
+@section('title', 'Editar Tipos de Usuários')
 @section('menuAtivo', 'tipUsuarios')
 @section('error', isset($error) ? $error : '')
 @section('content')

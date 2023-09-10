@@ -1,6 +1,6 @@
 @extends('app')
-@section('title', 'Editar de usuários')
-@section('menuAtivo', 'usuarios')
+@section('title', 'Editar Veterinários')
+@section('menuAtivo', 'veterinarios')
 @section('error', isset($error) ? $error : '')
 @section('content')
 
