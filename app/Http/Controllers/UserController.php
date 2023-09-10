@@ -59,10 +59,7 @@ class UserController extends Controller implements WebInteface
     public function webUpdate(Request $req)
     {
         $req->merge(['user_id' => $req->id]);
-
-        if ($req->password == '00000000') {
-            $newReq = $req->except('password');
-        }
+        $newReq = $req->password == '00000000' ? $req->except('password') : $req->all();
         $newReq = new Request($newReq);
         $ret = $this->update($newReq)->getData();
         if (!$ret->success) {
