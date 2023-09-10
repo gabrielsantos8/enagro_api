@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 class VeterinarianController extends Controller implements WebInteface
 {
 
-    public function index($err = "") {
+    public function index($err = "")
+    {
         return view('veterinarian.index', ['dados' => $this->list()->getData()->dados, "error" => $err]);
     }
 
-    public function create($err = "") {
+    public function create($err = "")
+    {
         $cityController = new CityController();
         $query = "SELECT 
                         u.*
@@ -27,23 +29,38 @@ class VeterinarianController extends Controller implements WebInteface
         return view('veterinarian.create', ['users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
     }
 
-    public function edit(int $id) {
-
+    public function edit(int $id, $err = "")
+    {
+        $cityController = new CityController();
+        $query = "SELECT 
+                        u.*
+                  FROM users u 
+                  WHERE NOT EXISTS (select 1 from veterinarians v where v.user_id = u.id)";
+        $users = DB::select($query);
+        $dados = $this->show($id)->getData()->dados[0];
+        return view('veterinarian.edit', ['dados' => $dados, 'users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
     }
 
-    public function webStore(Request $req) {
+    public function webStore(Request $req)
+    {
         $ret = $this->store($req)->getData();
-        if($ret->success) {
+        if ($ret->success) {
             return $this->index();
         }
         return $this->create($ret->message);
     }
 
-    public function webUpdate(Request $req) {
-
+    public function webUpdate(Request $req)
+    {
+        $ret = $this->update($req)->getData();
+        if ($ret->success) {
+            return $this->index();
+        }
+        return $this->edit($req->id, $ret->message);
     }
 
-    public function webDestroy(Request $req) {
+    public function webDestroy(Request $req)
+    {
         $ret = $this->destroy($req)->getData();
         if ($ret->success) {
             return $this->index();
@@ -100,10 +117,15 @@ class VeterinarianController extends Controller implements WebInteface
     public function update(Request $request)
     {
         try {
-            $dados = $request->except('id');
-            $veterinarian = Veterinarian::find($request->id);
-            $veterinarian->update($dados);
-            return response()->json(['success' => true, 'message' => 'Veterinário atualizado!'], 200);
+            $crmvService = new CrmvController();
+            $data = $crmvService->validate($request->uf, $request->name, $request->crmv, $request->idcrmv);
+            if (!empty($data)) {
+                $dados = $request->except('id');
+                $veterinarian = Veterinarian::find($request->id);
+                $veterinarian->update($dados);
+                return response()->json(['success' => true, 'message' => 'Veterinário atualizado!'], 200);
+            }
+            return response()->json(['success' => false, 'message' => 'Veterinário não identificado'], 404);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
@@ -122,17 +144,17 @@ class VeterinarianController extends Controller implements WebInteface
 
     public function getByUser(int $id)
     {
-       $veterinarian = $this->getBy('user_id', $id);
-       return response()->json(['success' => true, 'message' => "", "dados" => $veterinarian], count($veterinarian) >= 1 ? 200 : 404);
+        $veterinarian = $this->getBy('user_id', $id);
+        return response()->json(['success' => true, 'message' => "", "dados" => $veterinarian], count($veterinarian) >= 1 ? 200 : 404);
     }
 
     public function getBy(string $field, $value)
     {
         $veterinarian = DB::table('veterinarians')
-        ->join('users', 'users.id', '=', 'veterinarians.user_id')
-        ->select('veterinarians.*', 'users.name as user')
-        ->where('veterinarians.'.$field, '=', $value)
-        ->get();
+            ->join('users', 'users.id', '=', 'veterinarians.user_id')
+            ->select('veterinarians.*', 'users.name as user')
+            ->where('veterinarians.' . $field, '=', $value)
+            ->get();
         return $veterinarian;
     }
 }

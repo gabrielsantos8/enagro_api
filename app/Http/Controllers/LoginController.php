@@ -22,9 +22,9 @@ class LoginController extends Controller
     {
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            $user = User::where('email', '=', $credentials['email'])->get();  
-            if($user[0]->user_type_id == 2) {
+        $user = User::where('email', '=', $credentials['email'])->get();
+        if(isset($user[0]) && $user[0]->user_type_id == 2) {
+            if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
                 return view('home.home', ['user' => $user[0]]);
             }
         }

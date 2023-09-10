@@ -43,7 +43,7 @@
                     <label for="user_type_id" class="form-label"><b>Tipo:</b></label>
                     <select name="user_type_id" required value={{$dados->user_type_id}} class="form-control" id="user_type_id">
                         @foreach ($user_types as $type)
-                            <option value="{{ $type->id }}">{{ $type->id . ' - ' . $type->description }}</option>
+                            <option value="{{ $type->id }}" @if ($type->id == $dados->user_type_id) selected @endif >{{ $type->id . ' - ' . $type->description }}</option>
                         @endforeach
                     </select>
                 </div>
