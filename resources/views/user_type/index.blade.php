@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Enagro Admin')
+@section('title', 'Tipos de usuário')
 @section('menuAtivo', 'tipUsuarios')
 
 @section('content')

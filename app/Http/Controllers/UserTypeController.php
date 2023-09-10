@@ -32,7 +32,7 @@ class UserTypeController extends Controller
         if ($ret->success) {
             return redirect('/user_type');
         }
-        return view('user_type.create', ['user' => Auth::user(), 'error' => $ret->message]);
+        return view('user_type.create', ['error' => $ret->message]);
     }
 
     public function webUpdate(Request $req)
@@ -41,7 +41,7 @@ class UserTypeController extends Controller
         if ($ret->success) {
             return redirect('/user_type');
         }
-        return view('user_type.edit', ['user' => Auth::user(), 'error' => $ret->message]);
+        return view('user_type.edit', ['error' => $ret->message]);
     }
 
     public function webDestroy(Request $req) {
@@ -49,7 +49,7 @@ class UserTypeController extends Controller
         if ($ret->success) {
             return redirect('/user_type');
         }
-        return view('user_type.index', ['dados' => $this->list()->getData()->dados, 'user' => Auth::user(), 'error' => $ret->message]);
+        return view('user_type.index', ['dados' => $this->list()->getData()->dados, 'error' => $ret->message]);
     }
 
     public function list()

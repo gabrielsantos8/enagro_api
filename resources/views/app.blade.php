@@ -1,5 +1,7 @@
 @php
+    $user = Auth::user();
     $userName = explode(' ',$user->name)[0];
+    
 @endphp
 
 
@@ -53,7 +55,7 @@
                     <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-briefcase nav_icon'></i>
                         <span class="nav_name">Serviços Avulsos</span> </a>
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-stethoscope nav_icon'></i>
+                    <a href="{{route('veterinarian.index')}}" id="veterinarios" class="nav_link @yield('relClass')"> <i class='fa-solid fa-stethoscope nav_icon'></i>
                         <span class="nav_name">Veterinários</span> </a>
 
                     

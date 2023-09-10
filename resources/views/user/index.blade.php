@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Enagro Admin')
+@section('title', 'Usuários')
 @section('menuAtivo', 'usuarios')
 @section('error', isset($error) ? $error : '')
 

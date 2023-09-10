@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\VeterinarianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,4 +45,15 @@ Route::prefix('user_type')->middleware('auth')->group(function () {
     Route::post('/update', [UserTypeController::class, 'webUpdate'])->name('user_type.update');
     Route::post('/destroy', [UserTypeController::class, 'webDestroy'])->name('user_type.destroy');
     Route::get('/show/{id}', [UserTypeController::class, 'webShow'])->name('user_type.show');
+});
+
+
+Route::prefix('veterinarian')->middleware('auth')->group(function () {
+    Route::get('/', [VeterinarianController::class, 'index'])->name('veterinarian.index');
+    Route::get('/create', [VeterinarianController::class, 'create'])->name('veterinarian.create');
+    Route::get('/edit/{id}', [VeterinarianController::class, 'edit'])->name('veterinarian.edit');
+    Route::post('/store', [VeterinarianController::class, 'webStore'])->name('veterinarian.store');
+    Route::post('/update', [VeterinarianController::class, 'webUpdate'])->name('veterinarian.update');
+    Route::post('/destroy', [VeterinarianController::class, 'webDestroy'])->name('veterinarian.destroy');
+    Route::get('/show/{id}', [VeterinarianController::class, 'webShow'])->name('veterinarian.show');
 });
