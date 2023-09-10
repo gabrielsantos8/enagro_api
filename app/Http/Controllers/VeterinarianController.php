@@ -17,8 +17,14 @@ class VeterinarianController extends Controller implements WebInteface
         return view('veterinarian.index', ['dados' => $this->list()->getData()->dados]);
     }
 
-    public function create() {
-
+    public function create($err = "") {
+        $cityController = new CityController();
+        $query = "SELECT 
+                        u.*
+                  FROM users u 
+                  WHERE NOT EXISTS (select 1 from veterinarians v where v.user_id = u.id)";
+        $users = DB::select($query);
+        return view('veterinarian.create', ['users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
     }
 
     public function edit(int $id) {
@@ -26,7 +32,11 @@ class VeterinarianController extends Controller implements WebInteface
     }
 
     public function webStore(Request $req) {
-
+        $ret = $this->store($req)->getData();
+        if($ret->success) {
+            return $this->index();
+        }
+        return $this->create($ret->message);
     }
 
     public function webUpdate(Request $req) {
