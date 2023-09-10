@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\DB;
 class VeterinarianController extends Controller implements WebInteface
 {
 
-    public function index() {
-        return view('veterinarian.index', ['dados' => $this->list()->getData()->dados]);
+    public function index($err = "") {
+        return view('veterinarian.index', ['dados' => $this->list()->getData()->dados, "error" => $err]);
     }
 
     public function create($err = "") {
@@ -44,7 +44,11 @@ class VeterinarianController extends Controller implements WebInteface
     }
 
     public function webDestroy(Request $req) {
-
+        $ret = $this->destroy($req)->getData();
+        if ($ret->success) {
+            return $this->index();
+        }
+        return $this->index($ret->message);
     }
 
 
