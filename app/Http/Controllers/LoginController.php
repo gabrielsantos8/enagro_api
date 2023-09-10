@@ -11,13 +11,6 @@ class LoginController extends Controller
 {
     public function index()
     {
-        // $user = new User();
-        // $user->name = 'admin';
-        // $user->email = 'admin@gmail.com';
-        // $user->password = Hash::make('admin123');
-        // $user->user_type_id = 2;
-        // $user->save();
-
         if (Auth::check()) {
             return redirect('/');
         } else {
@@ -31,7 +24,9 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $user = User::where('email', '=', $credentials['email'])->get();  
-            return view('home.home', ['user' => $user[0]]);
+            if($user[0]->user_type_id == 2) {
+                return view('home.home', ['user' => $user[0]]);
+            }
         }
         return view('login.index', ['msg' => "Usuário não autenticado!"]);
     }
@@ -41,12 +36,4 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
-    public function cadastrar() {
-        //  $user = new User();
-        //  $user->name = 'admin';
-        //  $user->email = 'admin@gmail.com';
-        //  $user->password = Hash::make('admin123');
-        //  $user->user_types = 2;
-        //  $user->save();
-    }
 }

@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="foto_perfil" class="form-label"><b>Imagem:</b></label>
-                    <input type="file" class="form-control" name="foto_perfil" required/>
+                    <input type="file" class="form-control" name="foto_perfil" accept="image/*" required/>
                 </div>
             </div>
         </div>
