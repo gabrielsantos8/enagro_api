@@ -11,7 +11,11 @@ class AnimalType extends Model
 
     protected $fillable = ['description'];
 
-    public function users() {
-        return $this->hasMany(User::class);
+    public function animals() {
+        return $this->hasMany(Animal::class);
+    }
+
+    public function animalSubtypes() {
+        return $this->hasMany(AnimalSubtype::class);
     }
 }
