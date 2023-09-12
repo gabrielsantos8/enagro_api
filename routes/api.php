@@ -116,6 +116,7 @@ Route::prefix('animal_subtype')->group(function () {
     Route::post('/update', [AnimalSubtypeController::class, 'update']);
     Route::post('/destroy', [AnimalSubtypeController::class, 'destroy']);
     Route::get('/show/{id}', [AnimalSubtypeController::class, 'show']);
+    Route::get('/getByAnimalType/{id}', [AnimalSubtypeController::class, 'getByAnimalType']);
 });
 
 Route::prefix('animal')->group(function () {

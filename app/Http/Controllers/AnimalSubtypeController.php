@@ -64,4 +64,14 @@ class AnimalSubtypeController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function getByAnimalType(int $id)
+    {
+        $animal_subtypes = DB::table('animal_subtypes')
+            ->leftJoin('animal_types', 'animal_subtypes.animal_type_id', '=', 'animal_types.id')
+            ->select('animal_subtypes.*', 'animal_types.description as animal_type')
+            ->where([['animal_types.id', '=', $id]])
+            ->get();
+        return response()->json(['success' => true, 'message' => "", "dados" => $animal_subtypes], 200); 
+    }
 }
