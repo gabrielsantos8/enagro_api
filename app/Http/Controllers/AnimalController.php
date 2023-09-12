@@ -13,9 +13,10 @@ class AnimalController extends Controller
     {
         $animal = DB::table('animals')
             ->join('animal_types', 'animals.animal_type_id', '=', 'animal_types.id')
+            ->join('animal_subtypes', 'animals.animal_subtype_id', '=', 'animal_subtypes.id')
             ->join('user_addresses', 'animals.user_address_id', '=', 'user_addresses.id')
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
-            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
+            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge', 'animal_subtypes.description as animal_subtype')
             ->get();
         return response()->json(['success' => true, 'message' => "", "dados" => $animal], 200);
     }
@@ -24,9 +25,10 @@ class AnimalController extends Controller
     {
         $animal = DB::table('animals')
             ->join('animal_types', 'animals.animal_type_id', '=', 'animal_types.id')
+            ->join('animal_subtypes', 'animals.animal_subtype_id', '=', 'animal_subtypes.id')
             ->join('user_addresses', 'animals.user_address_id', '=', 'user_addresses.id')
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
-            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
+            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge', 'animal_subtypes.description as animal_subtype')
             ->where('animals.id', '=', $id)
             ->get();
         return response()->json(['success' => true, 'message' => "", "dados" => $animal], !empty($animal) ? 200 : 404);
@@ -42,6 +44,8 @@ class AnimalController extends Controller
             $animal->img_url = $request->img_url;
             $animal->user_address_id = $request->user_address_id;
             $animal->birth_date = $request->birth_date;
+            $animal->animal_subtype_id = $request->animal_subtype_id;
+            $animal->weight = $request->weight;
             if ($animal->save()) {
                 return response()->json(['success' => true, 'message' => "Animal cadastrado!", 'dados' => $animal], 200);
             }
@@ -83,9 +87,10 @@ class AnimalController extends Controller
     {
         $animal = DB::table('animals')
             ->join('animal_types', 'animals.animal_type_id', '=', 'animal_types.id')
+            ->join('animal_subtypes', 'animals.animal_subtype_id', '=', 'animal_subtypes.id')
             ->join('user_addresses', 'animals.user_address_id', '=', 'user_addresses.id')
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
-            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge')
+            ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge', 'animal_subtypes.description as animal_subtype')
             ->where($table . '.' . $field, '=', $value)
             ->orderBy('user_addresses.id')
             ->orderBy('animals.name')
