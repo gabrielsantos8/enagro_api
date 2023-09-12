@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\AnimalController;
-use App\Http\Controllers\AnimalSubtypeController;
-use App\Http\Controllers\AnimalTypeController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\ServiceCityController;
-use App\Http\Controllers\UserAddressController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserPhoneController;
-use App\Http\Controllers\UserTypeController;
-use App\Http\Controllers\VeterinarianController;
+use App\Http\Controllers\Api\AnimalController;
+use App\Http\Controllers\Api\AnimalSubtypeController;
+use App\Http\Controllers\Api\AnimalTypeController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\FileUploadController;
+use App\Http\Controllers\Api\ServiceCityController;
+use App\Http\Controllers\Api\UserAddressController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\UserPhoneController;
+use App\Http\Controllers\Api\UserTypeController;
+use App\Http\Controllers\Api\VeterinarianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +25,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::prefix('user_type')->group(function () {
     Route::get('/', [UserTypeController::class, 'list']);

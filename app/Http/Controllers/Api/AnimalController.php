@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use Exception;
 use Illuminate\Http\Request;
@@ -97,7 +98,7 @@ class AnimalController extends Controller
             ->get();
         return $animal;
     }
-    
+
     public function getImage(int $id)
     {
         try {
