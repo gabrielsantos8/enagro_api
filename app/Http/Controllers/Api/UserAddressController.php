@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\City;
+use App\Http\Controllers\Controller;
 use App\Models\UserAddress;
 use Exception;
 use Illuminate\Http\Request;

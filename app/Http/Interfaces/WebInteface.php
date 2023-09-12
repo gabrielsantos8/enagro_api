@@ -12,10 +12,10 @@ interface WebInteface {
 
     public function edit(int $id);
 
-    public function webStore(Request $req);
+    public function store(Request $req);
 
-    public function webUpdate(Request $req);
+    public function update(Request $req);
 
-    public function webDestroy(Request $req);
+    public function destroy(Request $req);
 
 }

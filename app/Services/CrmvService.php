@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-class CrmvController
+class CrmvService
 {
 
     protected $url = 'https://app.cfmv.gov.br/pf/consultaInscricao/';
