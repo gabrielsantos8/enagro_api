@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('animals', function (Blueprint $table) {
             $table->float('weight');
-            $table->unsignedBigInteger('animal_subtype_id')->unique();
+            $table->unsignedBigInteger('animal_subtype_id');
             $table->foreign('animal_subtype_id')->references('id')->on('animal_subtypes');
         });
     }
