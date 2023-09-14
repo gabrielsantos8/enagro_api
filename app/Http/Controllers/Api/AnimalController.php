@@ -116,7 +116,7 @@ class AnimalController extends Controller
     {
         try {
             $animal = Animal::find($id);
-            $animal->update(['img_url' => null]);
+            $animal->update(['img_url' => "https://static.thenounproject.com/png/1554486-200.png"]);
             return response()->json(['success' => true, 'message' => ""], 200);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 200);
