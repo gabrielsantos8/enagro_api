@@ -47,6 +47,7 @@ class AnimalController extends Controller
             $animal->birth_date = $request->birth_date;
             $animal->animal_subtype_id = $request->animal_subtype_id;
             $animal->weight = $request->weight;
+            $animal->amount = in_array($request->animal_subtype_id, [3,4]) ? $request->amount : 1;
             if ($animal->save()) {
                 return response()->json(['success' => true, 'message' => "Animal cadastrado!", 'dados' => $animal], 200);
             }
