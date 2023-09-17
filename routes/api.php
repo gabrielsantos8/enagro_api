@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\HealthInsuranceController;
 use App\Http\Controllers\Api\ServiceCityController;
+use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\UserAddressController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserPhoneController;
@@ -135,4 +136,13 @@ Route::prefix('health_insurance')->group(function () {
     Route::post('/update', [HealthInsuranceController::class, 'update']);
     Route::post('/destroy', [HealthInsuranceController::class, 'destroy']);
     Route::get('/show/{id}', [HealthInsuranceController::class, 'show']);
+});
+
+Route::prefix('service')->group(function () {
+    Route::get('/', [ServiceController::class, 'list']);
+    Route::post('/store', [ServiceController::class, 'store']);
+    Route::post('/update', [ServiceController::class, 'update']);
+    Route::post('/destroy', [ServiceController::class, 'destroy']);
+    Route::get('/show/{id}', [ServiceController::class, 'show']);
+    Route::get('/getByAnimalSubtype/{id}', [ServiceController::class, 'getByAnimalSubtype']);
 });
