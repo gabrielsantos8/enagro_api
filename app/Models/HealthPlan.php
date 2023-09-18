@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HealthInsuranceService extends Model
+class HealthPlan extends Model
 {
     use HasFactory;
-    protected $fillable = ['health_insurance_id','service_id'];
+    protected $fillable = ['description', 'detailed_description', 'value', 'minimal_animals', 'maximum_animals'];
 }

@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('health_insurances', function (Blueprint $table) {
+        Schema::create('health_plan_contract_status', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->text('detailed_description');
-            $table->float('value');
-            $table->integer('minimal_animals');
-            $table->integer('maximum_animals');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('health_insurances');
+        Schema::dropIfExists('health_plan_contract_status');
     }
 };
