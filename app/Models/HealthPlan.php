@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class HealthPlan extends Model
 {
     use HasFactory;
-    protected $fillable = ['description', 'detailed_description', 'value', 'minimal_animals', 'maximum_animals'];
+    protected $fillable = ['description', 'detailed_description', 'value', 'minimal_animals', 'maximum_animals', 'plan_colors'];
 }

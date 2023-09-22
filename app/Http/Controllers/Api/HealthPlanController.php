@@ -30,6 +30,7 @@ class HealthPlanController extends Controller
             $healthPlan->value = $request->value;
             $healthPlan->minimal_animals = $request->minimal_animals;
             $healthPlan->maximum_animals = $request->maximum_animals;
+            $healthPlan->plan_colors = $request->plan_colors;
             if ($healthPlan->save()) {
                 return response()->json(['success' => true, 'message' => "Plano de saúde cadastrado!", 'dados' => $healthPlan], 200);
             }

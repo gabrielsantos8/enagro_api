@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AnimalTypeController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FileUploadController;
+use App\Http\Controllers\Api\HealthPlanContractController;
 use App\Http\Controllers\Api\HealthPlanController;
 use App\Http\Controllers\Api\HealthPlanServiceController;
 use App\Http\Controllers\Api\ServiceCityController;
@@ -154,4 +155,23 @@ Route::prefix('health_plan_service')->group(function () {
     Route::post('/update', [HealthPlanServiceController::class, 'update']);
     Route::post('/destroy', [HealthPlanServiceController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanServiceController::class, 'show']);
+});
+
+
+Route::prefix('health_plan_contract')->group(function () {
+    Route::get('/', [HealthPlanContractController::class, 'list']);
+    Route::post('/store', [HealthPlanContractController::class, 'store']);
+    Route::post('/update', [HealthPlanContractController::class, 'update']);
+    Route::post('/destroy', [HealthPlanContractController::class, 'destroy']);
+    Route::get('/show/{id}', [HealthPlanContractController::class, 'show']);
+    Route::get('/getByUser/{id}', [HealthPlanContractController::class, 'getByUser']);
+});
+
+Route::prefix('health_plan_contract_installment')->group(function () {
+    Route::get('/', [HealthPlanContractInstallmentController::class, 'list']);
+    Route::post('/store', [HealthPlanContractInstallmentController::class, 'store']);
+    Route::post('/update', [HealthPlanContractInstallmentController::class, 'update']);
+    Route::post('/destroy', [HealthPlanContractInstallmentController::class, 'destroy']);
+    Route::get('/show/{id}', [HealthPlanContractInstallmentController::class, 'show']);
+    Route::get('/getByUser/{id}', [HealthPlanContractInstallmentController::class, 'getByUser']);
 });
