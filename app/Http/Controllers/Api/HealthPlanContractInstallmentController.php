@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\HealthPlanContractsInstallments;
+use App\Models\HealthPlanContractInstallment;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class HealthPlanContractsInstallmentController extends Controller
+class HealthPlanContractInstallmentController extends Controller
 {
     public function list()
     {
         $healthPlanContractsInstallments = DB::table('health_plan_contracts_installments')
             ->leftJoin('health_plan_contracts', 'health_plan_contracts_installments.contract_id', '=', 'health_plan_contracts.id')
             ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contracts_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
-            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.*', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
+            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
             ->get();
 
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanContractsInstallments], 200);
@@ -26,7 +26,7 @@ class HealthPlanContractsInstallmentController extends Controller
         $healthPlanContractsInstallment = DB::table('health_plan_contracts_installments')
             ->leftJoin('health_plan_contracts', 'health_plan_contracts_installments.contract_id', '=', 'health_plan_contracts.id')
             ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contracts_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
-            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.*', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
+            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
             ->where([['health_plan_contracts_installments.id', '=', $id]])
             ->get();
 
@@ -36,7 +36,7 @@ class HealthPlanContractsInstallmentController extends Controller
     public function store(Request $request)
     {
         try {
-            $healthPlanContractsInstallment = new HealthPlanContractsInstallments();
+            $healthPlanContractsInstallment = new HealthPlanContractInstallment();
             $healthPlanContractsInstallment->status_id = $request->status_id;
             $healthPlanContractsInstallment->contract_id = $request->contract_id;
             $healthPlanContractsInstallment->installment_number = $request->installment_number;
@@ -53,7 +53,7 @@ class HealthPlanContractsInstallmentController extends Controller
     {
         try {
             $dados = $request->except('id');
-            $healthPlanContractsInstallment = HealthPlanContractsInstallments::find($request->id);
+            $healthPlanContractsInstallment = HealthPlanContractInstallment::find($request->id);
             $healthPlanContractsInstallment->update($dados);
             return response()->json(['success' => true, 'message' => ''], 200);
         } catch (Exception $e) {
@@ -64,7 +64,7 @@ class HealthPlanContractsInstallmentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $healthPlanContractsInstallment = HealthPlanContractsInstallments::find($request->id);
+            $healthPlanContractsInstallment = HealthPlanContractInstallment::find($request->id);
             $healthPlanContractsInstallment->delete();
             return response()->json(['success' => true, 'message' => ""], 200);
         } catch (Exception $e) {
@@ -72,7 +72,7 @@ class HealthPlanContractsInstallmentController extends Controller
         }
     }
 
-    public function getByUser(int $id)
+    public function getByContract(int $id)
     {
         $healthPlanContractsInstallment = $this->getBy('health_plan_contracts_installments', 'contract_id', $id);
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanContractsInstallment], count($healthPlanContractsInstallment) >= 1 ? 200 : 404);
@@ -83,7 +83,7 @@ class HealthPlanContractsInstallmentController extends Controller
         $healthPlanContractsInstallment = DB::table('health_plan_contracts_installments')
             ->leftJoin('health_plan_contracts', 'health_plan_contracts_installments.contract_id', '=', 'health_plan_contracts.id')
             ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contracts_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
-            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.*', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
+            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
             ->where($table . '.' . $field, '=', $value)
             ->get();
 
