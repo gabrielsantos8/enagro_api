@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ActivationAnimalController;
 use App\Http\Controllers\Api\ActivationController;
 use App\Http\Controllers\Api\ActivationServiceController;
 use App\Http\Controllers\Api\AnimalController;
@@ -204,4 +205,13 @@ Route::prefix('activation_service')->group(function () {
     Route::post('/destroy', [ActivationServiceController::class, 'destroy']);
     Route::get('/show/{id}', [ActivationServiceController::class, 'show']);
     Route::get('/getByActivation/{id}', [ActivationServiceController::class, 'getByActivation']);
+});
+
+Route::prefix('activation_animal')->group(function () {
+    Route::get('/', [ActivationAnimalController::class, 'list']);
+    Route::post('/store', [ActivationAnimalController::class, 'store']);
+    Route::post('/update', [ActivationAnimalController::class, 'update']);
+    Route::post('/destroy', [ActivationAnimalController::class, 'destroy']);
+    Route::get('/show/{id}', [ActivationAnimalController::class, 'show']);
+    Route::get('/getByActivation/{id}', [ActivationAnimalController::class, 'getByActivation']);
 });
