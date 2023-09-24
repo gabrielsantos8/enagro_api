@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('service_id')->references('id')->on('services');
             $table->unsignedBigInteger('activation_id');
             $table->foreign('activation_id')->references('id')->on('activations');
+            $table->float('value');
             $table->timestamps();
         });
     }
