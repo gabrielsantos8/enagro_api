@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ActivationController;
 use App\Http\Controllers\Api\AnimalController;
 use App\Http\Controllers\Api\AnimalSubtypeController;
 use App\Http\Controllers\Api\AnimalTypeController;
@@ -183,4 +184,14 @@ Route::prefix('veterinarian_service')->group(function () {
     Route::post('/destroy', [VeterinarianServiceController::class, 'destroy']);
     Route::get('/show/{id}', [VeterinarianServiceController::class, 'show']);
     Route::get('/getByVeterinarian/{id}', [VeterinarianServiceController::class, 'getByVeterinarian']);
+});
+
+Route::prefix('activation')->group(function () {
+    Route::get('/', [ActivationController::class, 'list']);
+    Route::post('/store', [ActivationController::class, 'store']);
+    Route::post('/update', [ActivationController::class, 'update']);
+    Route::post('/destroy', [ActivationController::class, 'destroy']);
+    Route::get('/show/{id}', [ActivationController::class, 'show']);
+    Route::get('/getByVeterinarian/{id}', [ActivationController::class, 'getByVeterinarian']);
+    Route::get('/getByUser/{id}', [ActivationController::class, 'getByUser']);
 });
