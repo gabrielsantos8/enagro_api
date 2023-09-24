@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserPhoneController;
 use App\Http\Controllers\Api\UserTypeController;
 use App\Http\Controllers\Api\VeterinarianController;
+use App\Http\Controllers\Api\VeterinarianServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user_type')->group(function () {
@@ -173,4 +174,13 @@ Route::prefix('health_plan_contract_animal')->group(function () {
     Route::post('/destroy', [HealthPlanContractAnimalController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanContractAnimalController::class, 'show']);
     Route::get('/getByContract/{id}', [HealthPlanContractAnimalController::class, 'getByContract']);
+});
+
+Route::prefix('veterinarian_service')->group(function () {
+    Route::get('/', [VeterinarianServiceController::class, 'list']);
+    Route::post('/store', [VeterinarianServiceController::class, 'store']);
+    Route::post('/update', [VeterinarianServiceController::class, 'update']);
+    Route::post('/destroy', [VeterinarianServiceController::class, 'destroy']);
+    Route::get('/show/{id}', [VeterinarianServiceController::class, 'show']);
+    Route::get('/getByVeterinarian/{id}', [VeterinarianServiceController::class, 'getByVeterinarian']);
 });
