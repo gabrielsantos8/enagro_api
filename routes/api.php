@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ActivationServiceController;
 use App\Http\Controllers\Api\AnimalController;
 use App\Http\Controllers\Api\AnimalSubtypeController;
 use App\Http\Controllers\Api\AnimalTypeController;
+use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FileUploadController;
@@ -214,4 +215,13 @@ Route::prefix('activation_animal')->group(function () {
     Route::post('/destroy', [ActivationAnimalController::class, 'destroy']);
     Route::get('/show/{id}', [ActivationAnimalController::class, 'show']);
     Route::get('/getByActivation/{id}', [ActivationAnimalController::class, 'getByActivation']);
+});
+
+Route::prefix('appointment')->group(function () {
+    Route::get('/', [AppointmentController::class, 'list']);
+    Route::post('/store', [AppointmentController::class, 'store']);
+    Route::post('/update', [AppointmentController::class, 'update']);
+    Route::post('/destroy', [AppointmentController::class, 'destroy']);
+    Route::get('/show/{id}', [AppointmentController::class, 'show']);
+    Route::get('/getByActivation/{id}', [AppointmentController::class, 'getByActivation']);
 });
