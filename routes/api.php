@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\ActivationAnimalController;
+use App\Http\Controllers\Api\ActivationController;
+use App\Http\Controllers\Api\ActivationServiceController;
 use App\Http\Controllers\Api\AnimalController;
 use App\Http\Controllers\Api\AnimalSubtypeController;
 use App\Http\Controllers\Api\AnimalTypeController;
+use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FileUploadController;
@@ -11,6 +15,7 @@ use App\Http\Controllers\Api\HealthPlanContractController;
 use App\Http\Controllers\Api\HealthPlanContractInstallmentController;
 use App\Http\Controllers\Api\HealthPlanController;
 use App\Http\Controllers\Api\HealthPlanServiceController;
+use App\Http\Controllers\Api\ScheduledAppointmentController;
 use App\Http\Controllers\Api\ServiceCityController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\UserAddressController;
@@ -18,6 +23,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserPhoneController;
 use App\Http\Controllers\Api\UserTypeController;
 use App\Http\Controllers\Api\VeterinarianController;
+use App\Http\Controllers\Api\VeterinarianServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user_type')->group(function () {
@@ -173,4 +179,59 @@ Route::prefix('health_plan_contract_animal')->group(function () {
     Route::post('/destroy', [HealthPlanContractAnimalController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanContractAnimalController::class, 'show']);
     Route::get('/getByContract/{id}', [HealthPlanContractAnimalController::class, 'getByContract']);
+});
+
+Route::prefix('veterinarian_service')->group(function () {
+    Route::get('/', [VeterinarianServiceController::class, 'list']);
+    Route::post('/store', [VeterinarianServiceController::class, 'store']);
+    Route::post('/update', [VeterinarianServiceController::class, 'update']);
+    Route::post('/destroy', [VeterinarianServiceController::class, 'destroy']);
+    Route::get('/show/{id}', [VeterinarianServiceController::class, 'show']);
+    Route::get('/getByVeterinarian/{id}', [VeterinarianServiceController::class, 'getByVeterinarian']);
+});
+
+Route::prefix('activation')->group(function () {
+    Route::get('/', [ActivationController::class, 'list']);
+    Route::post('/store', [ActivationController::class, 'store']);
+    Route::post('/update', [ActivationController::class, 'update']);
+    Route::post('/destroy', [ActivationController::class, 'destroy']);
+    Route::get('/show/{id}', [ActivationController::class, 'show']);
+    Route::get('/getByVeterinarian/{id}', [ActivationController::class, 'getByVeterinarian']);
+    Route::get('/getByUser/{id}', [ActivationController::class, 'getByUser']);
+});
+
+Route::prefix('activation_service')->group(function () {
+    Route::get('/', [ActivationServiceController::class, 'list']);
+    Route::post('/store', [ActivationServiceController::class, 'store']);
+    Route::post('/update', [ActivationServiceController::class, 'update']);
+    Route::post('/destroy', [ActivationServiceController::class, 'destroy']);
+    Route::get('/show/{id}', [ActivationServiceController::class, 'show']);
+    Route::get('/getByActivation/{id}', [ActivationServiceController::class, 'getByActivation']);
+});
+
+Route::prefix('activation_animal')->group(function () {
+    Route::get('/', [ActivationAnimalController::class, 'list']);
+    Route::post('/store', [ActivationAnimalController::class, 'store']);
+    Route::post('/update', [ActivationAnimalController::class, 'update']);
+    Route::post('/destroy', [ActivationAnimalController::class, 'destroy']);
+    Route::get('/show/{id}', [ActivationAnimalController::class, 'show']);
+    Route::get('/getByActivation/{id}', [ActivationAnimalController::class, 'getByActivation']);
+});
+
+Route::prefix('appointment')->group(function () {
+    Route::get('/', [AppointmentController::class, 'list']);
+    Route::post('/store', [AppointmentController::class, 'store']);
+    Route::post('/update', [AppointmentController::class, 'update']);
+    Route::post('/destroy', [AppointmentController::class, 'destroy']);
+    Route::get('/show/{id}', [AppointmentController::class, 'show']);
+    Route::get('/getByActivation/{id}', [AppointmentController::class, 'getByActivation']);
+});
+
+Route::prefix('scheduled_appointment')->group(function () {
+    Route::get('/', [ScheduledAppointmentController::class, 'list']);
+    Route::post('/store', [ScheduledAppointmentController::class, 'store']);
+    Route::post('/update', [ScheduledAppointmentController::class, 'update']);
+    Route::post('/destroy', [ScheduledAppointmentController::class, 'destroy']);
+    Route::get('/show/{id}', [ScheduledAppointmentController::class, 'show']);
+    Route::get('/getByAppointment/{id}', [ScheduledAppointmentController::class, 'getByAppointment']);
 });
