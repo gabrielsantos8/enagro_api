@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\HealthPlanContractController;
 use App\Http\Controllers\Api\HealthPlanContractInstallmentController;
 use App\Http\Controllers\Api\HealthPlanController;
 use App\Http\Controllers\Api\HealthPlanServiceController;
+use App\Http\Controllers\Api\ScheduledAppointmentController;
 use App\Http\Controllers\Api\ServiceCityController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\UserAddressController;
@@ -224,4 +225,13 @@ Route::prefix('appointment')->group(function () {
     Route::post('/destroy', [AppointmentController::class, 'destroy']);
     Route::get('/show/{id}', [AppointmentController::class, 'show']);
     Route::get('/getByActivation/{id}', [AppointmentController::class, 'getByActivation']);
+});
+
+Route::prefix('scheduled_appointment')->group(function () {
+    Route::get('/', [ScheduledAppointmentController::class, 'list']);
+    Route::post('/store', [ScheduledAppointmentController::class, 'store']);
+    Route::post('/update', [ScheduledAppointmentController::class, 'update']);
+    Route::post('/destroy', [ScheduledAppointmentController::class, 'destroy']);
+    Route::get('/show/{id}', [ScheduledAppointmentController::class, 'show']);
+    Route::get('/getByAppointment/{id}', [ScheduledAppointmentController::class, 'getByAppointment']);
 });

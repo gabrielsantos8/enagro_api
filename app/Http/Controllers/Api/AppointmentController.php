@@ -40,7 +40,7 @@ class AppointmentController extends Controller
             $appointment = new Appointment();
             $appointment->status_id = $request->status_id;
             $appointment->activation_id = $request->activation_id;
-            $appointment->value = $request->activation_id;
+            $appointment->value = $request->value;
             $appointment->date = $request->date;
             $appointment->save();
             return response()->json(['success' => true, 'message' => ''], 200);
