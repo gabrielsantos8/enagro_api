@@ -43,17 +43,17 @@
                     </a>
     
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
-                        <span class="nav_name">Animais</span> </a>
+                    {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
+                        <span class="nav_name">Animais</span> </a> --}}
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-plus-medical nav_icon'></i>
-                        <span class="nav_name">Planos de Saúde</span> </a>
+                    {{-- <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-plus-medical nav_icon'></i>
+                        <span class="nav_name">Planos de Saúde</span> </a> --}}
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-lock nav_icon'></i>
-                        <span class="nav_name">Seguros</span> </a>
+                    {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-lock nav_icon'></i>
+                        <span class="nav_name">Seguros</span> </a> --}}
 
-                    <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-briefcase nav_icon'></i>
-                        <span class="nav_name">Serviços Avulsos</span> </a>
+                    {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-briefcase nav_icon'></i>
+                        <span class="nav_name">Serviços Avulsos</span> </a> --}}
 
                     <a href="{{route('veterinarian.index')}}" id="veterinarios" class="nav_link @yield('relClass')"> <i class='fa-solid fa-stethoscope nav_icon'></i>
                         <span class="nav_name">Veterinários</span> </a>
