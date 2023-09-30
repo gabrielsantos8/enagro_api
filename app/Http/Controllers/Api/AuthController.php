@@ -21,11 +21,15 @@ class AuthController extends Controller
 
             $user = DB::table('users')
             ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-            ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+            ->select('users.id','users.name', 'users.situation_id', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
             ->where([['users.email', '=', $credentials['email']]])
             ->get();
             
             foreach ($user as $key => $value) {
+                if($user[$key]->situation_id != 1) {
+                    
+                    return response()->json(['success' => false, 'message' => "Usuário não autenticado!", 'dados' => json_decode('{}')], 200);
+                }
                 $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);        
             }
 
