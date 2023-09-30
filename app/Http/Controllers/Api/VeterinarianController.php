@@ -95,7 +95,7 @@ class VeterinarianController extends Controller
         $veterinarian = DB::table('veterinarians')
             ->join('users', 'users.id', '=', 'veterinarians.user_id')
             ->select('veterinarians.*', 'users.name as user')
-            ->where('veterinarians.' . $field, '=', $value)
+            ->where([['veterinarians.' . $field, '=', $value]])
             ->get();
         return $veterinarian;
     }
