@@ -21,7 +21,7 @@ class UserController extends Controller implements WebInteface
 
     public function index()
     {
-        return view('user.index', ['dados' => $this->apiController->list()->getData()->dados]);
+        return view('user.index', ['data' => $this->apiController->list()->getData()->dados]);
     }
 
     public function create()
@@ -33,7 +33,7 @@ class UserController extends Controller implements WebInteface
     public function edit(int $id)
     {
         $user_types = UserType::all();
-        return view('user.edit', ['user_types' => $user_types, 'dados' => $this->apiController->show($id)->getData()->dados[0]]);
+        return view('user.edit', ['user_types' => $user_types, 'data' => $this->apiController->show($id)->getData()->dados[0]]);
     }
 
     public function store(Request $req)
@@ -96,6 +96,6 @@ class UserController extends Controller implements WebInteface
         if ($ret->success) {
             return redirect('/user');
         }
-        return view('user.index', ['dados' => $this->list()->getData()->dados, 'error' => $ret->message]);
+        return view('user.index', ['data' => $this->list()->getData()->dados, 'error' => $ret->message]);
     }
 }

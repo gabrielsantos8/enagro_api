@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($dados as $val)
+            @foreach ($data as $val)
                 <tr>
                     <th scope="row">{{ $val->id }}</th>
                     <th scope="row">{{ $val->nome }}</th>
@@ -42,18 +42,41 @@
                         <div class="btn-group" role="group" aria-label="Botões">
                             <a class="botao-default" href="{{ route('veterinarian.edit', $val->id) }}"><i
                                     class='bx bx-show-alt'></i></a>
-                            <form action="{{ route('veterinarian.destroy') }}" method="POST">
+                            <form id="form-excluir{{ $val->id }}" action="{{ route('veterinarian.destroy') }}"
+                                method="POST">
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
-                                <button class="botao-risco-default" type="submit"
-                                    onclick="return confirm('Tem certeza que deseja apagar?')">
-                                    <i class='bx bx-trash'></i>
+                                <button id="{{ $val->id }}" class="botao-risco-default" type="submit">
+                                    <i class='bx bx-trash'></i> Excluir
                                 </button>
                             </form>
                         </div>
                     </th>
                 </tr>
+
+                <div class="modal fade" id="modal-confirmacao{{ $val->id }}" role="dialog"
+                    aria-labelledby="modal-confirmacao-titulo" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal-confirmacao-titulo">Confirmar exclusão
+                                </h5>
+                                <button type="button" class="botao-default close" id="{{ $val->id }}"
+                                    data-dismiss="modal" aria-label="Fechar">
+                                    Fechar
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" form="form-excluir{{ $val->id }}"
+                                    class="btn btn-danger">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         </tbody>
     </table>

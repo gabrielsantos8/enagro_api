@@ -20,7 +20,7 @@ class VeterinarianController extends Controller
 
     public function index($err = "")
     {
-        return view('veterinarian.index', ['dados' => $this->apiController->list()->getData()->dados, "error" => $err]);
+        return view('veterinarian.index', ['data' => $this->apiController->list()->getData()->dados, "error" => $err]);
     }
 
     public function create($err = "")
@@ -37,19 +37,28 @@ class VeterinarianController extends Controller
     public function edit(int $id, $err = "")
     {
         $cityController = new CityController();
+        $data = $this->apiController->show($id)->getData()->dados[0];
         $query = "SELECT 
                         u.*
-                  FROM users u";
+                FROM users u 
+                WHERE NOT EXISTS (select 1 from veterinarians v where v.user_id = u.id)
+                
+                UNION
+
+                SELECT
+                    u.*
+                FROM users u 
+                WHERE u.id = $data->user_id 
+                ";
         $users = DB::select($query);
-        $dados = $this->apiController->show($id)->getData()->dados[0];
-        return view('veterinarian.edit', ['dados' => $dados, 'users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
+        return view('veterinarian.edit', ['data' => $data, 'users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
     }
 
     public function store(Request $req)
     {
         $ret = $this->apiController->store($req)->getData();
         if ($ret->success) {
-            return $this->index();
+            return redirect('/veterinarian');
         }
         return $this->create($ret->message);
     }
@@ -58,7 +67,7 @@ class VeterinarianController extends Controller
     {
         $ret = $this->apiController->update($req)->getData();
         if ($ret->success) {
-            return $this->index();
+            return redirect('/veterinarian');
         }
         return $this->edit($req->id, $ret->message);
     }
@@ -67,7 +76,7 @@ class VeterinarianController extends Controller
     {
         $ret = $this->apiController->destroy($req)->getData();
         if ($ret->success) {
-            return $this->index();
+            return redirect('/veterinarian');
         }
         return $this->index($ret->message);
     }

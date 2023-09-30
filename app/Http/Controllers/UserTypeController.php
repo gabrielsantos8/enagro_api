@@ -18,8 +18,8 @@ class UserTypeController extends Controller
 
     public function index()
     {
-        $dados = $this->apiController->list()->getData()->dados;
-        return view('user_type.index', ['dados' => $dados, 'user' => Auth::user()]);
+        $data = $this->apiController->list()->getData()->dados;
+        return view('user_type.index', ['data' => $data, 'user' => Auth::user()]);
     }
 
     public function create()
@@ -55,6 +55,6 @@ class UserTypeController extends Controller
         if ($ret->success) {
             return redirect('/user_type');
         }
-        return view('user_type.index', ['dados' => $this->apiController->list()->getData()->dados, 'error' => $ret->message]);
+        return view('user_type.index', ['data' => $this->apiController->list()->getData()->dados, 'error' => $ret->message]);
     }
 }

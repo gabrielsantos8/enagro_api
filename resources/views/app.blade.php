@@ -1,6 +1,6 @@
 @php
     $user = Auth::user();
-    $userName = explode(' ',$user->name)[0];
+    $userName = explode(' ', $user->name)[0];
     
 @endphp
 
@@ -31,17 +31,20 @@
         <nav class="nav">
             <div>
                 <a href="/" class="nav_logo"> <i class='fa-solid fa-arrows-rotate fa-spin nav_logo-icon'></i><span
-                        class="nav_logo-name"><img src="{{ asset('img/logo_enagro_white.png') }}" style="width: 30%"></span></a>
+                        class="nav_logo-name"><img src="{{ asset('img/logo_enagro_white.png') }}"
+                            style="width: 30%"></span></a>
                 <div class="nav_list">
 
-                    <a id="usuarios" href="{{route('user.index')}}" class="nav_link"> <i class='fa fa-users nav_icon'></i>
+                    <a id="usuarios" href="{{ route('user.index') }}" class="nav_link"> <i
+                            class='fa fa-users nav_icon'></i>
                         <span class="nav_name">Usuários</span>
                     </a>
 
-                    <a id="tipUsuarios" href="{{route('user_type.index')}}" class="nav_link"><i class="fas fa-user"></i>
-                        <span class="nav_name">Tipos de Usuários</span> 
+                    <a id="tipUsuarios" href="{{ route('user_type.index') }}" class="nav_link"><i
+                            class="fas fa-user"></i>
+                        <span class="nav_name">Tipos de Usuários</span>
                     </a>
-    
+
 
                     {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
                         <span class="nav_name">Animais</span> </a> --}}
@@ -55,25 +58,26 @@
                     {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-briefcase nav_icon'></i>
                         <span class="nav_name">Serviços Avulsos</span> </a> --}}
 
-                    <a href="{{route('veterinarian.index')}}" id="veterinarios" class="nav_link @yield('relClass')"> <i class='fa-solid fa-stethoscope nav_icon'></i>
+                    <a href="{{ route('veterinarian.index') }}" id="veterinarios" class="nav_link @yield('relClass')"> <i
+                            class='fa-solid fa-stethoscope nav_icon'></i>
                         <span class="nav_name">Veterinários</span> </a>
 
-                    
+
                     <hr style="color: #fff">
 
-                    <div class="nav_link d-flex" style="color: white"> 
+                    <div class="nav_link d-flex" style="color: white">
                         <i class='fa fa-user-circle bx-sm nav_icon'></i>
-                        <span>{{ $userName }}</span>           
+                        <span>{{ $userName }}</span>
                         <form action="{{ route('login.sair') }}">
                             <button class="btn btn-link ms-auto" type="submit">
                                 <i class="logoutBtn bx bx-log-out bx-rotate-180 bx-sm"></i>
                             </button>
                         </form>
-                    
+
                     </div>
 
 
-                        {{-- <div class="cardLogin card d-flex flex-row align-items-center">
+                    {{-- <div class="cardLogin card d-flex flex-row align-items-center">
                             <i class="userIcon bx bx-user-circle bx-sm"></i>
                             <span>{{ $user->name }}</span>
                             <form action="{{ route('login.sair') }}">
@@ -86,9 +90,7 @@
 
                 </div>
 
-                
 
-                
 
             </div>
         </nav>
@@ -97,12 +99,26 @@
     <div class="height-100 bg-light p-4">
         @yield('content')
     </div>
+
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/0.9.0/jquery.mask.min.js"></script>
     <script>
+        $("#number").mask("999999999");
+        $("#ddd").mask("99");
         var menuAtivo = @yield('menuAtivo');
         menuAtivo.classList.add('active');
+        $(document).ready(function() {
+            $('.botao-risco-default').on('click', function(e) {
+                e.preventDefault();
+                $('#modal-confirmacao' + e.target.id).modal('show');
+            });
+
+            $('.close').on('click', function(e) {
+                $('#modal-confirmacao' + e.target.id).modal('hide');
+            });
+        });
     </script>
 </body>
 
