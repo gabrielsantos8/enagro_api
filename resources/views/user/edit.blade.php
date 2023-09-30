@@ -13,11 +13,13 @@
             <div class="row">
                 <div class="col-4">
                     <label for="name" class="form-label"><b>Nome:</b></label>
-                    <input type="text" required name="name" id="name" value={{$dados->name}} class="form-control">
+                    <input type="text" required name="name" id="name" value={{ $data->name }}
+                        class="form-control">
                 </div>
                 <div class="col-4">
                     <label for="number" class="form-label"><b>Email:</b></label>
-                    <input type="email" required name="email" id="email" value={{$dados->email}} class="form-control">
+                    <input type="email" required name="email" id="email" value={{ $data->email }}
+                        class="form-control">
                 </div>
                 <div class="col-4">
                     <label for="password" class="form-label"><b>Senha:</b></label>
@@ -30,20 +32,25 @@
             <div class="row">
                 <div class="col-2">
                     <label for="ddd" class="form-label"><b>DDD:</b></label>
-                    <input type="number" hidden name="id" id="id" value={{$dados->id}} class="form-control">
-                    <input type="number" hidden name="user_phone_id" id="user_phone_id" value={{$dados->user_phone_id}} class="form-control">
-                    <input type="number" required name="ddd" max="99" id="ddd" value={{$dados->ddd}} class="form-control"
-                        placeholder="00">
+                    <input type="number" hidden name="id" id="id" value={{ $data->id }}
+                        class="form-control">
+                    <input type="number" hidden name="user_phone_id" id="user_phone_id" value={{ $data->user_phone_id }}
+                        class="form-control">
+                    <input type="number" required name="ddd" max="99" id="ddd" value={{ $data->ddd }}
+                        class="form-control" placeholder="00">
                 </div>
                 <div class="col-2">
                     <label for="number" class="form-label"><b>Número Telefone:</b></label>
-                    <input type="number" required name="number" max="999999999" id="number" value={{$dados->number}} class="form-control" placeholder="000000000">
+                    <input type="number" required name="number" id="number" value={{ $data->number }}
+                        class="form-control" placeholder="000000000">
                 </div>
                 <div class="col-8">
                     <label for="user_type_id" class="form-label"><b>Tipo:</b></label>
-                    <select name="user_type_id" required value={{$dados->user_type_id}} class="form-control" id="user_type_id">
+                    <select name="user_type_id" required value={{ $data->user_type_id }} class="form-control"
+                        id="user_type_id">
                         @foreach ($user_types as $type)
-                            <option value="{{ $type->id }}" @if ($type->id == $dados->user_type_id) selected @endif >{{ $type->id . ' - ' . $type->description }}</option>
+                            <option value="{{ $type->id }}" @if ($type->id == $data->user_type_id) selected @endif>
+                                {{ $type->id . ' - ' . $type->description }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -53,12 +60,12 @@
             <div class="row">
                 <div class="col-12">
                     <label for="foto_perfil" class="form-label"><b>Imagem:</b></label>
-                    <input type="file" class="form-control" name="foto_perfil" accept="image/*"/>
+                    <input type="file" class="form-control" name="foto_perfil" accept="image/*" />
                 </div>
             </div>
         </div>
         <div class="img-selected">
-            <img src="{{$dados->image_url}}" alt="imagem">
+            <img src="{{ $data->image_url }}" alt="imagem">
         </div>
 
 
