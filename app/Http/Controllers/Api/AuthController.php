@@ -58,7 +58,7 @@ class AuthController extends Controller
 
             $user = DB::table('users')
                 ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-                ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+                ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'users.situation_id')
                 ->where([['users.email', '=', $request->email]])
                 ->get();
                 
