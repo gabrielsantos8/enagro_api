@@ -44,13 +44,22 @@
                     <input type="number" required name="number" id="number" value={{ $data->number }}
                         class="form-control" placeholder="000000000">
                 </div>
-                <div class="col-8">
+                <div class="col-4">
                     <label for="user_type_id" class="form-label"><b>Tipo:</b></label>
                     <select name="user_type_id" required value={{ $data->user_type_id }} class="form-control"
                         id="user_type_id">
                         @foreach ($user_types as $type)
                             <option value="{{ $type->id }}" @if ($type->id == $data->user_type_id) selected @endif>
                                 {{ $type->id . ' - ' . $type->description }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for="situation_id" class="form-label"><b>Situação:</b></label>
+                    <select name="situation_id" required class="form-control" id="situation_id">
+                        @foreach ($situations as $situation)
+                            <option @if ($data->situation_id == $situation->id) selected @endif value="{{ $situation->id }}">
+                                {{ $situation->id . ' - ' . $situation->description }}</option>
                         @endforeach
                     </select>
                 </div>

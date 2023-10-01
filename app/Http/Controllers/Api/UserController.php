@@ -17,11 +17,14 @@ class UserController extends Controller
         $users = DB::table('users')
             ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->leftJoin('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'users.updated_at', 'users.created_at', 'user_types.description as user_type', 'user_phones.id as user_phone_id', 'user_phones.ddd', 'user_phones.number')
+            ->leftJoin('situations', 'users.situation_id', '=', 'situations.id')
+            ->select('users.id', 'users.situation_id', 'users.name', 'situations.description as situation', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'users.updated_at', 'users.created_at', 'user_types.description as user_type', 'user_phones.id as user_phone_id', 'user_phones.ddd', 'user_phones.number')
             ->get();
 
         foreach ($users as $key => $value) {
+            $haveData = DB::select("SELECT 1 FROM health_plan_contracts WHERE user_id = {$users[$key]->id}");
             $users[$key]->addresses = $userAddressController->getBy('user_id', $users[$key]->id);
+            $users[$key]->isNotDeletable = isset($haveData[0]);
         }
 
         return response()->json(['success' => true, 'message' => "", "dados" => $users], 200);
@@ -34,12 +37,15 @@ class UserController extends Controller
         $user = DB::table('users')
             ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->leftJoin('user_phones', 'user_phones.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'user_types.description as user_type', 'user_phones.id as user_phone_id', 'user_phones.ddd', 'user_phones.number')
+            ->leftJoin('situations', 'users.situation_id', '=', 'situations.id')
+            ->select('users.id', 'users.situation_id', 'users.name', 'situations.description as situation', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'users.image_url', 'users.updated_at', 'users.created_at', 'user_types.description as user_type', 'user_phones.id as user_phone_id', 'user_phones.ddd', 'user_phones.number')
             ->where([['users.id', '=', $id]])
             ->get();
 
         foreach ($user as $key => $value) {
+            $haveData = DB::select("SELECT 1 as yes FROM health_plan_contracts WHERE user_id = {$user[$key]->id}");
             $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);
+            $user[$key]->isNotDeletable = isset($haveData[0]);
         }
 
         return response()->json(['success' => true, 'message' => !empty($user) ? "" : "Usuário não encontrado!", "dados" => $user], !empty($user) ? 200 : 404);
