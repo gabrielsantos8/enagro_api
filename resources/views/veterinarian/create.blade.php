@@ -37,11 +37,20 @@
                     <label for="crmv" class="form-label"><b>CRMV:</b></label>
                     <input type="number" required name="crmv" id="crmv" class="form-control">
                 </div>
-                <div class="col-8">
+                <div class="col-4">
                     <label for="user_id" class="form-label"><b>Usuário:</b></label>
                     <select name="user_id" required class="form-control" id="user_id">
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->id . ' - ' . $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for="situation_id" class="form-label"><b>Situação:</b></label>
+                    <select name="situation_id" required class="form-control" id="situation_id">
+                        @foreach ($situations as $situation)
+                            <option value="{{ $situation->id }}">
+                                {{ $situation->id . ' - ' . $situation->description }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -19,7 +19,8 @@
                 <th class="header-table-col-default" scope="col">Senha </th>
                 <th class="header-table-col-default" scope="col">Data Criado</th>
                 <th class="header-table-col-default" scope="col">Data Atualizado</th>
-                <th class="header-table-col-default" scope="col">Tipo de Usuário</th>
+                <th class="header-table-col-default" scope="col">Tipo</th>
+                <th class="header-table-col-default" scope="col">Situação</th>
                 <th class="header-table-col-default"></th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@
                     <th scope="row">{{ $val->created_at }}</th>
                     <th scope="row">{{ $val->updated_at }}</th>
                     <th scope="row">{{ $val->user_type }}</th>
+                    <th scope="row">{{ $val->situation }}</th>
                     <th scope="row">
                         <div class="btn-group" role="group" aria-label="Botões">
                             <a class="botao-default" href="{{ route('user.edit', $val->id) }}"><i
@@ -42,7 +44,7 @@
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
-                                <button id="{{ $val->id }}" class="botao-risco-default" type="submit">
+                                <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif class="botao-risco-default" type="submit">
                                     <i class='bx bx-trash'></i> Excluir
                                 </button>
                             </form>

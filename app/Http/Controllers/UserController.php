@@ -8,6 +8,7 @@ use App\Http\Interfaces\WebInteface;
 use App\Models\UserPhone;
 use App\Models\UserType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller implements WebInteface
 {
@@ -27,13 +28,15 @@ class UserController extends Controller implements WebInteface
     public function create()
     {
         $user_types = UserType::all();
-        return view('user.create', ['user_types' => $user_types]);
+        $situations = DB::select('SELECT * FROM situations');
+        return view('user.create', ['user_types' => $user_types, 'situations' => $situations]);
     }
 
     public function edit(int $id)
     {
         $user_types = UserType::all();
-        return view('user.edit', ['user_types' => $user_types, 'data' => $this->apiController->show($id)->getData()->dados[0]]);
+        $situations = DB::select('SELECT * FROM situations');
+        return view('user.edit', ['user_types' => $user_types, 'situations' => $situations, 'data' => $this->apiController->show($id)->getData()->dados[0]]);
     }
 
     public function store(Request $req)
@@ -42,7 +45,8 @@ class UserController extends Controller implements WebInteface
         $ret = $authController->register($req)->getData();
         if (!$ret->success) {
             $user_types = UserType::all();
-            return view('user.create', ['user_types' => $user_types, 'error' => $ret->message]);
+            $situations = DB::select('SELECT * FROM situations');
+            return view('user.create', ['user_types' => $user_types, 'situations' => $situations, 'error' => $ret->message]);
         }
 
         UserPhone::create([
@@ -55,7 +59,8 @@ class UserController extends Controller implements WebInteface
         $retEnv = $this->apiController->sendImage($req)->getData();
         if (!$retEnv->success) {
             $user_types = UserType::all();
-            return view('user.create', ['user_types' => $user_types, 'error' => $ret->message]);
+            $situations = DB::select('SELECT * FROM situations');
+            return view('user.create', ['user_types' => $user_types, 'situations' => $situations, 'error' => $ret->message]);
         }
         return redirect('/user');
     }
@@ -69,14 +74,16 @@ class UserController extends Controller implements WebInteface
         $ret = $this->apiController->update($newReq)->getData();
         if (!$ret->success) {
             $user_types = UserType::all();
-            return view('user.edit', ['user_types' => $user_types, 'error' => $ret->message]);
+            $situations = DB::select('SELECT * FROM situations');
+            return view('user.edit', ['user_types' => $user_types, 'situations' => $situations, 'error' => $ret->message]);
         }
 
         if ($req->hasFile('foto_perfil')) {
             $retEnv = $this->apiController->sendImage($req)->getData();
             if (!$retEnv->success) {
                 $user_types = UserType::all();
-                return view('user.edit', ['user_types' => $user_types, 'error' => $ret->message]);
+                $situations = DB::select('SELECT * FROM situations');
+                return view('user.edit', ['user_types' => $user_types, 'situations' => $situations, 'error' => $ret->message]);
             }
         }
 

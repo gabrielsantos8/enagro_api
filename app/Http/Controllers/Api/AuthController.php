@@ -20,17 +20,17 @@ class AuthController extends Controller
             $userAddressController = new UserAddressController;
 
             $user = DB::table('users')
-            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-            ->select('users.id','users.name', 'users.situation_id', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
-            ->where([['users.email', '=', $credentials['email']]])
-            ->get();
-            
+                ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+                ->select('users.id', 'users.name', 'users.situation_id', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type')
+                ->where([['users.email', '=', $credentials['email']]])
+                ->get();
+
             foreach ($user as $key => $value) {
-                if($user[$key]->situation_id != 1) {
-                    
+                if ($user[$key]->situation_id != 1) {
+
                     return response()->json(['success' => false, 'message' => "Usuário não autenticado!", 'dados' => json_decode('{}')], 200);
                 }
-                $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);        
+                $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);
             }
 
             $token = $this->generateJWTToken($user[0]->id, $user[0]->name, $user[0]->email, $user[0]->user_type_id, $user[0]->user_type);
@@ -52,18 +52,19 @@ class AuthController extends Controller
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->user_type_id = ($request->user_type_id) ? $request->user_type_id : 1;
+            $user->situation_id = $request->situation_id ?? 1;
             if ($user->save()) {
-            
-            $userAddressController = new UserAddressController;
 
-            $user = DB::table('users')
-                ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
-                ->select('users.id','users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'users.situation_id')
-                ->where([['users.email', '=', $request->email]])
-                ->get();
-                
+                $userAddressController = new UserAddressController;
+
+                $user = DB::table('users')
+                    ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
+                    ->select('users.id', 'users.name', 'users.email', 'users.email_verified_at', 'users.user_type_id', 'user_types.description as user_type', 'users.situation_id')
+                    ->where([['users.email', '=', $request->email]])
+                    ->get();
+
                 foreach ($user as $key => $value) {
-                    $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);        
+                    $user[$key]->addresses = $userAddressController->getBy('user_id', $user[$key]->id);
                 }
 
                 $token = $this->generateJWTToken($user[0]->id, $user[0]->name, $user[0]->email, $user[0]->user_type_id, $user[0]->user_type);

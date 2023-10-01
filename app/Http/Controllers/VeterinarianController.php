@@ -31,7 +31,8 @@ class VeterinarianController extends Controller
                   FROM users u 
                   WHERE NOT EXISTS (select 1 from veterinarians v where v.user_id = u.id)";
         $users = DB::select($query);
-        return view('veterinarian.create', ['users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
+        $situations = DB::select('SELECT * FROM situations');
+        return view('veterinarian.create', ['users' => $users, 'situations' => $situations, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
     }
 
     public function edit(int $id, $err = "")
@@ -51,7 +52,8 @@ class VeterinarianController extends Controller
                 WHERE u.id = $data->user_id 
                 ";
         $users = DB::select($query);
-        return view('veterinarian.edit', ['data' => $data, 'users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
+        $situations = DB::select('SELECT * FROM situations');
+        return view('veterinarian.edit', ['data' => $data, 'situations' => $situations, 'users' => $users, 'ufs' => $cityController->getUfs()->getData()->dados, 'error' => $err]);
     }
 
     public function store(Request $req)

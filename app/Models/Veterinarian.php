@@ -9,7 +9,7 @@ class Veterinarian extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_pf_inscricao','pf_inscricao','pf_uf','nome','nome_social','atuante','user_id', 'situation'];
+    protected $fillable = ['id_pf_inscricao','pf_inscricao','pf_uf','nome','nome_social','atuante','user_id', 'situation_id'];
 
     public function user() {
         return $this->belongsTo(User::class);

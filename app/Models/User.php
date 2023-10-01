@@ -44,7 +44,7 @@ class User extends Authenticatable
         'user_type_id',
         'image_url',
         'password',
-        'situation'
+        'situation_id'
     ];
 
     /**

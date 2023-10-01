@@ -20,6 +20,7 @@
                 <th class="header-table-col-default" scope="col">CRMV</th>
                 <th class="header-table-col-default" scope="col">UF</th>
                 <th class="header-table-col-default" scope="col">Atuante</th>
+                <th class="header-table-col-default" scope="col">Situação</th>
                 <th class="header-table-col-default" scope="col">Data Cadastro</th>
                 <th class="header-table-col-default" scope="col">Data Alteração</th>
                 <th class="header-table-col-default"></th>
@@ -36,6 +37,7 @@
                     <th scope="row">{{ $val->pf_inscricao }}</th>
                     <th scope="row">{{ $val->pf_uf }}</th>
                     <th scope="row">{{ $val->atuante == 1 ? 'Sim' : 'Não' }}</th>
+                    <th scope="row">{{ $val->situation }}</th>
                     <th scope="row">{{ $val->created_at }}</th>
                     <th scope="row">{{ $val->updated_at }}</th>
                     <th scope="row">
@@ -47,7 +49,7 @@
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
-                                <button id="{{ $val->id }}" class="botao-risco-default" type="submit">
+                                <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif class="botao-risco-default" type="submit">
                                     <i class='bx bx-trash'></i> Excluir
                                 </button>
                             </form>
