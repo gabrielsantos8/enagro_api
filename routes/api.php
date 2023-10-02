@@ -161,6 +161,7 @@ Route::prefix('health_plan_contract')->group(function () {
     Route::post('/destroy', [HealthPlanContractController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanContractController::class, 'show']);
     Route::get('/getByUser/{id}', [HealthPlanContractController::class, 'getByUser']);
+    Route::get('/getActiveContractByUser/{id}', [HealthPlanContractController::class, 'getActiveContractByUser']);
 });
 
 Route::prefix('health_plan_contract_installment')->group(function () {

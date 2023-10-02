@@ -104,11 +104,17 @@ class HealthPlanContractController extends Controller
 
     public function getByUser(int $id)
     {
-        $healthPlanContract = $this->getBy('health_plan_contracts', 'user_id', $id);
+        $healthPlanContract = $this->getBy([['health_plan_contracts.user_id', '=', $id]]);
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanContract], count($healthPlanContract) >= 1 ? 200 : 404);
     }
 
-    public function getBy(string $table, string $field, $value)
+    public function getActiveContractByUser(int $id)
+    {
+        $healthPlanContract = $this->getBy([['health_plan_contracts.user_id', '=', $id], ['health_plan_contracts.health_plan_contract_status_id', '=', 1]]);
+        return response()->json(['success' => true, 'message' => "", "dados" => isset($healthPlanContract[0]) ? $healthPlanContract[0] : json_decode('{}')], 200);
+    }
+
+    public function getBy(array $wheres)
     {
         $healthPlanContract = DB::table('health_plan_contracts')
             ->leftJoin('users', 'health_plan_contracts.user_id', '=', 'users.id')
@@ -127,7 +133,7 @@ class HealthPlanContractController extends Controller
                 'health_plan_contract_types.description as type',
                 'health_plan_contract_status.description as status'
             )
-            ->where($table . '.' . $field, '=', $value)
+            ->where($wheres)
             ->get();
 
         return $healthPlanContract;
