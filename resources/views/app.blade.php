@@ -46,8 +46,8 @@
                     </a>
 
 
-                    {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
-                        <span class="nav_name">Animais</span> </a> --}}
+                    <a href="animal" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
+                        <span class="nav_name">Animais</span> </a>
 
                     {{-- <a href="" class="nav_link @yield('relClass')"> <i class='bx bx-plus-medical nav_icon'></i>
                         <span class="nav_name">Planos de Saúde</span> </a> --}}

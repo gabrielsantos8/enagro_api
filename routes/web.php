@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
@@ -54,3 +55,13 @@ Route::prefix('veterinarian')->middleware('auth')->group(function () {
     Route::post('/update', [VeterinarianController::class, 'update'])->name('veterinarian.update');
     Route::post('/destroy', [VeterinarianController::class, 'destroy'])->name('veterinarian.destroy');
 });
+
+Route::prefix('animal')->middleware('auth')->group(function () {
+    Route::get('/', [AnimalController::class, 'index'])->name('animal.index');
+    Route::get('/create', [AnimalController::class, 'create'])->name('animal.create');
+    Route::get('/edit/{id}', [AnimalController::class, 'edit'])->name('animal.edit');
+    Route::post('/store', [AnimalController::class, 'store'])->name('animal.store');
+    Route::post('/update', [AnimalController::class, 'update'])->name('animal.update');
+    Route::post('/destroy', [AnimalController::class, 'destroy'])->name('animal.destroy');
+});
+
