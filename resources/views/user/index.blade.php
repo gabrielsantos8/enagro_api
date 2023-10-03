@@ -60,7 +60,6 @@
                                 </h5>
                                 <button type="button" class="botao-default close bx bx-x" id="{{ $val->id }}"
                                     data-dismiss="modal" aria-label="Fechar" style="background: white; color: #000; font-size: 30px;">
-                                  
                                 </button>
                             </div>
                             <div class="modal-body">

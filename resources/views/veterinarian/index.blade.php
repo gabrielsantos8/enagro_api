@@ -64,9 +64,8 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modal-confirmacao-titulo">Confirmar exclusão
                                 </h5>
-                                <button type="button" class="botao-default close" id="{{ $val->id }}"
-                                    data-dismiss="modal" aria-label="Fechar">
-                                    Fechar
+                                <button type="button" class="botao-default close bx bx-x" id="{{ $val->id }}"
+                                    data-dismiss="modal" aria-label="Fechar" style="background: white; color: #000; font-size: 30px;">
                                 </button>
                             </div>
                             <div class="modal-body">
