@@ -116,6 +116,7 @@ class HealthPlanContractController extends Controller
 
     public function getBy(array $wheres)
     {
+        $servicesController = new HealthPlanServiceController();
         $healthPlanContract = DB::table('health_plan_contracts')
             ->leftJoin('users', 'health_plan_contracts.user_id', '=', 'users.id')
             ->leftJoin('health_plans', 'health_plan_contracts.health_plan_id', '=', 'health_plans.id')
@@ -135,6 +136,11 @@ class HealthPlanContractController extends Controller
             )
             ->where($wheres)
             ->get();
+
+        foreach ($healthPlanContract as $key => $value) {
+            $services = $servicesController->getByHealthPlan($value->health_plan_id)->getData()->dados;
+            $healthPlanContract[$key]->services = $services;
+        }
 
         return $healthPlanContract;
     }

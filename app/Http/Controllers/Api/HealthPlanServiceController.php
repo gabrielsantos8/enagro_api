@@ -15,7 +15,16 @@ class HealthPlanServiceController extends Controller
         $healthPlanServices = DB::table('health_plan_services')
             ->leftJoin('health_plans', 'health_plan_services.health_plan_id', '=', 'health_plans.id')
             ->leftJoin('services', 'health_plan_services.service_id', '=', 'services.id')
-            ->select('health_plan_services.*', 'health_plans.description as health_plans', 'services.description as service')
+            ->leftJoin('animal_subtypes', 'services.animal_subtype_id', '=', 'animal_subtypes.id')
+            ->leftJoin('animal_types', 'animal_subtypes.animal_type_id', '=', 'animal_types.id')
+            ->select(
+                'health_plan_services.*',
+                'health_plans.description as health_plans',
+                'services.*',
+                'animal_subtypes.description as animal_subtype',
+                'animal_subtypes.animal_type_id',
+                'animal_types.description as animal_type'
+            )
             ->get();
 
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanServices], 200);
@@ -26,7 +35,16 @@ class HealthPlanServiceController extends Controller
         $healthPlanService = DB::table('health_plan_services')
             ->leftJoin('health_plans', 'health_plan_services.health_plan_id', '=', 'health_plans.id')
             ->leftJoin('services', 'health_plan_services.service_id', '=', 'services.id')
-            ->select('health_plan_services.*', 'health_plans.description as health_plans', 'services.description as service')
+            ->leftJoin('animal_subtypes', 'services.animal_subtype_id', '=', 'animal_subtypes.id')
+            ->leftJoin('animal_types', 'animal_subtypes.animal_type_id', '=', 'animal_types.id')
+            ->select(
+                'health_plan_services.*',
+                'health_plans.description as health_plans',
+                'services.*',
+                'animal_subtypes.description as animal_subtype',
+                'animal_subtypes.animal_type_id',
+                'animal_types.description as animal_type'
+            )
             ->where([['health_plan_services.id', '=', $id]])
             ->get();
 
@@ -67,5 +85,32 @@ class HealthPlanServiceController extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function getByHealthPlan(int $id)
+    {
+        $healthPlanService = $this->getBy([['health_plan_services.health_plan_id', '=', $id]]);
+        return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanService], 200);
+    }
+
+    public function getBy(array $wheres)
+    {
+        $healthPlanService = DB::table('health_plan_services')
+            ->leftJoin('health_plans', 'health_plan_services.health_plan_id', '=', 'health_plans.id')
+            ->leftJoin('services', 'health_plan_services.service_id', '=', 'services.id')
+            ->leftJoin('animal_subtypes', 'services.animal_subtype_id', '=', 'animal_subtypes.id')
+            ->leftJoin('animal_types', 'animal_subtypes.animal_type_id', '=', 'animal_types.id')
+            ->select(
+                'health_plan_services.*',
+                'health_plans.description as health_plans',
+                'services.*',
+                'animal_subtypes.description as animal_subtype',
+                'animal_subtypes.animal_type_id',
+                'animal_types.description as animal_type'
+            )
+            ->where($wheres)
+            ->get();
+
+        return $healthPlanService;
     }
 }

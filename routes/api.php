@@ -151,6 +151,7 @@ Route::prefix('health_plan_service')->group(function () {
     Route::post('/update', [HealthPlanServiceController::class, 'update']);
     Route::post('/destroy', [HealthPlanServiceController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanServiceController::class, 'show']);
+    Route::get('/getByHealthPlan/{id}', [HealthPlanServiceController::class, 'getByHealthPlan']);
 });
 
 
