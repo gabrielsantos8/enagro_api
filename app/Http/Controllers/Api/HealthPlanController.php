@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\HealthPlan;
+use App\Utils\SqlGetter;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HealthPlanController extends Controller
 {
@@ -60,5 +62,31 @@ class HealthPlanController extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function getBestsPlansByUser(int $id) {
+        $servicesController = new HealthPlanServiceController();
+        $sql = SqlGetter::getSql('get_bests_plans_by_user');
+        $healthPlans = DB::select($sql,[$id,$id]);
+
+        foreach ($healthPlans as $key => $value) {
+            $services = $servicesController->getByHealthPlan($value->id)->getData()->dados;
+            $healthPlans[$key]->services = $services;
+        }
+
+        echo json_encode(['success' => true, 'message' => "", "dados" => $healthPlans]);
+    }
+
+    public function getAllPlansByUser(int $id) {
+        $servicesController = new HealthPlanServiceController();
+        $sql = SqlGetter::getSql('get_all_plans_by_user');
+        $healthPlans = DB::select($sql,[$id,$id]);
+
+        foreach ($healthPlans as $key => $value) {
+            $services = $servicesController->getByHealthPlan($value->id)->getData()->dados;
+            $healthPlans[$key]->services = $services;
+        }
+
+        echo json_encode(['success' => true, 'message' => "", "dados" => $healthPlans]);
     }
 }

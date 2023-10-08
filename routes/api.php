@@ -134,6 +134,8 @@ Route::prefix('health_plan')->group(function () {
     Route::post('/update', [HealthPlanController::class, 'update']);
     Route::post('/destroy', [HealthPlanController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanController::class, 'show']);
+    Route::get('/getBestsPlansByUser/{id}', [HealthPlanController::class, 'getBestsPlansByUser']);
+    Route::get('/getAllPlansByUser/{id}', [HealthPlanController::class, 'getAllPlansByUser']);
 });
 
 Route::prefix('service')->group(function () {
