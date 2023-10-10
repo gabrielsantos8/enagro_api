@@ -183,6 +183,7 @@ Route::prefix('health_plan_contract_animal')->group(function () {
     Route::post('/destroy', [HealthPlanContractAnimalController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanContractAnimalController::class, 'show']);
     Route::get('/getByContract/{id}', [HealthPlanContractAnimalController::class, 'getByContract']);
+    Route::get('/getAnimalsToAddByUser/{user_id}/{contract_id}', [HealthPlanContractAnimalController::class, 'getAnimalsToAddByUser']);
 });
 
 Route::prefix('veterinarian_service')->group(function () {
