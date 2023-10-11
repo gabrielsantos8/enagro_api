@@ -34,8 +34,12 @@
         <div class="mb-3">
             <div class="row">
                 <div class="col-4">
-                    <label for="description" class="form-label"><b>Endereço do Cliente</b></label>
-                    <input type="text" required name="description" id="description" class="form-control">
+                    <label for="animal_type_id" class="form-label"><b>Endereço do Cliente:</b></label>
+                    <select name="animal_type_id" required class="form-control" id="animal_type_id">
+                        @foreach ($animal_types as $type)
+                            <option value="{{ $type->id }}">{{ $type->id . ' - ' . $type->description }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-2">
                     <label for="number" class="form-label"><b>Data Nascimento</b></label>
