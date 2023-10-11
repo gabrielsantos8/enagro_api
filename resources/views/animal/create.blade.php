@@ -17,34 +17,31 @@
                     <input type="text" required name="name" id="name" class="form-control">
                 </div>
                 <div class="col-4">
-                    <label for="number" class="form-label"><b>Email:</b></label>
-                    <input type="email" required name="email" id="email" class="form-control">
+                    <label for="description" class="form-label"><b>Descrição</b></label>
+                    <input type="text" required name="description" id="description" class="form-control">
                 </div>
                 <div class="col-4">
-                    <label for="password" class="form-label"><b>Senha:</b></label>
-                    <input type="password" required name="password" id="password" class="form-control">
+                    <label for="animal_type_id" class="form-label"><b>Tipo:</b></label>
+                    <select name="animal_type_id" required class="form-control" id="animal_type_id">
+                        @foreach ($animal_types as $type)
+                            <option value="{{ $type->id }}">{{ $type->id . ' - ' . $type->description }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
 
         <div class="mb-3">
             <div class="row">
-                <div class="col-2">
-                    <label for="ddd" class="form-label"><b>DDD:</b></label>
-                    <input type="number" required name="ddd" max="99" id="ddd" class="form-control" placeholder="00">
-                </div>
-                <div class="col-2">
-                    <label for="number" class="form-label"><b>Número Telefone:</b></label>
-                    <input type="number" required name="number" max="999999999" id="number" class="form-control" placeholder="000000000">
-                </div>
                 <div class="col-4">
-                    <label for="user_type_id" class="form-label"><b>Tipo:</b></label>
-                    <select name="user_type_id" required class="form-control" id="user_type_id">
-                        @foreach ($user_types as $type)
-                            <option value="{{ $type->id }}">{{ $type->id . ' - ' . $type->description }}</option>
-                        @endforeach
-                    </select>
+                    <label for="description" class="form-label"><b>Endereço do Cliente</b></label>
+                    <input type="text" required name="description" id="description" class="form-control">
                 </div>
+                <div class="col-2">
+                    <label for="number" class="form-label"><b>Data Nascimento</b></label>
+                    <input type="number" required name="number" max="9999999" id="number" class="form-control" placeholder="01/01/2001">
+                </div>
+                
                 <div class="col-4">
                     <label for="situation_id" class="form-label"><b>Situação:</b></label>
                     <select name="situation_id" required class="form-control" id="situation_id">

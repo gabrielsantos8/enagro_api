@@ -17,6 +17,10 @@
                 <th class="header-table-col-default" scope="col">Descrição</th>
                 <th class="header-table-col-default" scope="col">Tipo de Animal</th>
                 <th class="header-table-col-default" scope="col">Endereço do Cliente</th>
+                <th class="header-table-col-default" scope="col">Data Criado</th>
+                <th class="header-table-col-default" scope="col">Data Atualizado</th>
+                <th class="header-table-col-default" scope="col">Data Nascimento</th>
+                <th class="header-table-col-default" scope="col">Situação</th>
                 <th class="header-table-col-default"></th>
             </tr>
         </thead>
