@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\HealthPlanContract;
+use App\Services\SignatureService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,7 +76,8 @@ class HealthPlanContractController extends Controller
         }
     }
 
-    private function calcContractValue($type, $value) {
+    private function calcContractValue($type, $value)
+    {
         return $type == 1 ? $value : $value * 12;
     }
 
@@ -143,5 +145,17 @@ class HealthPlanContractController extends Controller
         }
 
         return $healthPlanContract;
+    }
+
+
+    public function contractSign(Request $req)
+    {
+        try {
+            $service = new SignatureService();
+            $ret = $service->startSign($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }
