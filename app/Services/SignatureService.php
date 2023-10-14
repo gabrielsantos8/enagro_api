@@ -7,16 +7,37 @@ use App\Models\HealthPlanContractAnimal;
 use App\Models\HealthPlanContractInstallment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Utils\SqlGetter;
+use Illuminate\Support\Facades\DB;
 
 class SignatureService
 {
 
     public function startSign(Request $req)
     {
+        if($this->contractExists($req->user_id)) {
+            $this->cancelContractInstallment($req->user_id);
+            $this->cancelContract($req->user_id);
+        }
         $contract = $this->insContract($req);
         $installment = $this->insInstallment($contract);
         $animals = $this->insAnimals($contract, $req->animals);
         return ['contract' => $contract, 'installment' => $installment, 'animals' => $animals];
+    }
+
+    private function contractExists(int $user_id) {
+        $ret = DB::select(SqlGetter::getSql('exists_contract_by_user'), [$user_id]);
+        return isset($ret[0]);
+    }
+
+    private function cancelContractInstallment(int $user_id) {
+        $ret = DB::select(SqlGetter::getSql('cancel_contract_installment_by_user'), [$user_id]);
+        return isset($ret[0]);
+    }
+
+    private function cancelContract(int $user_id) {
+        $ret = DB::select(SqlGetter::getSql('cancel_contract_by_user'), [$user_id]);
+        return isset($ret[0]);
     }
 
     private function insContract(Request $req)
