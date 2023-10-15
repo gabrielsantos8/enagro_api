@@ -194,6 +194,7 @@ Route::prefix('veterinarian_service')->group(function () {
     Route::post('/destroy', [VeterinarianServiceController::class, 'destroy']);
     Route::get('/show/{id}', [VeterinarianServiceController::class, 'show']);
     Route::get('/getByVeterinarian/{id}', [VeterinarianServiceController::class, 'getByVeterinarian']);
+    Route::get('/getNotByVeterinarian/{id}', [VeterinarianServiceController::class, 'getNotByVeterinarian']);
 });
 
 Route::prefix('activation')->group(function () {
