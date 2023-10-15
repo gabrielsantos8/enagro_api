@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\VeterinarianService;
+use App\Utils\SqlGetter;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,10 +72,16 @@ class VeterinarianServiceController extends Controller
         }
     }
 
-    public function getByVeterinarian(int $id)
+    public function getByVeterinarian(int $veterinarian_id)
     {
-        $veterinarianService = $this->getBy('veterinarian_services', 'veterinarian_id', $id);
-        return response()->json(['success' => true, 'message' => "", "dados" => $veterinarianService], count($veterinarianService) >= 1 ? 200 : 404);
+        $services = DB::select(SqlGetter::getSql('get_services_by_veterinarian'),[$veterinarian_id]);
+        return response()->json(['success' => true, 'message' => "", "dados" => $services], 200);
+    }
+
+    public function getNotByVeterinarian(int $veterinarian_id)
+    {
+        $services = DB::select(SqlGetter::getSql('get_services_notby_veterinarian'),[$veterinarian_id]);
+        return response()->json(['success' => true, 'message' => "", "dados" => $services], 200);
     }
 
     public function getBy(string $table, string $field, $value)
