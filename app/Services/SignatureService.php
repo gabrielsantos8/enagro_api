@@ -70,11 +70,6 @@ class SignatureService
     private function getDueDate(int $typeId)
     {
         $currentDate = Carbon::now();
-        if ($typeId === 1) {
-            return $currentDate->addDays(30);
-        } elseif ($typeId === 2) {
-            return $currentDate->addYear();
-        }
         return $currentDate;
     }
 
