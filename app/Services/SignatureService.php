@@ -21,7 +21,10 @@ class SignatureService
         }
         $contract = $this->insContract($req);
         $installment = $this->insInstallment($contract);
-        $animals = $this->insAnimals($contract, $req->animals);
+        $animals = array();
+        if($req->animals != '') {
+            $animals = $this->insAnimals($contract, $req->animals);
+        }
         return ['contract' => $contract, 'installment' => $installment, 'animals' => $animals];
     }
 
@@ -47,14 +50,9 @@ class SignatureService
         $healthPlanContract->user_id = $req->user_id;
         $healthPlanContract->health_plan_contract_type_id = $req->health_plan_contract_type_id;
         $healthPlanContract->health_plan_contract_status_id = 1;
-        $healthPlanContract->value = $this->calcContractValue($req->health_plan_contract_type_id, $req->value);
+        $healthPlanContract->value = $req->value;
         $healthPlanContract->save();
         return $healthPlanContract;
-    }
-
-    private function calcContractValue(int $type, float $value)
-    {
-        return $type == 1 ? $value : $value * 12;
     }
 
     private function insInstallment(HealthPlanContract $contract)

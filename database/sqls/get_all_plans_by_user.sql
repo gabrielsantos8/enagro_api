@@ -17,4 +17,5 @@ WHERE NOT EXISTS (
     FROM health_plan_contracts hpc
     WHERE hpc.health_plan_id = hp.id
       AND hpc.user_id = ?    
+      AND hpc.health_plan_contract_status_id = 1
 )

@@ -64,10 +64,11 @@ class HealthPlanController extends Controller
         }
     }
 
-    public function getBestsPlansByUser(int $id) {
+    public function getBestsPlansByUser(int $id)
+    {
         $servicesController = new HealthPlanServiceController();
         $sql = SqlGetter::getSql('get_bests_plans_by_user');
-        $healthPlans = DB::select($sql,[$id,$id]);
+        $healthPlans = DB::select($sql, [$id, $id]);
 
         foreach ($healthPlans as $key => $value) {
             $services = $servicesController->getByHealthPlan($value->id)->getData()->dados;
@@ -77,10 +78,11 @@ class HealthPlanController extends Controller
         echo json_encode(['success' => true, 'message' => "", "dados" => $healthPlans]);
     }
 
-    public function getAllPlansByUser(int $id) {
+    public function getAllPlansByUser(int $id)
+    {
         $servicesController = new HealthPlanServiceController();
         $sql = SqlGetter::getSql('get_all_plans_by_user');
-        $healthPlans = DB::select($sql,[$id,$id]);
+        $healthPlans = DB::select($sql, [$id, $id]);
 
         foreach ($healthPlans as $key => $value) {
             $services = $servicesController->getByHealthPlan($value->id)->getData()->dados;
@@ -88,5 +90,12 @@ class HealthPlanController extends Controller
         }
 
         echo json_encode(['success' => true, 'message' => "", "dados" => $healthPlans]);
+    }
+
+    public function getAnimalsToAddByUser(int $user_id, int $plan_id)
+    {
+        $sql = SqlGetter::getSql('get_animals_to_add_by_plan_and_user');
+        $res = DB::SELECT($sql, [$plan_id, $user_id]);
+        return response()->json(['success' => true, 'message' => "", "dados" => $res], 200);
     }
 }
