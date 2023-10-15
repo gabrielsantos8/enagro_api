@@ -136,6 +136,7 @@ Route::prefix('health_plan')->group(function () {
     Route::get('/show/{id}', [HealthPlanController::class, 'show']);
     Route::get('/getBestsPlansByUser/{id}', [HealthPlanController::class, 'getBestsPlansByUser']);
     Route::get('/getAllPlansByUser/{id}', [HealthPlanController::class, 'getAllPlansByUser']);
+    Route::get('/getAnimalsToAddByUser/{user_id}/{plan_id}', [HealthPlanController::class, 'getAnimalsToAddByUser']);
 });
 
 Route::prefix('service')->group(function () {
