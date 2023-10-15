@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\HealthPlanContract;
+use App\Services\PaymentService;
 use App\Services\SignatureService;
 use Exception;
 use Illuminate\Http\Request;
@@ -153,6 +154,17 @@ class HealthPlanContractController extends Controller
         try {
             $service = new SignatureService();
             $ret = $service->startSign($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function installmentPayment(Request $req)
+    {
+        try {
+            $service = new PaymentService();
+            $ret = $service->installmentPayment($req);
             return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
