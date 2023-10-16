@@ -207,6 +207,8 @@ Route::prefix('activation')->group(function () {
     Route::get('/show/{id}', [ActivationController::class, 'show']);
     Route::get('/getByVeterinarian/{id}', [ActivationController::class, 'getByVeterinarian']);
     Route::get('/getByUser/{id}', [ActivationController::class, 'getByUser']);
+    Route::post('/findBestVeterinarian', [ActivationController::class, 'findBestVeterinarian']);
+    Route::post('/createActivation', [ActivationController::class, 'createActivation']);
 });
 
 Route::prefix('activation_service')->group(function () {

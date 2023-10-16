@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activation;
+use App\Services\ConActivationService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,14 +95,36 @@ class ActivationController extends Controller
     public function getBy(string $table, string $field, $value)
     {
         $activation =  DB::table('activations')
-        ->leftJoin('veterinarians', 'activations.veterinarian_id', '=', 'veterinarians.id')
-        ->leftJoin('health_plan_contracts', 'activations.contract_id', '=', 'health_plan_contracts.id')
-        ->leftJoin('activation_status', 'activations.activation_status_id', '=', 'activation_status.id')
-        ->leftJoin('activation_types', 'activations.activation_type_id', '=', 'activation_types.id')
-        ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as tipo', 'activation_status.description as status')
-        ->where([[$table.'.'.$field, '=', $value]])
-        ->get();
+            ->leftJoin('veterinarians', 'activations.veterinarian_id', '=', 'veterinarians.id')
+            ->leftJoin('health_plan_contracts', 'activations.contract_id', '=', 'health_plan_contracts.id')
+            ->leftJoin('activation_status', 'activations.activation_status_id', '=', 'activation_status.id')
+            ->leftJoin('activation_types', 'activations.activation_type_id', '=', 'activation_types.id')
+            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as tipo', 'activation_status.description as status')
+            ->where([[$table . '.' . $field, '=', $value]])
+            ->get();
 
         return $activation;
+    }
+
+    public function findBestVeterinarian(Request $req)
+    {
+        try {
+            $service = new ConActivationService();
+            $ret  = $service->findBestVeterinarianForService($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function createActivation(Request $req)
+    {
+        try {
+            $service = new ConActivationService();
+            $ret  = $service->createActivation($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }
