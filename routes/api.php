@@ -146,6 +146,7 @@ Route::prefix('service')->group(function () {
     Route::post('/destroy', [ServiceController::class, 'destroy']);
     Route::get('/show/{id}', [ServiceController::class, 'show']);
     Route::get('/getByAnimalSubtype/{id}', [ServiceController::class, 'getByAnimalSubtype']);
+    Route::get('/getByAnimalSubtypes/{ids}', [ServiceController::class, 'getByAnimalSubtypes']);
 });
 
 Route::prefix('health_plan_service')->group(function () {

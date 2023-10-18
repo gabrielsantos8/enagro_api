@@ -74,6 +74,27 @@ class ServiceController extends Controller
         return response()->json(['success' => true, 'message' => "", "dados" => $service], count($service) >= 1 ? 200 : 404);
     }
 
+    public function getByAnimalSubtypes(string $ids)
+    {
+        $idsArr = explode(',', $ids);
+        $service = array();
+        $uniqueValues = array();
+        foreach ($idsArr as $value) {
+            $data = $this->getBy('animal_subtype_id', $value);
+            if (isset($data[0])) {
+                foreach ($data as $vv) {
+                    if (!in_array($vv, $uniqueValues)) {
+                        $uniqueValues[] = $vv;
+                        $service[] = $vv;
+                    }
+                }
+            }
+        }
+
+
+        return response()->json(['success' => true, 'message' => "", "dados" => $service], count($service) >= 1 ? 200 : 404);
+    }
+
     public function getBy(string $field, $value)
     {
         $service = DB::table('services')
