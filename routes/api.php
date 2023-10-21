@@ -87,6 +87,7 @@ Route::prefix('veterinarian')->group(function () {
     Route::post('/update', [VeterinarianController::class, 'update']);
     Route::post('/destroy', [VeterinarianController::class, 'destroy']);
     Route::get('/getByUser/{id}', [VeterinarianController::class, 'getByUser']);
+    Route::get('/getByServicesAndCities/{services_id}/{animals_id}', [VeterinarianController::class, 'getByServicesAndCities']);
 });
 
 Route::prefix('service_city')->group(function () {
