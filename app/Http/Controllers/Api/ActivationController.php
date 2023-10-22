@@ -18,7 +18,7 @@ class ActivationController extends Controller
             ->leftJoin('health_plan_contracts', 'activations.contract_id', '=', 'health_plan_contracts.id')
             ->leftJoin('activation_status', 'activations.activation_status_id', '=', 'activation_status.id')
             ->leftJoin('activation_types', 'activations.activation_type_id', '=', 'activation_types.id')
-            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as tipo', 'activation_status.description as status')
+            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as type', 'activation_status.description as status')
             ->get();
 
         return response()->json(['success' => true, 'message' => "", "dados" => $activations], 200);
@@ -31,7 +31,7 @@ class ActivationController extends Controller
             ->leftJoin('health_plan_contracts', 'activations.contract_id', '=', 'health_plan_contracts.id')
             ->leftJoin('activation_status', 'activations.activation_status_id', '=', 'activation_status.id')
             ->leftJoin('activation_types', 'activations.activation_type_id', '=', 'activation_types.id')
-            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as tipo', 'activation_status.description as status')
+            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as type', 'activation_status.description as status')
             ->where([['activations.id', '=', $id]])
             ->get();
 
@@ -88,8 +88,12 @@ class ActivationController extends Controller
 
     public function getByUser(int $id)
     {
-        $activation = $this->getBy('health_plan_contracts', 'user_id', $id);
-        return response()->json(['success' => true, 'message' => "", "dados" => $activation], count($activation) >= 1 ? 200 : 404);
+        $activations = $this->getBy('health_plan_contracts', 'user_id', $id);
+        foreach ($activations as $key => $actv) {
+            $activations[$key]->services = DB::select('SELECT s.* FROM activation_services asv LEFT JOIN services s on s.id = asv.service_id WHERE asv.activation_id = ?', [$actv->id]);
+            $activations[$key]->animals = DB::select('SELECT a.* FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id WHERE aa.activation_id = ?', [$actv->id]);
+        }
+        return response()->json(['success' => true, 'message' => "", "dados" => $activations], 200);
     }
 
     public function getBy(string $table, string $field, $value)
@@ -97,9 +101,10 @@ class ActivationController extends Controller
         $activation =  DB::table('activations')
             ->leftJoin('veterinarians', 'activations.veterinarian_id', '=', 'veterinarians.id')
             ->leftJoin('health_plan_contracts', 'activations.contract_id', '=', 'health_plan_contracts.id')
+            ->leftJoin('health_plans', 'health_plan_contracts.health_plan_id', '=', 'health_plans.id')
             ->leftJoin('activation_status', 'activations.activation_status_id', '=', 'activation_status.id')
             ->leftJoin('activation_types', 'activations.activation_type_id', '=', 'activation_types.id')
-            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as tipo', 'activation_status.description as status')
+            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as type', 'activation_status.description as status', 'health_plans.description as plan')
             ->where([[$table . '.' . $field, '=', $value]])
             ->get();
 
