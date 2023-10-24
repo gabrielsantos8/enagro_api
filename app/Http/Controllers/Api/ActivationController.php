@@ -82,8 +82,12 @@ class ActivationController extends Controller
 
     public function getByVeterinarian(int $id)
     {
-        $activation = $this->getBy('activations', 'veterinarian_id', $id);
-        return response()->json(['success' => true, 'message' => "", "dados" => $activation], count($activation) >= 1 ? 200 : 404);
+        $activations = $this->getBy('activations', 'veterinarian_id', $id);
+        foreach ($activations as $key => $actv) {
+            $activations[$key]->services = DB::select('SELECT s.* FROM activation_services asv LEFT JOIN services s on s.id = asv.service_id WHERE asv.activation_id = ?', [$actv->id]);
+            $activations[$key]->animals = DB::select('SELECT a.* FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id WHERE aa.activation_id = ?', [$actv->id]);
+        }
+        return response()->json(['success' => true, 'message' => "", "dados" => $activations], 200);
     }
 
     public function getByUser(int $id)
