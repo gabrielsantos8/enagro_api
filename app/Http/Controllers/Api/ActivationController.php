@@ -86,7 +86,7 @@ class ActivationController extends Controller
         foreach ($activations as $key => $actv) {
             $activations[$key]->valueToPay = DB::select('SELECT sum(s.value) as value FROM activation_services asv LEFT JOIN services s on s.id = asv.service_id WHERE asv.activation_id = ?', [$actv->id])[0]->value;
             $activations[$key]->services = DB::select('SELECT s.* FROM activation_services asv LEFT JOIN services s on s.id = asv.service_id WHERE asv.activation_id = ?', [$actv->id]);
-            $activations[$key]->animals = DB::select('SELECT a.* FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id WHERE aa.activation_id = ?', [$actv->id]);
+            $activations[$key]->animals = DB::select('SELECT a.*,ad.complement,ad.city_id,c.description as city,c.uf,c.ibge,att.description as animal_type,ast.description as animal_subtype FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id LEFT JOIN animal_types att on att.id = a.animal_type_id LEFT JOIN animal_subtypes ast on ast.id = a.animal_subtype_id LEFT JOIN user_addresses ad on ad.id = a.user_address_id LEFT JOIN cities c on c.id = ad.city_id WHERE aa.activation_id = ?', [$actv->id]);
             $activations[$key]->addresses = DB::select('SELECT ad.*, c.uf, c.ibge, c.description as city FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id LEFT JOIN user_addresses ad on ad.id = a.user_address_id LEFT JOIN cities c ON c.id = ad.city_id WHERE aa.activation_id = ? GROUP BY 1,2,3,4,5,6,7,8,9', [$actv->id]);
             $activations[$key]->phones = DB::select('SELECT up.* FROM user_phones up WHERE up.user_id = ?', [$actv->user_id]);
         }
