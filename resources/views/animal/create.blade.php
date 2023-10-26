@@ -43,9 +43,10 @@
                 </div>
                 <div class="col-2">
                     <label for="number" class="form-label"><b>Data Nascimento</b></label>
-                    <input type="number" required name="number" max="9999999" id="number" class="form-control" placeholder="01/01/2001">
+                    <input type="number" required name="number" max="9999999" id="number" class="form-control"
+                        placeholder="01/01/2001">
                 </div>
-                
+
                 <div class="col-4">
                     <label for="situation_id" class="form-label"><b>Situação:</b></label>
                     <select name="situation_id" required class="form-control" id="situation_id">
@@ -62,7 +63,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="foto_perfil" class="form-label"><b>Imagem:</b></label>
-                    <input type="file" class="form-control" name="foto_perfil" accept="image/*" required/>
+                    <input type="file" class="form-control" name="foto_perfil" accept="image/*" required />
                 </div>
             </div>
         </div>
