@@ -84,8 +84,11 @@ class ActivationController extends Controller
     {
         $activations = $this->getBy('activations', 'veterinarian_id', $id);
         foreach ($activations as $key => $actv) {
+            $activations[$key]->valueToPay = DB::select('SELECT sum(s.value) as value FROM activation_services asv LEFT JOIN services s on s.id = asv.service_id WHERE asv.activation_id = ?', [$actv->id])[0]->value;
             $activations[$key]->services = DB::select('SELECT s.* FROM activation_services asv LEFT JOIN services s on s.id = asv.service_id WHERE asv.activation_id = ?', [$actv->id]);
             $activations[$key]->animals = DB::select('SELECT a.* FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id WHERE aa.activation_id = ?', [$actv->id]);
+            $activations[$key]->addresses = DB::select('SELECT ad.*, c.uf, c.ibge, c.description as city FROM activation_animals aa LEFT JOIN animals a on a.id = aa.animal_id LEFT JOIN user_addresses ad on ad.id = a.user_address_id LEFT JOIN cities c ON c.id = ad.city_id WHERE aa.activation_id = ? GROUP BY 1,2,3,4,5,6,7,8,9', [$actv->id]);
+            $activations[$key]->phones = DB::select('SELECT up.* FROM user_phones up WHERE up.user_id = ?', [$actv->user_id]);
         }
         return response()->json(['success' => true, 'message' => "", "dados" => $activations], 200);
     }
@@ -105,10 +108,11 @@ class ActivationController extends Controller
         $activation =  DB::table('activations')
             ->leftJoin('veterinarians', 'activations.veterinarian_id', '=', 'veterinarians.id')
             ->leftJoin('health_plan_contracts', 'activations.contract_id', '=', 'health_plan_contracts.id')
+            ->leftJoin('users', 'health_plan_contracts.user_id', '=', 'users.id')
             ->leftJoin('health_plans', 'health_plan_contracts.health_plan_id', '=', 'health_plans.id')
             ->leftJoin('activation_status', 'activations.activation_status_id', '=', 'activation_status.id')
             ->leftJoin('activation_types', 'activations.activation_type_id', '=', 'activation_types.id')
-            ->select('activations.*', 'veterinarians.nome as veterinarian', 'activation_types.description as type', 'activation_status.description as status', 'health_plans.description as plan')
+            ->select('activations.*', 'veterinarians.nome as veterinarian', 'users.name as user', 'users.id as user_id','activation_types.description as type', 'activation_status.description as status', 'health_plans.description as plan')
             ->where([[$table . '.' . $field, '=', $value]])
             ->get();
 
