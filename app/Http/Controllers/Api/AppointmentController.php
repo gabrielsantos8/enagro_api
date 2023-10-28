@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activation;
 use App\Models\Appointment;
 use Exception;
 use Illuminate\Http\Request;
@@ -42,7 +43,11 @@ class AppointmentController extends Controller
             $appointment->activation_id = $request->activation_id;
             $appointment->value = $request->value;
             $appointment->date = $request->date;
-            $appointment->save();
+            $appointment->end_date = $request->end_date;
+            if($appointment->save()) {
+                $activation = Activation::find($request->activation_id);
+                $activation->update(['activation_status_id' => 1]);
+            }
             return response()->json(['success' => true, 'message' => ''], 200);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);

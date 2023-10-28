@@ -1,0 +1,8 @@
+SELECT
+	1 as naopode
+FROM veterinarians v
+LEFT JOIN activations a on a.veterinarian_id = v.id
+LEFT JOIN appointments ap on ap.activation_id = a.id
+WHERE v.id = ?
+  and ? BETWEEN ap.date and ap.end_date
+  LIMIT 1
