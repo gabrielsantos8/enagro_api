@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Activation;
 use App\Models\Appointment;
+use App\Utils\SqlGetter;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,11 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         try {
+            $vetId = DB::select('select a.veterinarian_id from activations a where a.id = ? limit 1', [$request->activation_id])[0]->veterinarian_id;
+            $isNotAvailable = DB::select(SqlGetter::getSql('vet_is_available'), [$vetId, $request->date, $request->end_date]);
+            if(!empty($isNotAvailable)) {
+                return response()->json(['success' => false, 'message' => 'Horário indisponível!'], 200);
+            }
             $appointment = new Appointment();
             $appointment->status_id = $request->status_id;
             $appointment->activation_id = $request->activation_id;
@@ -50,7 +56,7 @@ class AppointmentController extends Controller
             }
             return response()->json(['success' => true, 'message' => ''], 200);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'Houve um erro ao aceitar. Tente novamente mais tarde.'], 500);
         }
     }
 
