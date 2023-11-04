@@ -40,7 +40,7 @@ class AppointmentController extends Controller
     {
         try {
             $vetId = DB::select('select a.veterinarian_id from activations a where a.id = ? limit 1', [$request->activation_id])[0]->veterinarian_id;
-            $isNotAvailable = DB::select(SqlGetter::getSql('vet_is_available'), [$vetId, $request->date, $request->end_date]);
+            $isNotAvailable = DB::select(SqlGetter::getSql('vet_is_available'), [$vetId, $request->initial_date, $request->end_date]);
             if(!empty($isNotAvailable)) {
                 return response()->json(['success' => false, 'message' => 'Horário indisponível!'], 200);
             }
@@ -48,7 +48,7 @@ class AppointmentController extends Controller
             $appointment->status_id = $request->status_id;
             $appointment->activation_id = $request->activation_id;
             $appointment->value = $request->value;
-            $appointment->date = $request->date;
+            $appointment->initial_date = $request->initial_date;
             $appointment->end_date = $request->end_date;
             if($appointment->save()) {
                 $activation = Activation::find($request->activation_id);
