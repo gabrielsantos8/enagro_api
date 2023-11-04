@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('activation_id');
             $table->foreign('activation_id')->references('id')->on('activations');
             $table->float('value');
-            $table->timestamp('date');
+            $table->timestamp('initial_date');
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('appointment_status');
             $table->timestamps();
