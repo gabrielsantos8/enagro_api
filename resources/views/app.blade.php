@@ -1,7 +1,7 @@
 @php
     $user = Auth::user();
     $userName = explode(' ', $user->name)[0];
-    
+
 @endphp
 
 
@@ -19,6 +19,9 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+
 
     <link rel="icon" href="{{ asset('img/icone_enagro.png') }}" type="image/x-icon">
 </head>
@@ -46,6 +49,7 @@
                     </a>
 
 
+
                     {{-- <a href="" class="nav_link @yield('relClass')"> <i class='fa-solid fa-paw nav_icon'></i>
                         <span class="nav_name">Animais</span> </a> --}}
 
@@ -64,6 +68,12 @@
 
 
                     <hr style="color: #fff">
+
+                    <a href="{{ route('relatory.plansByRegionIndex') }}" id="planosPorRegiao" class="nav_link @yield('relClass')"> <i class='bx bx-location-plus nav_icon'></i>
+                        <span class="nav_name">Planos por região</span> </a>
+
+                    <hr style="color: #fff">
+
 
                     <div class="nav_link d-flex" style="color: white">
                         <i class='fa fa-user-circle bx-sm nav_icon'></i>
@@ -104,6 +114,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/0.9.0/jquery.mask.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script>
         $("#number").mask("999999999");
         $("#ddd").mask("99");

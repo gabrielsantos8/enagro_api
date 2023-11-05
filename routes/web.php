@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RelatoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VeterinarianController;
@@ -53,4 +54,10 @@ Route::prefix('veterinarian')->middleware('auth')->group(function () {
     Route::post('/store', [VeterinarianController::class, 'store'])->name('veterinarian.store');
     Route::post('/update', [VeterinarianController::class, 'update'])->name('veterinarian.update');
     Route::post('/destroy', [VeterinarianController::class, 'destroy'])->name('veterinarian.destroy');
+});
+
+
+Route::prefix('relatory')->middleware('auth')->group(function () {
+    Route::get('/plansByRegion', [RelatoryController::class, 'plansByRegionIndex'])->name('relatory.plansByRegionIndex');
+    Route::post('/plansByRegionData', [RelatoryController::class, 'plansByRegionData']);
 });
