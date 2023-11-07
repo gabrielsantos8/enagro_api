@@ -14,7 +14,7 @@ class SqlGetter
         return $sql;
     }
 
-    public function switchParams( $params, $sql ){
+    public static function switchParams( $params, $sql ){
 		foreach($params as $nome => $valor){
 			$valor = trim(str_replace('\"', "'", $valor));
 			$sql = preg_replace( '/:'.$nome.'\b/i', $valor, $sql);
