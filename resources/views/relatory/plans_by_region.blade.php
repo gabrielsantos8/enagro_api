@@ -55,13 +55,16 @@
             </tr>
         </thead>
     </table>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js">
-    </script>
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/buttons/1.13.6/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.13.6/js/buttons.html5.min.js">
-    </script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script> --}}
+    <script src="{{ mix('js/jquery-3.7.0.js') }}"></script>
+    <script src="{{ mix('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ mix('js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ mix('js/jszip.min.js') }}"></script>
+    <script src="{{ mix('js/pdfmake.min.js') }}"></script>
+    <script src="{{ mix('js/vfs_fonts.js') }}"></script>
+    <script src="{{ mix('js/buttons.html5.min.js') }}"></script>
+    <script src="{{ mix('js/buttons.print.min.js') }}"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -93,7 +96,7 @@
                 ],
                 "dom": 'Bfrtip',
                 "buttons": [
-                    'excel'
+                    'excel', 'print'
                 ]
             });
 
@@ -108,7 +111,6 @@
                 } else {
                     $('#aviso').empty();
                     $.post("/relatory/plansByRegionData", {
-                        "_token": "3q2ot7OIliZ9BVrNDUlE1uEEEuXT7EFD912GKvzP",
                         "dini": dini,
                         "dfim": dfim,
                         "uf": uf,
