@@ -8,6 +8,7 @@
     "/js/jszip.min.js": "/js/jszip.min.js",
     "/js/pdfmake.min.js": "/js/pdfmake.min.js",
     "/js/vfs_fonts.js": "/js/vfs_fonts.js",
+    "/js/jquery.mask.min.js": "/js/jquery.mask.min.js",
     "/css/app.css": "/css/app.css",
     "/css/bootstrap.min.css": "/css/bootstrap.min.css",
     "/css/all.min.css": "/css/all.min.css",
