@@ -20,7 +20,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
 
 
     <link rel="icon" href="{{ asset('img/icone_enagro.png') }}" type="image/x-icon">
@@ -69,8 +70,13 @@
 
                     <hr style="color: #fff">
 
-                    <a href="{{ route('relatory.plansByRegionIndex') }}" id="planosPorRegiao" class="nav_link @yield('relClass')"> <i class='bx bx-location-plus nav_icon'></i>
+                    <a href="{{ route('relatory.plansByRegionIndex') }}" id="planosPorRegiao"
+                        class="nav_link @yield('relClass')"> <i class='bx bx-location-plus nav_icon'></i>
                         <span class="nav_name">Planos por região</span> </a>
+
+                    <a href="{{ route('relatory.installmentByUser') }}" id="parcelasPorUsuario"
+                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
+                        <span class="nav_name">Parcelas por usuário</span> </a>
 
                     <hr style="color: #fff">
 
@@ -119,6 +125,7 @@
     <script src="{{ mix('js/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/buttons.html5.min.js') }}"></script>
     <script src="{{ mix('js/buttons.print.min.js') }}"></script>
+    <script src="{{ mix('js/jquery.mask.min.js') }}"></script>
 
     <script>
         $("#number").mask("999999999");

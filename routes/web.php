@@ -59,5 +59,7 @@ Route::prefix('veterinarian')->middleware('auth')->group(function () {
 
 Route::prefix('relatory')->middleware('auth')->group(function () {
     Route::get('/plansByRegion', [RelatoryController::class, 'plansByRegionIndex'])->name('relatory.plansByRegionIndex');
+    Route::get('/installmentByUser', [RelatoryController::class, 'installmentByUserIndex'])->name('relatory.installmentByUser');
     Route::post('/plansByRegionData', [RelatoryController::class, 'plansByRegionData']);
+    Route::post('/installmentByUserIndexData', [RelatoryController::class, 'installmentByUserIndexData']);
 });
