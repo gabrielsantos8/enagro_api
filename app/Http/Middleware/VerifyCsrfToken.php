@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'relatory/plansByRegionData',
-        'relatory/installmentByUserIndexData'
+        'relatory/installmentByUserIndexData',
+        'relatory/animalsBySubtypeData'
     ];
 }

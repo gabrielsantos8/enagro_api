@@ -78,6 +78,10 @@
                         class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
                         <span class="nav_name">Parcelas por usuário</span> </a>
 
+                    <a href="{{ route('relatory.animalsBySubtype') }}" id="animaisPorSubTipos"
+                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
+                        <span class="nav_name">Animais por sub-tipo</span> </a>
+
                     <hr style="color: #fff">
 
 

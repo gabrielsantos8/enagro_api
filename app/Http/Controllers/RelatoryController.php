@@ -31,4 +31,15 @@ class RelatoryController extends Controller
         $data = DB::select(SqlGetter::getSql('rel_installments_by_user', $params));
         return response()->json(['success' => true, 'message' => "", 'dados' => $data], 200);
     }
+
+    public function animalsBySubtypeIndex() {
+        $subTypes = DB::select('SELECT * FROM animal_subtypes');
+        return view('relatory.animals_by_subtype', ['subtypes' => $subTypes]);
+    }
+
+    public function animalsBySubtypeData(Request $req) {
+        $params = $req->except('_token');
+        $data = DB::select(SqlGetter::getSql('rel_animals_by_subtype', $params));
+        return response()->json(['success' => true, 'message' => "", 'dados' => $data], 200);
+    }
 }
