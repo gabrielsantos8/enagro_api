@@ -70,7 +70,7 @@
         $(document).ready(function() {
             var tabela = $('#userInstallmentTable').DataTable({
                 "columns": [{
-                        "data": "Cód.Contrato"
+                        "data": "contract_id"
                     },
                     {
                         "data": "Número Parcela"

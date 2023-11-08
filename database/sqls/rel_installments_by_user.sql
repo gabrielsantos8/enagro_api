@@ -1,8 +1,8 @@
 SELECT 
-	hpci.contract_id as "Cód.Contrato"
+	 hpci.contract_id 
    ,hpci.installment_number as "Número Parcela"
    ,hpcis.description as "Situação"
-   ,DATE_FORMAT(hpci.due_date, '%d/%m/%Y %H:%i:%s') as "Data de Vencimento"
+   ,DATE_FORMAT(hpci.due_date, '%d/%m/%Y') as "Data de Vencimento"
    ,hpci.value as "Valor"
    ,hp.description as "Plano"
    ,hpct.description as "Tipo" 
