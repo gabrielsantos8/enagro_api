@@ -68,6 +68,11 @@
                         <span class="nav_name">Veterinários</span> </a>
 
 
+                    <a id="plans" href="{{ route('health_plan.index') }}" class="nav_link"><i
+                            class="fa-solid fa-notes-medical nav_icon"></i>
+                        <span class="nav_name">Planos de Saúde</span>
+                    </a>
+
                     <hr style="color: #fff">
 
                     <a href="{{ route('relatory.plansByRegionIndex') }}" id="planosPorRegiao"
@@ -75,11 +80,11 @@
                         <span class="nav_name">Planos por região</span> </a>
 
                     <a href="{{ route('relatory.installmentByUser') }}" id="parcelasPorUsuario"
-                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
+                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon'></i>
                         <span class="nav_name">Parcelas por usuário</span> </a>
 
                     <a href="{{ route('relatory.animalsBySubtype') }}" id="animaisPorSubTipos"
-                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
+                        class="nav_link @yield('relClass')"> <i class='bx bxs-dog nav_icon'></i>
                         <span class="nav_name">Animais por sub-tipo</span> </a>
 
                     <hr style="color: #fff">
@@ -130,10 +135,13 @@
     <script src="{{ mix('js/buttons.html5.min.js') }}"></script>
     <script src="{{ mix('js/buttons.print.min.js') }}"></script>
     <script src="{{ mix('js/jquery.mask.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
         $("#number").mask("999999999");
         $("#ddd").mask("99");
+        $("#value").mask("000.00");
         var menuAtivo = @yield('menuAtivo');
         menuAtivo.classList.add('active');
         $(document).ready(function() {

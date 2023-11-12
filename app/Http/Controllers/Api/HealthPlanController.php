@@ -14,6 +14,13 @@ class HealthPlanController extends Controller
     public function list()
     {
         $healthPlans = HealthPlan::all();
+
+        foreach ($healthPlans as $key => $value) {
+            $haveData1 = DB::select("SELECT 1 FROM health_plan_services WHERE health_plan_id = {$healthPlans[$key]->id}");
+            $haveData2 = DB::select("SELECT 1 FROM health_plan_contracts WHERE health_plan_id = {$healthPlans[$key]->id}");
+            $healthPlans[$key]->isNotDeletable = isset($haveData1[0]) || isset($haveData2[0]); 
+        }
+
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlans], 200);
     }
 
@@ -26,13 +33,16 @@ class HealthPlanController extends Controller
     public function store(Request $request)
     {
         try {
+
+            $colors = 'ff000,';
+            $colors .= str_replace('#','ff',$request->plan_colors);
             $healthPlan = new HealthPlan();
             $healthPlan->description = $request->description;
             $healthPlan->detailed_description = $request->detailed_description;
             $healthPlan->value = $request->value;
             $healthPlan->minimal_animals = $request->minimal_animals;
             $healthPlan->maximum_animals = $request->maximum_animals;
-            $healthPlan->plan_colors = $request->plan_colors;
+            $healthPlan->plan_colors = $colors;
             if ($healthPlan->save()) {
                 return response()->json(['success' => true, 'message' => "Plano de saúde cadastrado!", 'dados' => $healthPlan], 200);
             }
@@ -45,6 +55,9 @@ class HealthPlanController extends Controller
     {
         try {
             $dados = $request->except('id');
+            $colors = 'ff000,';
+            $colors .= str_replace('#','ff',$dados['plan_colors']);
+            $dados['plan_colors']  = $colors;
             $healthPlan = HealthPlan::find($request->id);
             $healthPlan->update($dados);
             return response()->json(['success' => true, 'message' => 'Plano de saúde atualizado!'], 200);
