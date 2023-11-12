@@ -35,7 +35,6 @@ class HealthPlanController extends Controller
         try {
 
             $colors = 'ff000,';
-
             $colors .= str_replace('#','ff',$request->plan_colors);
             $healthPlan = new HealthPlan();
             $healthPlan->description = $request->description;
@@ -56,6 +55,9 @@ class HealthPlanController extends Controller
     {
         try {
             $dados = $request->except('id');
+            $colors = 'ff000,';
+            $colors .= str_replace('#','ff',$dados['plan_colors']);
+            $dados['plan_colors']  = $colors;
             $healthPlan = HealthPlan::find($request->id);
             $healthPlan->update($dados);
             return response()->json(['success' => true, 'message' => 'Plano de saúde atualizado!'], 200);
