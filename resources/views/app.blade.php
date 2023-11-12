@@ -139,6 +139,7 @@
     <script>
         $("#number").mask("999999999");
         $("#ddd").mask("99");
+        $("#value").mask("000.00");
         var menuAtivo = @yield('menuAtivo');
         menuAtivo.classList.add('active');
         $(document).ready(function() {

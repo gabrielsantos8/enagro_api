@@ -21,13 +21,19 @@ class HealthPlanController extends Controller
 
     public function create($err = "")
     {
-    }
-
-    public function edit(int $id, $err = "")
-    {
+        return view('health_plan.create', ["error" => $err]);
     }
 
     public function store(Request $req)
+    {
+        $ret = $this->apiController->store($req)->getData();
+        if ($ret->success) {
+            return redirect('/health_plan');
+        }
+        return $this->create($ret->message);   
+    }
+
+    public function edit(int $id, $err = "")
     {
     }
 

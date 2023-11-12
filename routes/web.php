@@ -69,9 +69,9 @@ Route::prefix('relatory')->middleware('auth')->group(function () {
 
 Route::prefix('health_plan')->middleware('auth')->group(function () {
     Route::get('/', [HealthPlanController::class, 'index'])->name('health_plan.index');
-    Route::post('/store', [HealthPlanController::class, 'store'])->name('health_plan.create');
+    Route::get('/create', [HealthPlanController::class, 'create'])->name('health_plan.create');
+    Route::post('/store', [HealthPlanController::class, 'store'])->name('health_plan.store');
     Route::get('/edit/{id}', [HealthPlanController::class, 'edit'])->name('health_plan.edit');
-    Route::post('/update', [HealthPlanController::class, 'update'])->name('health_plan.store');
+    Route::post('/update', [HealthPlanController::class, 'update'])->name('health_plan.update');
     Route::post('/destroy', [HealthPlanController::class, 'destroy'])->name('health_plan.destroy');
-    Route::get('/show/{id}', [HealthPlanController::class, 'show'])->name('health_plan.show');
 });

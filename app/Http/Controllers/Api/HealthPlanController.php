@@ -33,13 +33,17 @@ class HealthPlanController extends Controller
     public function store(Request $request)
     {
         try {
+
+            $colors = 'ff000,';
+
+            $colors .= str_replace('#','ff',$request->plan_colors);
             $healthPlan = new HealthPlan();
             $healthPlan->description = $request->description;
             $healthPlan->detailed_description = $request->detailed_description;
             $healthPlan->value = $request->value;
             $healthPlan->minimal_animals = $request->minimal_animals;
             $healthPlan->maximum_animals = $request->maximum_animals;
-            $healthPlan->plan_colors = $request->plan_colors;
+            $healthPlan->plan_colors = $colors;
             if ($healthPlan->save()) {
                 return response()->json(['success' => true, 'message' => "Plano de saúde cadastrado!", 'dados' => $healthPlan], 200);
             }
