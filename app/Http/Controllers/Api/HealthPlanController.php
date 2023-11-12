@@ -14,6 +14,13 @@ class HealthPlanController extends Controller
     public function list()
     {
         $healthPlans = HealthPlan::all();
+
+        foreach ($healthPlans as $key => $value) {
+            $haveData1 = DB::select("SELECT 1 FROM health_plan_services WHERE health_plan_id = {$healthPlans[$key]->id}");
+            $haveData2 = DB::select("SELECT 1 FROM health_plan_contracts WHERE health_plan_id = {$healthPlans[$key]->id}");
+            $healthPlans[$key]->isNotDeletable = isset($haveData1[0]) || isset($haveData2[0]); 
+        }
+
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlans], 200);
     }
 

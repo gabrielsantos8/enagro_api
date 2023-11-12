@@ -68,6 +68,11 @@
                         <span class="nav_name">Veterinários</span> </a>
 
 
+                    <a id="plans" href="{{ route('health_plan.index') }}" class="nav_link"><i
+                            class="fa-solid fa-notes-medical nav_icon"></i>
+                        <span class="nav_name">Planos de Saúde</span>
+                    </a>
+
                     <hr style="color: #fff">
 
                     <a href="{{ route('relatory.plansByRegionIndex') }}" id="planosPorRegiao"
@@ -75,11 +80,11 @@
                         <span class="nav_name">Planos por região</span> </a>
 
                     <a href="{{ route('relatory.installmentByUser') }}" id="parcelasPorUsuario"
-                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
+                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon'></i>
                         <span class="nav_name">Parcelas por usuário</span> </a>
 
                     <a href="{{ route('relatory.animalsBySubtype') }}" id="animaisPorSubTipos"
-                        class="nav_link @yield('relClass')"> <i class='bx bxs-dollar-circle nav_icon' ></i>
+                        class="nav_link @yield('relClass')"> <i class='bx bxs-dog nav_icon'></i>
                         <span class="nav_name">Animais por sub-tipo</span> </a>
 
                     <hr style="color: #fff">
