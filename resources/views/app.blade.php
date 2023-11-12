@@ -135,6 +135,8 @@
     <script src="{{ mix('js/buttons.html5.min.js') }}"></script>
     <script src="{{ mix('js/buttons.print.min.js') }}"></script>
     <script src="{{ mix('js/jquery.mask.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
         $("#number").mask("999999999");

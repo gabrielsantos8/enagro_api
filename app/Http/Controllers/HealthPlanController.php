@@ -43,5 +43,10 @@ class HealthPlanController extends Controller
 
     public function destroy(Request $req)
     {
+        $ret = $this->apiController->destroy($req)->getData();
+        if ($ret->success) {
+            return redirect('/health_plan');
+        }
+        return $this->index($ret->message);
     }
 }
