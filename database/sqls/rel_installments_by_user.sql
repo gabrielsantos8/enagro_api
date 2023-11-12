@@ -9,7 +9,7 @@ SELECT
    ,DATE_FORMAT(hpci.created_at, '%d/%m/%Y %H:%i:%s') as "Data de Criação"
 FROM health_plan_contract_installments hpci
 LEFT JOIN health_plan_contracts hpc on hpc.id = hpci.contract_id
-LEFT JOIN health_plan_contracts_installments_status hpcis on hpcis.id = hpc.health_plan_contract_status_id
+LEFT JOIN health_plan_contracts_installments_status hpcis on hpcis.id = hpci.status_id
 LEFT JOIN health_plan_contract_types hpct on hpct.id = hpc.health_plan_contract_type_id
 LEFT JOIN health_plans hp on hp.id = hpc.health_plan_id
 LEFT JOIN users u on u.id = hpc.user_id
