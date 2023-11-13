@@ -73,6 +73,11 @@
                         <span class="nav_name">Planos de Saúde</span>
                     </a>
 
+                    <a id="services" href="{{ route('service.index') }}" class="nav_link">
+                        <i class='bx bx-shield-alt-2 nav_icon'></i>
+                    <span class="nav_name">Serviços</span>
+                </a>
+
                     <hr style="color: #fff">
 
                     <a href="{{ route('relatory.plansByRegionIndex') }}" id="planosPorRegiao"

@@ -1,10 +1,10 @@
 @extends('app')
-@section('title', 'Editando Planos')
-@section('menuAtivo', 'plans')
+@section('title', 'Cadastro de Serviços')
+@section('menuAtivo', 'services')
 @section('error', isset($error) ? $error : '')
 @section('content')
 
-    <h1>Planos - Manutenção</h1>
+    <h1>Serviços - Manutenção</h1>
 
     <form action="{{ route('health_plan.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
