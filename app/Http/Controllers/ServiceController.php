@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\ServiceController as ApiServiceController;
+use App\Models\AnimalSubtype;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -24,7 +25,8 @@ class ServiceController extends Controller
 
     public function create($err = "")
     {
-        return view('service.create', ["error" => $err]);
+        $animalSubtypes = AnimalSubtype::all();
+        return view('service.create', ["error" => $err, 'animal_subtypes' => $animalSubtypes]);
     }
 
     public function store(Request $req)

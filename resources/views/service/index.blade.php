@@ -13,6 +13,7 @@
             <tr class="header-table-default">
                 <th class="header-table-col-default" scope="col">ID</th>
                 <th class="header-table-col-default" scope="col">Descrição</th>
+                <th class="header-table-col-default" scope="col">Sub-tipo Animal</th>
                 <th class="header-table-col-default" scope="col">Valor</th>
                 <th class="header-table-col-default" scope="col">Data Cadastro</th>
                 <th class="header-table-col-default" scope="col">Data Alteração</th>
@@ -24,6 +25,7 @@
                 <tr>
                     <th scope="row">{{ $val->id }}</th>
                     <th scope="row">{{ $val->description }}</th>
+                    <th scope="row">{{ $val->animal_subtype }}</th>
                     <th scope="row">{{ $val->value }}</th>
                     <th scope="row">{{ $val->created_at }}</th>
                     <th scope="row">{{ $val->updated_at }}</th>
