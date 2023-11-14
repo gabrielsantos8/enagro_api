@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\HealthPlanController as ApiHealthPlanController;
+use App\Utils\SqlGetter;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HealthPlanController extends Controller
 {
@@ -67,5 +69,15 @@ class HealthPlanController extends Controller
             return redirect('/health_plan');
         }
         return $this->index($ret->message);
+    }
+
+
+    public function services(int $id) {
+        $data = DB::select(SqlGetter::getSql('get_services_by_plan', ['plan_id' => $id]));
+        foreach ($data as $key => $value) {
+            $haveData2 = DB::select("SELECT 1 FROM health_plan_contracts WHERE health_plan_id = {$data[$key]->plan_id}");
+            $data[$key]->isNotDeletable = isset($haveData2[0]); 
+        }
+        return view('health_plan.services', ['data' => $data]);
     }
 }
