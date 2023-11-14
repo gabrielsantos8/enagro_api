@@ -74,7 +74,7 @@ Route::prefix('health_plan')->middleware('auth')->group(function () {
     Route::post('/store', [HealthPlanController::class, 'store'])->name('health_plan.store');
     Route::get('/edit/{id}', [HealthPlanController::class, 'edit'])->name('health_plan.edit');
     Route::get('/services/{id}', [HealthPlanController::class, 'services'])->name('health_plan.services');
-    Route::get('/service_create', [HealthPlanController::class, 'service_create'])->name('health_plan.service_create');
+    Route::get('/service_create/{id}', [HealthPlanController::class, 'service_create'])->name('health_plan.service_create');
     Route::post('/service_store', [HealthPlanController::class, 'service_store'])->name('health_plan.service_store');
     Route::post('/service_destroy', [HealthPlanController::class, 'service_destroy'])->name('health_plan.service_destroy');
     Route::post('/update', [HealthPlanController::class, 'update'])->name('health_plan.update');

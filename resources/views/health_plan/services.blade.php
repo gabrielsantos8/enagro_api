@@ -6,7 +6,7 @@
 @section('content')
     <h1>Serviços do plano {{ isset($data[0]) ? $data[0]->plan : '' }}</h1>
     <div class="d-flex justify-content-start">
-        <a class="botao-default" href="{{ route('health_plan.service_create') }}"><i class='bx bx-add-to-queue'></i>
+        <a class="botao-default" href="{{ route('health_plan.service_create', $plan_id) }}"><i class='bx bx-add-to-queue'></i>
             Adicionar</a>
     </div>
     <table class="table table-striped">
@@ -37,6 +37,7 @@
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
+                                <input type="number" name="health_plan_id" value="{{ $val->plan_id }}" hidden>
                                 <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif
                                     class="botao-risco-default" type="submit">
                                     <i class='bx bx-trash'></i> Excluir
