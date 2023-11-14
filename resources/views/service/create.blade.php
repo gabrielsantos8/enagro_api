@@ -5,9 +5,7 @@
 @section('content')
 
     <h1>Serviços - Manutenção</h1>
-
-
-
+    
     <form action="{{ route('service.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">

@@ -40,8 +40,9 @@ class ServiceController extends Controller
 
     public function edit(int $id, $err = "")
     {
-        $data = $this->apiController->show($id)->getData()->dados;
-        return view('service.edit', ['data' => $data, 'error' => $err]);
+        $animalSubtypes = AnimalSubtype::all();
+        $data = $this->apiController->show($id)->getData()->dados[0];
+        return view('service.edit', ['data' => $data, 'animal_subtypes' => $animalSubtypes, 'error' => $err]);
     }
 
 
