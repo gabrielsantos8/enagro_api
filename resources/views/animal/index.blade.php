@@ -15,6 +15,8 @@
                 <th class="header-table-col-default" scope="col">ID</th>
                 <th class="header-table-col-default" scope="col">Nome</th>
                 <th class="header-table-col-default" scope="col">Descrição</th>
+                <th class="header-table-col-default" scope="col">Quantidade</th>
+                <th class="header-table-col-default" scope="col">Peso</th>
                 <th class="header-table-col-default" scope="col">Tipo de Animal</th>
                 <th class="header-table-col-default" scope="col">Endereço do Cliente</th>
                 <th class="header-table-col-default" scope="col">Data Criado</th>
@@ -30,23 +32,25 @@
                     <th scope="row">{{ $val->id }}</th>
                     <th scope="row">{{ $val->name }}</th>
                     <th scope="row">{{ $val->description }}</th>
-                    <th scope="row">{{ $val->ddd . ' - ' . $val->number }}</th>
-                    <th scope="row">***********</th>
+                    <th scope="row">{{ $val->amount }}</th>
+                    <th scope="row">{{ $val->weight }}</th>
+                    <th scope="row">{{ $val->animal_type }}</th>
+                    <th scope="row">{{ $val->user_address_id }}</th>
                     <th scope="row">{{ $val->created_at }}</th>
                     <th scope="row">{{ $val->updated_at }}</th>
-                    <th scope="row">{{ $val->animal_type }}</th>
-                    <th scope="row">{{ $val->situation }}</th>
+                    <th scope="row">{{ $val->birth_date }}</th>
+                    {{-- <th scope="row">{{ $val->situation }}</th> --}}
                     <th scope="row">
                         <div class="btn-group" role="group" aria-label="Botões">
-                            <a class="botao-default" href="{{ route('user.edit', $val->id) }}"><i
+                            <a class="botao-default" href="{{ route('animal.edit', $val->id) }}"><i
                                     class='bx bx-show-alt'></i></a>
-                            <form id="form-excluir{{ $val->id }}" action="{{ route('user.destroy') }}" method="POST">
+                            <form id="form-excluir{{ $val->id }}" action="{{ route('animal.destroy') }}" method="POST">
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
-                                <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif class="botao-risco-default" type="submit">
+                                {{-- <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif class="botao-risco-default" type="submit">
                                     <i class='bx bx-trash'></i> Excluir
-                                </button>
+                                </button> --}}
                             </form>
                         </div>
                     </th>

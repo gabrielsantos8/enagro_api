@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Animal;
+use App\Models\AnimalSubtype;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,10 +39,12 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         try {
+            $stype  = AnimalSubtype::find($request->animal_subtype_id);
+            $type = !isset($request->animal_type_id) ? $stype->animal_type_id : $request->animal_type_id;
             $animal = new Animal();
             $animal->name = $request->name;
             $animal->description = $request->description;
-            $animal->animal_type_id = $request->animal_type_id;
+            $animal->animal_type_id =  $type;
             $animal->img_url = $request->img_url;
             $animal->user_address_id = $request->user_address_id;
             $animal->birth_date = $request->birth_date;
