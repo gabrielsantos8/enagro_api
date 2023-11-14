@@ -16,6 +16,11 @@ class ServiceController extends Controller
             ->join('animal_subtypes', 'animal_subtypes.id', '=', 'services.animal_subtype_id')
             ->select('services.*', 'animal_subtypes.description as animal_subtype')
             ->get();
+        foreach ($services as $key => $value) {
+            $haveData1 = DB::select("SELECT 1 FROM health_plan_services WHERE service_id = {$services[$key]->id}");
+            $haveData2 = DB::select("SELECT 1 FROM activation_services WHERE service_id = {$services[$key]->id}");
+            $services[$key]->isNotDeletable = isset($haveData1[0]) || isset($haveDat2[0]);
+        }
         return response()->json(['success' => true, 'message' => "", "dados" => $services], 200);
     }
 

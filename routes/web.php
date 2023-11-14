@@ -4,6 +4,7 @@ use App\Http\Controllers\HealthPlanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RelatoryController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VeterinarianController;
@@ -74,4 +75,13 @@ Route::prefix('health_plan')->middleware('auth')->group(function () {
     Route::get('/edit/{id}', [HealthPlanController::class, 'edit'])->name('health_plan.edit');
     Route::post('/update', [HealthPlanController::class, 'update'])->name('health_plan.update');
     Route::post('/destroy', [HealthPlanController::class, 'destroy'])->name('health_plan.destroy');
+});
+
+Route::prefix('service')->middleware('auth')->group(function () {
+    Route::get('/', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/create', [ServiceController::class, 'create'])->name('service.create');
+    Route::post('/store', [ServiceController::class, 'store'])->name('service.store');
+    Route::get('/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
+    Route::post('/update', [ServiceController::class, 'update'])->name('service.update');
+    Route::post('/destroy', [ServiceController::class, 'destroy'])->name('service.destroy');
 });

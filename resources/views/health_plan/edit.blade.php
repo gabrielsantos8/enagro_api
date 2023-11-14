@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Cadastro de Planos')
+@section('title', 'Editando Planos')
 @section('menuAtivo', 'plans')
 @section('error', isset($error) ? $error : '')
 @section('content')
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <button class="botao-default w-100" type="submit">Cadastrar</button>
+        <button class="botao-default w-100" type="submit">Salvar</button>
     </form>
 
 @endsection
