@@ -160,6 +160,17 @@ class HealthPlanContractController extends Controller
         }
     }
 
+    public function contractCancel(Request $req)
+    {
+        try {
+            $service = new SignatureService();
+            $ret = $service->contractCancel($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
     public function installmentPayment(Request $req)
     {
         try {

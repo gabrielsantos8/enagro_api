@@ -28,6 +28,15 @@ class SignatureService
         return ['contract' => $contract, 'installment' => $installment, 'animals' => $animals];
     }
 
+    public function contractCancel(Request $req)
+    {
+        if($this->contractExists($req->user_id)) {
+            $this->cancelContractInstallment($req->user_id);
+            $this->cancelContract($req->user_id);
+        }
+        return true;
+    }
+
     private function contractExists(int $user_id) {
         $ret = DB::select(SqlGetter::getSql('exists_contract_by_user'), [$user_id]);
         return isset($ret[0]);
