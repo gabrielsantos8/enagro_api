@@ -1,21 +1,21 @@
 @extends('app')
-@section('title', 'Planos de Saúde')
+@section('title', 'Serviços do plano ' . (isset($data[0]) ? $data[0]->plan : ''))
 @section('menuAtivo', 'plans')
 @section('error', isset($error) ? $error : '')
 
 @section('content')
-    <h1>Planos de Saúde</h1>
+    <h1>Serviços do plano {{ isset($data[0]) ? $data[0]->plan : '' }}</h1>
     <div class="d-flex justify-content-start">
-        <a class="botao-default" href="{{ route('health_plan.create') }}"><i class='bx bx-add-to-queue'></i> Adicionar</a>
+        <a class="botao-default" href="{{ route('health_plan.service_create', $plan_id) }}"><i class='bx bx-add-to-queue'></i>
+            Adicionar</a>
     </div>
     <table class="table table-striped">
         <thead>
             <tr class="header-table-default">
                 <th class="header-table-col-default" scope="col">ID</th>
-                <th class="header-table-col-default" scope="col">Plano</th>
+                <th class="header-table-col-default" scope="col">Descrição</th>
+                <th class="header-table-col-default" scope="col">Sub-tipo Animal</th>
                 <th class="header-table-col-default" scope="col">Valor</th>
-                <th class="header-table-col-default" scope="col">Mínimo de animais</th>
-                <th class="header-table-col-default" scope="col">Máximo de animais</th>
                 <th class="header-table-col-default" scope="col">Data Cadastro</th>
                 <th class="header-table-col-default" scope="col">Data Alteração</th>
                 <th class="header-table-col-default"></th>
@@ -25,22 +25,19 @@
             @foreach ($data as $val)
                 <tr>
                     <th scope="row">{{ $val->id }}</th>
-                    <th scope="row">{{ $val->description }}</th>
-                    <th scope="row">{{ $val->value }}</th>
-                    <th scope="row">{{ $val->minimal_animals}}</th>
-                    <th scope="row">{{ $val->maximum_animals }}</th>
+                    <th scope="row">{{ $val->service }}</th>
+                    <th scope="row">{{ $val->animal_subtype }}</th>
+                    <th scope="row">{{ $val->service_value }}</th>
                     <th scope="row">{{ $val->created_at }}</th>
                     <th scope="row">{{ $val->updated_at }}</th>
                     <th scope="row">
                         <div class="btn-group" role="group" aria-label="Botões">
-                            <a class="botao-default" href="{{ route('health_plan.services', $val->id) }}"><i class='bx bxs-shield-plus' ></i></a>
-                            <a class="botao-default" href="{{ route('health_plan.edit', $val->id) }}"><i
-                                    class='bx bx-show-alt'></i></a>
-                            <form id="form-excluir{{ $val->id }}" action="{{ route('health_plan.destroy') }}"
+                            <form id="form-excluir{{ $val->id }}" action="{{ route('health_plan.service_destroy') }}"
                                 method="POST">
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
+                                <input type="number" name="health_plan_id" value="{{ $val->plan_id }}" hidden>
                                 <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif
                                     class="botao-risco-default" type="submit">
                                     <i class='bx bx-trash'></i> Excluir
