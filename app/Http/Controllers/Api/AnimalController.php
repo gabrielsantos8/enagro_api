@@ -20,6 +20,11 @@ class AnimalController extends Controller
             ->join('cities', 'user_addresses.city_id', '=', 'cities.id')
             ->select('animals.*', 'animal_types.description as animal_type', 'user_addresses.complement', 'cities.id as city_id', 'cities.description as city', 'cities.uf', 'cities.ibge', 'animal_subtypes.description as animal_subtype')
             ->get();
+        foreach ($animal as $key => $value) {
+            $haveData = DB::select("SELECT 1 FROM activation_animals WHERE animal_id = {$animal[$key]->id}");
+            $haveData2 = DB::select("SELECT 1 FROM health_plan_contract_animals WHERE animal_id = {$animal[$key]->id}");
+            $animal[$key]->isNotDeletable = isset($haveData[0])|| isset($haveData2[0]);
+        }
         return response()->json(['success' => true, 'message' => "", "dados" => $animal], 200);
     }
 

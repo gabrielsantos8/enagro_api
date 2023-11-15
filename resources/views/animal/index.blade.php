@@ -48,9 +48,9 @@
                                 @method('POST')
                                 @csrf
                                 <input type="number" name="id" value="{{ $val->id }}" hidden>
-                                {{-- <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif class="botao-risco-default" type="submit">
+                                <button id="{{ $val->id }}" @if ($val->isNotDeletable) hidden @endif class="botao-risco-default" type="submit">
                                     <i class='bx bx-trash'></i> Excluir
-                                </button> --}}
+                                </button>
                             </form>
                         </div>
                     </th>

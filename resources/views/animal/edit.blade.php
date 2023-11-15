@@ -31,7 +31,8 @@
                     <label for="animal_subtype_id" class="form-label"><b>Tipo:</b></label>
                     <select name="animal_subtype_id" required class="form-control" id="animal_subtype_id">
                         @foreach ($animal_subtypes as $type)
-                            <option value="{{ $type->id }}">{{ $type->id . ' - ' . $type->description }}</option>
+                            <option @if ($data->animal_subtype_id == $type->id) selected @endif value="{{ $type->id }}">
+                                {{ $type->id . ' - ' . $type->description }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -39,7 +40,8 @@
                     <label for="user_address_id" class="form-label"><b>Endereço do Cliente:</b></label>
                     <select name="user_address_id" required class="form-control" id="user_address_id">
                         @foreach ($user_address as $type)
-                            <option value="{{ $type->id }}">{{ $type->id . ' - ' . $type->complement }}</option>
+                            <option @if ($data->user_address_id == $type->id) selected @endif value="{{ $type->id }}">
+                                {{ $type->id . ' - ' . $type->complement }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -54,6 +56,8 @@
                     <input type="date" value="{{ $data->birth_date}}" required name="birth_date" id="birth_date" class="form-control"
                         placeholder="01/01/2001">
                 </div>
+
+                <input type="number" value="{{ $data->id}}" required name="id" id="id" hidden class="form-control">
 
                 {{-- <div class="col-4">
                     <label for="situation_id" class="form-label"><b>Situação:</b></label>
@@ -71,7 +75,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="img_url" class="form-label"><b>Imagem:</b></label>
-                    <input type="file" class="form-control" name="img_url" accept="image/*" required />
+                    <input type="file" class="form-control" name="img_url" accept="image/*" />
                 </div>
             </div>
         </div>

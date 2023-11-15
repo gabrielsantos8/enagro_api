@@ -33,6 +33,17 @@ class AnimalController extends Controller
         return view('animal.create', ['animal_subtypes' => $animal_subtypes, 'user_address' => $user_address]);
     }
 
+    public function update(Request $req) 
+    {
+        $ret = $this->apiController->update($req)->getData();
+        if ($ret->success) {
+            return redirect('/animal');
+        }
+        return $this->edit($req->id, $ret->message);
+
+        
+    }
+
     public function edit(int $id)
     {
         $animal_subtypes = AnimalSubtype::all();
@@ -53,6 +64,10 @@ class AnimalController extends Controller
 
     public function destroy(Request $req)
     {
-    
+        $ret = $this->apiController->destroy($req)->getData();
+        if ($ret->success) {
+            return redirect('/animal');
+        }
+        return view('animal.index', ['data' => $this->list()->getData()->dados, 'error' => $ret->message]);
     }
 }
