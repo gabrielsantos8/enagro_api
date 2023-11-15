@@ -87,6 +87,7 @@ Route::prefix('veterinarian')->group(function () {
     Route::post('/update', [VeterinarianController::class, 'update']);
     Route::post('/destroy', [VeterinarianController::class, 'destroy']);
     Route::get('/getByUser/{id}', [VeterinarianController::class, 'getByUser']);
+    Route::get('/getByServicesAndCities/{services_id}/{animals_id}', [VeterinarianController::class, 'getByServicesAndCities']);
 });
 
 Route::prefix('service_city')->group(function () {
@@ -134,6 +135,9 @@ Route::prefix('health_plan')->group(function () {
     Route::post('/update', [HealthPlanController::class, 'update']);
     Route::post('/destroy', [HealthPlanController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanController::class, 'show']);
+    Route::get('/getBestsPlansByUser/{id}', [HealthPlanController::class, 'getBestsPlansByUser']);
+    Route::get('/getAllPlansByUser/{id}', [HealthPlanController::class, 'getAllPlansByUser']);
+    Route::get('/getAnimalsToAddByUser/{user_id}/{plan_id}', [HealthPlanController::class, 'getAnimalsToAddByUser']);
 });
 
 Route::prefix('service')->group(function () {
@@ -143,6 +147,7 @@ Route::prefix('service')->group(function () {
     Route::post('/destroy', [ServiceController::class, 'destroy']);
     Route::get('/show/{id}', [ServiceController::class, 'show']);
     Route::get('/getByAnimalSubtype/{id}', [ServiceController::class, 'getByAnimalSubtype']);
+    Route::get('/getByAnimalSubtypes/{ids}', [ServiceController::class, 'getByAnimalSubtypes']);
 });
 
 Route::prefix('health_plan_service')->group(function () {
@@ -151,6 +156,7 @@ Route::prefix('health_plan_service')->group(function () {
     Route::post('/update', [HealthPlanServiceController::class, 'update']);
     Route::post('/destroy', [HealthPlanServiceController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanServiceController::class, 'show']);
+    Route::get('/getByHealthPlan/{id}', [HealthPlanServiceController::class, 'getByHealthPlan']);
 });
 
 
@@ -162,6 +168,8 @@ Route::prefix('health_plan_contract')->group(function () {
     Route::get('/show/{id}', [HealthPlanContractController::class, 'show']);
     Route::get('/getByUser/{id}', [HealthPlanContractController::class, 'getByUser']);
     Route::get('/getActiveContractByUser/{id}', [HealthPlanContractController::class, 'getActiveContractByUser']);
+    Route::post('/contractSign', [HealthPlanContractController::class, 'contractSign']);
+    Route::post('/installmentPayment', [HealthPlanContractController::class, 'installmentPayment']);
 });
 
 Route::prefix('health_plan_contract_installment')->group(function () {
@@ -180,6 +188,7 @@ Route::prefix('health_plan_contract_animal')->group(function () {
     Route::post('/destroy', [HealthPlanContractAnimalController::class, 'destroy']);
     Route::get('/show/{id}', [HealthPlanContractAnimalController::class, 'show']);
     Route::get('/getByContract/{id}', [HealthPlanContractAnimalController::class, 'getByContract']);
+    Route::get('/getAnimalsToAddByUser/{user_id}/{contract_id}', [HealthPlanContractAnimalController::class, 'getAnimalsToAddByUser']);
 });
 
 Route::prefix('veterinarian_service')->group(function () {
@@ -189,6 +198,7 @@ Route::prefix('veterinarian_service')->group(function () {
     Route::post('/destroy', [VeterinarianServiceController::class, 'destroy']);
     Route::get('/show/{id}', [VeterinarianServiceController::class, 'show']);
     Route::get('/getByVeterinarian/{id}', [VeterinarianServiceController::class, 'getByVeterinarian']);
+    Route::get('/getNotByVeterinarian/{id}', [VeterinarianServiceController::class, 'getNotByVeterinarian']);
 });
 
 Route::prefix('activation')->group(function () {
@@ -199,6 +209,8 @@ Route::prefix('activation')->group(function () {
     Route::get('/show/{id}', [ActivationController::class, 'show']);
     Route::get('/getByVeterinarian/{id}', [ActivationController::class, 'getByVeterinarian']);
     Route::get('/getByUser/{id}', [ActivationController::class, 'getByUser']);
+    Route::post('/findBestVeterinarian', [ActivationController::class, 'findBestVeterinarian']);
+    Route::post('/createActivation', [ActivationController::class, 'createActivation']);
 });
 
 Route::prefix('activation_service')->group(function () {

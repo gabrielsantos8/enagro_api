@@ -12,10 +12,10 @@ class HealthPlanContractInstallmentController extends Controller
 {
     public function list()
     {
-        $healthPlanContractsInstallments = DB::table('health_plan_contracts_installments')
-            ->leftJoin('health_plan_contracts', 'health_plan_contracts_installments.contract_id', '=', 'health_plan_contracts.id')
-            ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contracts_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
-            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
+        $healthPlanContractsInstallments = DB::table('health_plan_contract_installments')
+            ->leftJoin('health_plan_contracts', 'health_plan_contract_installments.contract_id', '=', 'health_plan_contracts.id')
+            ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contract_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
+            ->select('health_plan_contract_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
             ->get();
 
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanContractsInstallments], 200);
@@ -23,11 +23,11 @@ class HealthPlanContractInstallmentController extends Controller
 
     public function show(string $id)
     {
-        $healthPlanContractsInstallment = DB::table('health_plan_contracts_installments')
-            ->leftJoin('health_plan_contracts', 'health_plan_contracts_installments.contract_id', '=', 'health_plan_contracts.id')
-            ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contracts_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
-            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
-            ->where([['health_plan_contracts_installments.id', '=', $id]])
+        $healthPlanContractsInstallment = DB::table('health_plan_contract_installments')
+            ->leftJoin('health_plan_contracts', 'health_plan_contract_installments.contract_id', '=', 'health_plan_contracts.id')
+            ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contract_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
+            ->select('health_plan_contract_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
+            ->where([['health_plan_contract_installments.id', '=', $id]])
             ->get();
 
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanContractsInstallment], !empty($healthPlanContractsInstallment) ? 200 : 404);
@@ -74,16 +74,16 @@ class HealthPlanContractInstallmentController extends Controller
 
     public function getByContract(int $id)
     {
-        $healthPlanContractsInstallment = $this->getBy('health_plan_contracts_installments', 'contract_id', $id);
+        $healthPlanContractsInstallment = $this->getBy('health_plan_contract_installments', 'contract_id', $id);
         return response()->json(['success' => true, 'message' => "", "dados" => $healthPlanContractsInstallment], count($healthPlanContractsInstallment) >= 1 ? 200 : 404);
     }
 
     public function getBy(string $table, string $field, $value)
     {
-        $healthPlanContractsInstallment = DB::table('health_plan_contracts_installments')
-            ->leftJoin('health_plan_contracts', 'health_plan_contracts_installments.contract_id', '=', 'health_plan_contracts.id')
-            ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contracts_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
-            ->select('health_plan_contracts_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
+        $healthPlanContractsInstallment = DB::table('health_plan_contract_installments')
+            ->leftJoin('health_plan_contracts', 'health_plan_contract_installments.contract_id', '=', 'health_plan_contracts.id')
+            ->leftJoin('health_plan_contracts_installments_status', 'health_plan_contract_installments.status_id', '=', 'health_plan_contracts_installments_status.id')
+            ->select('health_plan_contract_installments.*', 'health_plan_contracts.health_plan_id', 'health_plan_contracts_installments_status.description as health_plan_contracts_installments_status')
             ->where($table . '.' . $field, '=', $value)
             ->get();
 

@@ -16,6 +16,11 @@ class ServiceController extends Controller
             ->join('animal_subtypes', 'animal_subtypes.id', '=', 'services.animal_subtype_id')
             ->select('services.*', 'animal_subtypes.description as animal_subtype')
             ->get();
+        foreach ($services as $key => $value) {
+            $haveData1 = DB::select("SELECT 1 FROM health_plan_services WHERE service_id = {$services[$key]->id}");
+            $haveData2 = DB::select("SELECT 1 FROM activation_services WHERE service_id = {$services[$key]->id}");
+            $services[$key]->isNotDeletable = isset($haveData1[0]) || isset($haveDat2[0]);
+        }
         return response()->json(['success' => true, 'message' => "", "dados" => $services], 200);
     }
 
@@ -71,6 +76,27 @@ class ServiceController extends Controller
     public function getByAnimalSubtype(int $id)
     {
         $service = $this->getBy('animal_subtype_id', $id);
+        return response()->json(['success' => true, 'message' => "", "dados" => $service], count($service) >= 1 ? 200 : 404);
+    }
+
+    public function getByAnimalSubtypes(string $ids)
+    {
+        $idsArr = explode(',', $ids);
+        $service = array();
+        $uniqueValues = array();
+        foreach ($idsArr as $value) {
+            $data = $this->getBy('animal_subtype_id', $value);
+            if (isset($data[0])) {
+                foreach ($data as $vv) {
+                    if (!in_array($vv, $uniqueValues)) {
+                        $uniqueValues[] = $vv;
+                        $service[] = $vv;
+                    }
+                }
+            }
+        }
+
+
         return response()->json(['success' => true, 'message' => "", "dados" => $service], count($service) >= 1 ? 200 : 404);
     }
 

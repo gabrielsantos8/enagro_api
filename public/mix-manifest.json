@@ -1,4 +1,18 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/buttons.html5.min.js": "/js/buttons.html5.min.js",
+    "/js/buttons.print.min.js": "/js/buttons.print.min.js",
+    "/js/dataTables.buttons.min.js": "/js/dataTables.buttons.min.js",
+    "/js/jquery-3.7.0.js": "/js/jquery-3.7.0.js",
+    "/js/jquery.dataTables.min.js": "/js/jquery.dataTables.min.js",
+    "/js/jszip.min.js": "/js/jszip.min.js",
+    "/js/pdfmake.min.js": "/js/pdfmake.min.js",
+    "/js/vfs_fonts.js": "/js/vfs_fonts.js",
+    "/js/jquery.mask.min.js": "/js/jquery.mask.min.js",
+    "/css/app.css": "/css/app.css",
+    "/css/bootstrap.min.css": "/css/bootstrap.min.css",
+    "/css/all.min.css": "/css/all.min.css",
+    "/css/boxicons.min.css": "/css/boxicons.min.css",
+    "/css/jquery.dataTables.min.css": "/css/jquery.dataTables.min.css",
+    "/css/buttons.dataTables.min.css": "/css/buttons.dataTables.min.css"
 }

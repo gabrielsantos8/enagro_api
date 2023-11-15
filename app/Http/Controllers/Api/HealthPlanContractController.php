@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\HealthPlanContract;
+use App\Services\PaymentService;
+use App\Services\SignatureService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,7 +77,8 @@ class HealthPlanContractController extends Controller
         }
     }
 
-    private function calcContractValue($type, $value) {
+    private function calcContractValue($type, $value)
+    {
         return $type == 1 ? $value : $value * 12;
     }
 
@@ -116,6 +119,7 @@ class HealthPlanContractController extends Controller
 
     public function getBy(array $wheres)
     {
+        $servicesController = new HealthPlanServiceController();
         $healthPlanContract = DB::table('health_plan_contracts')
             ->leftJoin('users', 'health_plan_contracts.user_id', '=', 'users.id')
             ->leftJoin('health_plans', 'health_plan_contracts.health_plan_id', '=', 'health_plans.id')
@@ -136,6 +140,34 @@ class HealthPlanContractController extends Controller
             ->where($wheres)
             ->get();
 
+        foreach ($healthPlanContract as $key => $value) {
+            $services = $servicesController->getByHealthPlan($value->health_plan_id)->getData()->dados;
+            $healthPlanContract[$key]->services = $services;
+        }
+
         return $healthPlanContract;
+    }
+
+
+    public function contractSign(Request $req)
+    {
+        try {
+            $service = new SignatureService();
+            $ret = $service->startSign($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function installmentPayment(Request $req)
+    {
+        try {
+            $service = new PaymentService();
+            $ret = $service->installmentPayment($req);
+            return response()->json(['success' => true, 'message' => '', 'dados' => $ret], 200);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }

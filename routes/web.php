@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\HealthPlanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RelatoryController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VeterinarianController;
@@ -65,3 +68,33 @@ Route::prefix('animal')->middleware('auth')->group(function () {
     Route::post('/destroy', [AnimalController::class, 'destroy'])->name('animal.destroy');
 });
 
+Route::prefix('relatory')->middleware('auth')->group(function () {
+    Route::get('/plansByRegion', [RelatoryController::class, 'plansByRegionIndex'])->name('relatory.plansByRegionIndex');
+    Route::get('/installmentByUser', [RelatoryController::class, 'installmentByUserIndex'])->name('relatory.installmentByUser');
+    Route::get('/animalsBySubtype', [RelatoryController::class, 'animalsBySubtypeIndex'])->name('relatory.animalsBySubtype');
+    Route::post('/plansByRegionData', [RelatoryController::class, 'plansByRegionData']);
+    Route::post('/installmentByUserIndexData', [RelatoryController::class, 'installmentByUserIndexData']);
+    Route::post('/animalsBySubtypeData', [RelatoryController::class, 'animalsBySubtypeData']);
+});
+
+Route::prefix('health_plan')->middleware('auth')->group(function () {
+    Route::get('/', [HealthPlanController::class, 'index'])->name('health_plan.index');
+    Route::get('/create', [HealthPlanController::class, 'create'])->name('health_plan.create');
+    Route::post('/store', [HealthPlanController::class, 'store'])->name('health_plan.store');
+    Route::get('/edit/{id}', [HealthPlanController::class, 'edit'])->name('health_plan.edit');
+    Route::get('/services/{id}', [HealthPlanController::class, 'services'])->name('health_plan.services');
+    Route::get('/service_create/{id}', [HealthPlanController::class, 'service_create'])->name('health_plan.service_create');
+    Route::post('/service_store', [HealthPlanController::class, 'service_store'])->name('health_plan.service_store');
+    Route::post('/service_destroy', [HealthPlanController::class, 'service_destroy'])->name('health_plan.service_destroy');
+    Route::post('/update', [HealthPlanController::class, 'update'])->name('health_plan.update');
+    Route::post('/destroy', [HealthPlanController::class, 'destroy'])->name('health_plan.destroy');
+});
+
+Route::prefix('service')->middleware('auth')->group(function () {
+    Route::get('/', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/create', [ServiceController::class, 'create'])->name('service.create');
+    Route::post('/store', [ServiceController::class, 'store'])->name('service.store');
+    Route::get('/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
+    Route::post('/update', [ServiceController::class, 'update'])->name('service.update');
+    Route::post('/destroy', [ServiceController::class, 'destroy'])->name('service.destroy');
+});
