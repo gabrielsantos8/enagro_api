@@ -105,6 +105,13 @@ class AnimalController extends Controller
             ->orderBy('user_addresses.id')
             ->orderBy('animals.name')
             ->get();
+        
+        foreach ($animal as $key => $value) {
+            $haveData = DB::select("SELECT 1 FROM activation_animals WHERE animal_id = {$animal[$key]->id}");
+            $haveData2 = DB::select("SELECT 1 FROM health_plan_contract_animals WHERE animal_id = {$animal[$key]->id}");
+            $animal[$key]->is_not_deletable = isset($haveData[0])|| isset($haveData2[0]);
+        }
+
         return $animal;
     }
 

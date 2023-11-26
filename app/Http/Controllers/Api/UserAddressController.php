@@ -106,6 +106,12 @@ class UserAddressController extends Controller
             ->select('user_addresses.*', 'cities.description as city', 'cities.uf', 'cities.ibge', 'users.name as user')
             ->where('user_addresses.' . $field, '=', $value)
             ->get();
+        
+            foreach ($userAddress as $key => $value) {
+            $haveData = DB::select("SELECT 1 FROM animals WHERE user_address_id = {$userAddress[$key]->id}");
+            $userAddress[$key]->is_not_deletable = isset($haveData[0]);
+        }
+
         return $userAddress;
     }
 }
