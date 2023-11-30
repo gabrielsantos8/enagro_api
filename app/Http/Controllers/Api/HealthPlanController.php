@@ -87,6 +87,10 @@ class HealthPlanController extends Controller
             $healthPlans[$key]->services = $services;
         }
 
+        if(count($healthPlans) == 1) {
+            $healthPlans[] = $healthPlans[0];
+        }
+
         echo json_encode(['success' => true, 'message' => "", "dados" => $healthPlans]);
     }
 
